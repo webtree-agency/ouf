@@ -117,7 +117,7 @@ export { default as MenuIcon } from "./menu.svg";
 export { default as StackIcon } from "./stack.svg";
 export { default as ClockIcon } from "./clock.svg";
 export { default as Mute } from "./mute.svg";
-export { default as Sound } from "./sound.svg";
+export { default as SoundIcon } from "./sound.svg";
 export { default as MapIcon } from "./map-icon.svg";
 export { default as ExpandIcon } from "./expand.svg";
 export { default as CollapseIcon } from "./collapse.svg";

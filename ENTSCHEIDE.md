@@ -105,3 +105,24 @@ Je Entscheid: was gilt, was verworfen wurde, warum. Neueste unten.
   Antwort nicht mehr beim Formular an, und der Fokus ginge verloren.
 - **Bearbeiten führt in die Liste zurück, aus der man kam** (`?zurueck=`),
   geprüft auf `/karten…`.
+
+## Block 4
+
+- **Erst Wiederholungen, dann neue Karten**, statt sie zu mischen. Fällige
+  Lernschritte gehen allem vor; am Ende kommt, was in den nächsten 20 Minuten
+  fällig wird (wie Anki). Verworfen: neue Karten zwischen die Wiederholungen
+  streuen; das braucht einen Zähler je Runde und bringt beim Lernen nichts,
+  was man merkt.
+- **Ein Aufruf je Bewertung**: Die Aktion bewertet und gibt die nächste Karte
+  samt Intervallen zurück. Die Seite wird dabei nicht neu gerechnet; Übersicht
+  und Statistik rechnen bei jedem Aufruf frisch.
+- **Ein Doppelklick bewertet nicht zweimal.** Die Bewertung trägt den Stand
+  (`reps`), mit dem die Karte gezeigt wurde; passt er nicht mehr, zählt sie
+  nicht.
+- **Z nimmt zurück, was heute in der aktiven Sprache bewertet wurde**, eine
+  Bewertung nach der anderen. Verworfen: Rückgängig über Tage; dann stimmten
+  Tagesgrenzen und Tageslimit von gestern nicht mehr.
+- **Intervalle mit Dezimalpunkt** („1.5 Monate"), wie `de-CH` es schreibt.
+- **Neue Karten zählen je Deck gegen das Limit**, eingeführt heisst: heute zum
+  ersten Mal bewertet und nicht zurückgenommen. Eine Rückwärtskarte ist ein
+  eigener Lernstand und zählt einzeln.

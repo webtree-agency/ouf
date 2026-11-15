@@ -57,3 +57,29 @@ export async function runAction(
   if (ziel) redirect(ziel);
   return OK;
 }
+
+/**
+ * Dasselbe für eine Aktion, die Daten zurückgibt statt weiterzuleiten: die
+ * nächste Lernkarte nach einer Bewertung.
+ */
+export async function runActionWith<T>(
+  options: Omit<RunOptions, "revalidate">,
+  action: (actor: Actor) => Promise<T>,
+): Promise<{ ok: true; data: T } | Exclude<ActionResult, { ok: true }>> {
+  try {
+    let actor: Actor;
+    if (options.fresh) {
+      const gate = await freshSessionOrFailure();
+      if (!gate.ok) return gate.result;
+      actor = { id: gate.session.userId, email: gate.session.email };
+    } else {
+      const session = await requireSession();
+      actor = { id: session.userId, email: session.email };
+    }
+    return { ok: true, data: await action(actor) };
+  } catch (error) {
+    const answer = answerOrThrow(error);
+    if (answer.ok) throw error;
+    return answer;
+  }
+}

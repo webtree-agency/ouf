@@ -1,7 +1,8 @@
 import { and, asc, eq, sql } from "drizzle-orm";
 
 import { getDb, schema } from "../../db/index.ts";
-import { endOfDay } from "../time/day.ts";
+import { remainingNew } from "../learning/queue.ts";
+import { endOfDay, startOfDay } from "../time/day.ts";
 
 /** Ein Lernstand zählt, wenn er vorwärts ist oder die Karte die Rückwärtskarte trägt. */
 export const ACTIVE_SCHEDULE = sql`(${schema.cardSchedules.direction} = 'forward' or ${schema.cards.reverse})`;
@@ -12,6 +13,8 @@ export type DeckRow = {
   newPerDay: number;
   cardCount: number;
   newCount: number;
+  /** Was heute noch neu drankommt: das Limit abzüglich der heute eingeführten. */
+  newToday: number;
   dueCount: number;
 };
 
@@ -21,7 +24,8 @@ export async function listDecks(
   now = new Date(),
 ): Promise<DeckRow[]> {
   const ende = endOfDay(now).toISOString();
-  return getDb()
+  const beginn = startOfDay(now).toISOString();
+  const rows = await getDb()
     .select({
       id: schema.decks.id,
       name: schema.decks.name,
@@ -29,6 +33,13 @@ export async function listDecks(
       cardCount: sql<number>`count(distinct ${schema.cards.id})::int`,
       newCount: sql<number>`count(${schema.cardSchedules.id}) filter (where ${schema.cardSchedules.scheduleStatus} = 'new' and ${ACTIVE_SCHEDULE})::int`,
       dueCount: sql<number>`count(${schema.cardSchedules.id}) filter (where ${schema.cardSchedules.scheduleStatus} <> 'new' and ${schema.cardSchedules.dueAt} < ${ende}::timestamptz and ${ACTIVE_SCHEDULE})::int`,
+      introduced: sql<number>`(
+        select count(*)::int from ${schema.reviews}
+        where ${schema.reviews.deckId} = ${schema.decks.id}
+          and ${schema.reviews.statusBefore} = 'new'
+          and ${schema.reviews.reviewedAt} >= ${beginn}::timestamptz
+          and not exists (select 1 from ${schema.reviewUndos} where ${schema.reviewUndos.reviewId} = ${schema.reviews.id})
+      )`,
     })
     .from(schema.decks)
     .leftJoin(schema.cards, eq(schema.cards.deckId, schema.decks.id))
@@ -44,6 +55,11 @@ export async function listDecks(
     )
     .groupBy(schema.decks.id)
     .orderBy(asc(sql`lower(${schema.decks.name})`), asc(schema.decks.id));
+
+  return rows.map(({ introduced, ...row }) => ({
+    ...row,
+    newToday: Math.min(row.newCount, remainingNew(row.newPerDay, introduced)),
+  }));
 }
 
 export async function findDeck(userId: string, deckId: string) {

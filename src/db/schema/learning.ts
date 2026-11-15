@@ -4,6 +4,7 @@ import {
   doublePrecision,
   index,
   integer,
+  jsonb,
   pgEnum,
   pgTable,
   smallint,
@@ -131,3 +132,47 @@ export const cardSchedules = pgTable(
     index("card_schedules_due_idx").on(table.dueAt),
   ],
 );
+
+/**
+ * **Jede Bewertung, nur angefügt** (§8). Ein Auslöser weist `UPDATE` und
+ * `DELETE` ab; einzig Konto löschen darf es (`lib/account/credentials.ts`).
+ * Karte, Deck und Sprache stehen ohne Fremdschlüssel: Wer eine Karte löscht,
+ * behält ihre Geschichte in der Statistik.
+ */
+export const reviews = pgTable(
+  "reviews",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    languageId: uuid("language_id").notNull(),
+    deckId: uuid("deck_id").notNull(),
+    cardId: uuid("card_id").notNull(),
+    scheduleId: uuid("schedule_id").notNull(),
+    rating: smallint("rating").notNull(),
+    statusBefore: text("status_before").notNull(),
+    scheduledDays: doublePrecision("scheduled_days").notNull(),
+    dueAfter: timestamp("due_after", { withTimezone: true }).notNull(),
+    durationMs: integer("duration_ms").notNull(),
+    reviewedAt: timestamp("reviewed_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    // Der ganze Stand davor: daraus stellt Rückgängig ihn wieder her.
+    before: jsonb("before").notNull(),
+  },
+  (table) => [
+    index("reviews_user_time_idx").on(table.userId, table.reviewedAt),
+    index("reviews_schedule_idx").on(table.scheduleId),
+  ],
+);
+
+/** Welche Bewertung zurückgenommen wurde. Ebenfalls nur angefügt. */
+export const reviewUndos = pgTable("review_undos", {
+  reviewId: uuid("review_id")
+    .primaryKey()
+    .references(() => reviews.id, { onDelete: "cascade" }),
+  undoneAt: timestamp("undone_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});

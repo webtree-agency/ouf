@@ -213,3 +213,8 @@
 .apexcharts-gridline {
   @apply stroke-gray-100 dark:stroke-gray-800;
 }
+
+/* Unten am iPhone liegt der Balken zum Wechseln der App; die Knöpfe bleiben darüber. */
+@utility pb-safe {
+  padding-bottom: max(1rem, env(safe-area-inset-bottom));
+}

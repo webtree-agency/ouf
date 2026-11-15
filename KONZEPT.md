@@ -68,7 +68,7 @@ Reine Funktionen in `lib/learning/`, ts-fsrs nur in `scheduler.ts`.
 - **Bewerten** schreibt Stand und Protokoll in einer Transaktion.
   **Rückgängig** setzt den Stand aus `before` zurück und trägt die Rücknahme
   ein; das Protokoll selbst wird nie geändert.
-- **Intervall** neben jedem Knopf: „1 Min", „10 Min", „2 T", „3 Mt", „1,5 J".
+- **Intervall** neben jedem Knopf: „1 Min", „10 Min", „2 Tage", „3 Monate", „1.5 Jahre".
 
 ## Bedienung
 
