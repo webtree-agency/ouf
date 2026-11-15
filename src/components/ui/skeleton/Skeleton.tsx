@@ -40,7 +40,7 @@ export function CardSkeleton({
 /** Die Kennzahl-Kacheln einer Bereichs-Übersicht (`MetricGrid`). */
 export function TilesSkeleton({ count = 4 }: { count?: number }) {
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:gap-6 xl:grid-cols-4">
+    <div className="grid grid-cols-2 gap-4 md:gap-6 xl:grid-cols-4">
       {Array.from({ length: count }, (_, i) => (
         <div key={i} className={`${CARD} p-5 md:p-6`}>
           <Skeleton className="h-9 w-24" />

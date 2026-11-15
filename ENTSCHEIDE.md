@@ -126,3 +126,19 @@ Je Entscheid: was gilt, was verworfen wurde, warum. Neueste unten.
 - **Neue Karten zählen je Deck gegen das Limit**, eingeführt heisst: heute zum
   ersten Mal bewertet und nicht zurückgenommen. Eine Rückwärtskarte ist ein
   eigener Lernstand und zählt einzeln.
+
+## Block 5
+
+- **Vier Kacheln, je mit einem Vergleich in Worten** („morgen 6", „gestern 13",
+  „von 47 neuen", „30 Tage, davor 88 %"). Verworfen: farbige Pfeile mit
+  Prozent; bei „fällig" ist mehr weder gut noch schlecht, und ein rotes Minus
+  neben „gelernt" wäre Gamification von hinten.
+- **Trefferquote heisst: Wiederholungen ohne „Nochmal"**, nur Karten, die
+  schon in der Wiederholung waren. Lernschritte zählen nicht mit, dort ist ein
+  Fehler gewollt.
+- **Prognose ohne neue Karten**: Wie viele neue kommen, steht im Tageslimit.
+- **Achsen ausgedünnt** (bei 30 Tagen jeder Montag, bei 14 jeder zweite Tag).
+  Die genauen Zahlen stehen daneben.
+- **`pnpm dev:seed --verlauf`** spielt 30 Tage Lernen über die echte
+  Lernlogik ein, damit die Statistik lokal etwas zeigt. Nicht in den
+  Migrationen.

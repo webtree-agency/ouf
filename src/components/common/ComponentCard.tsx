@@ -24,7 +24,7 @@ const ComponentCard: React.FC<ComponentCardProps> = ({
     <div className={`min-w-0 ${CARD} ${className}`}>
       {/* Card Header */}
       {(title || action) && (
-        <div className="flex flex-wrap items-start justify-between gap-4 px-6 py-5">
+        <div className="flex flex-wrap items-start justify-between gap-4 px-4 py-5 sm:px-6">
           <div>
             {title && (
               <h3 className="text-base font-medium text-gray-800 dark:text-white/90">
