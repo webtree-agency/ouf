@@ -8,16 +8,18 @@ import Input from "@/components/form/input/InputField";
 import { useQueryHref } from "@/hooks/useQueryHref";
 
 // Wörtliche Klassen statt gebauter Strings — Tailwind sieht nur, was dasteht.
+// Am Handy zwei Auswahlen nebeneinander, die Suche über die ganze Breite:
+// untereinander schob die Filterkarte die Liste aus dem ersten Bildschirm.
 const GRID = {
-  2: "grid grid-cols-1 gap-4 sm:grid-cols-2",
-  3: "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3",
-  4: "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4",
+  2: "grid grid-cols-2 gap-4",
+  3: "grid grid-cols-2 gap-4 lg:grid-cols-3",
+  4: "grid grid-cols-2 gap-4 lg:grid-cols-4",
 } as const;
 
 const FULL_ROW = {
-  2: "sm:col-span-2",
-  3: "sm:col-span-2 lg:col-span-3",
-  4: "sm:col-span-2 lg:col-span-4",
+  2: "col-span-2",
+  3: "col-span-2 lg:col-span-3",
+  4: "col-span-2 lg:col-span-4",
 } as const;
 
 export type FilterBarColumns = keyof typeof GRID;
@@ -39,7 +41,7 @@ export function FilterSearch({
   placeholder?: string;
 }) {
   return (
-    <div>
+    <div className="col-span-2 lg:col-span-1">
       <Label htmlFor={id}>Suchen</Label>
       <Input
         id={id}

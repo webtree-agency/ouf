@@ -163,3 +163,23 @@ Je Entscheid: was gilt, was verworfen wurde, warum. Neueste unten.
 - **Kein Import von `.apkg`.** Dafür bräuchte es ein ZIP- und ein
   SQLite-Paket (sql.js mit WebAssembly), und beides ist nicht unvermeidbar:
   Anki exportiert „Notizen als Text", und das liest ouf. ein.
+
+## Block 7
+
+- **Filter am Handy zweispaltig**, die Suche über die ganze Breite. Untereinander
+  schob die Filterkarte die Liste aus dem ersten Bildschirm.
+- **404 und Fehlerseite im Stil von ouf.**, kurz, mit zwei Wegen zurück.
+- **Ungenutzte Bausteine gelöscht** (`TextArea`, `change`, `percent`); was hier
+  liegt, läuft auch.
+
+## Vorschläge für alle Projekte
+
+- **`apple-mobile-web-app-capable` von Hand setzen**, wo `appleWebApp` steht.
+  Next 16 schreibt das Tag nicht mehr (Brain:
+  `2026-11-16-next-16-schreibt-kein-apple-mobile-web-app-capable`). Gehört in
+  den Starter.
+- **Der Software-Authenticator kann auch registrieren**
+  (`src/lib/auth/testing.ts`, `register()`): Bescheinigung „none" als CBOR von
+  Hand, ohne Paket. Damit testet ein Integrationstest den ganzen Weg vom
+  Anlegen bis zum Anmelden mit echter Signaturprüfung. Im Cockpit kann nur
+  `assert()`, das Anlegen ist dort ungetestet.

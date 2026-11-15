@@ -57,6 +57,7 @@ export default function DeleteAccount({ email }: { email: string }) {
             <Input
               id="delete-confirmation"
               type="email"
+              autoFocus
               autoComplete="off"
               value={confirmation}
               onChange={(event) => {
