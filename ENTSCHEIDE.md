@@ -78,3 +78,30 @@ Je Entscheid: was gilt, was verworfen wurde, warum. Neueste unten.
   übernommen, gleiche Version. Ohne ihn müsste man den Schlüssel abtippen.
 - **Die Sperre meldet sich im Logger**, nicht als Meldung an Admins; ouf. hat
   keine.
+
+## Block 3
+
+- **Sprachen aus einer festen Liste**, Französisch mit Genus, die übrigen fünf
+  nur mit Sprechsprache. Der Name steht im Code, in der Datenbank nur die
+  Kennung. Verworfen: freier Name samt Sprechsprache; das ist ein Formular mit
+  zwei Feldern für einen Fall, der heute nicht ansteht.
+- **Eine Rückwärtskarte ist ein zweiter Lernstand derselben Karte**, keine
+  zweite Karte. Abwählen lässt den Stand liegen, er kommt nur nicht mehr dran;
+  wer sie wieder anwählt, macht dort weiter. Verworfen: den Stand löschen; das
+  nähme der Statistik die Geschichte.
+- **Das Protokoll hängt ohne Fremdschlüssel an Karte und Deck.** Wer eine Karte
+  löscht, löscht ihre Geschichte nicht mit, und das Protokoll muss nie geändert
+  werden. Nur am Konto hängt es fest, damit Konto löschen alles mitnimmt.
+- **Dubletten werden gemeldet, nicht verboten.** „la tour" (der Turm) und „le
+  tour" (die Runde) teilen sich nichts, „la mémoire" kann zweimal mit anderer
+  Rückseite gewollt sein. Gesucht wird über die normierte Vorderseite in der
+  ganzen Sprache, Akzente zählen mit.
+- **Das Genus folgt dem Artikel, bis man es selbst setzt.** „la …" und „une …"
+  heisst weiblich, „le …" und „un …" männlich; bei „l'…" und „les …" bleibt es
+  offen.
+- **Schnellerfassung ohne Weiterleitung.** Die Aktion gibt Erfolg zurück und
+  erneuert die Ansicht; das Formular baut sich mit neuem `key` auf, der Fokus
+  steht wieder vorne. Verworfen: `redirect()` auf dieselbe Seite, danach käme die
+  Antwort nicht mehr beim Formular an, und der Fokus ginge verloren.
+- **Bearbeiten führt in die Liste zurück, aus der man kam** (`?zurueck=`),
+  geprüft auf `/karten…`.

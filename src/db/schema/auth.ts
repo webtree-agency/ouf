@@ -1,4 +1,5 @@
 import {
+  type AnyPgColumn,
   bigint,
   index,
   pgEnum,
@@ -8,10 +9,17 @@ import {
   uuid,
 } from "drizzle-orm/pg-core";
 
+import { languages } from "./learning.ts";
+
 export const users = pgTable("users", {
   id: uuid("id").primaryKey().defaultRandom(),
   email: text("email").notNull().unique(),
   name: text("name").notNull(),
+  // Die Sprache, die Übersicht, Decks und Statistik zeigen; gilt auf jedem Gerät.
+  activeLanguageId: uuid("active_language_id").references(
+    (): AnyPgColumn => languages.id,
+    { onDelete: "set null" },
+  ),
   // Sperre nach Fehlversuchen (§10).
   lockedUntil: timestamp("locked_until", { withTimezone: true }),
   lastLoginAt: timestamp("last_login_at", { withTimezone: true }),

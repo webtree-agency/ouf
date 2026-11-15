@@ -1,8 +1,9 @@
-import { expect, test, type Page } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 import { closeDb } from "../../src/db/index.ts";
 import { setupTestDb, truncateAll } from "../../src/db/testing.ts";
 import { applyE2eEnv } from "./env.ts";
+import { virtualAuthenticator } from "./helpers.ts";
 
 test.beforeAll(async () => {
   applyE2eEnv();
@@ -10,22 +11,6 @@ test.beforeAll(async () => {
 });
 test.beforeEach(truncateAll);
 test.afterAll(closeDb);
-
-/** Ein Authenticator im Browser; ohne ihn gäbe es kein Touch ID zum Anklicken. */
-async function virtualAuthenticator(page: Page) {
-  const client = await page.context().newCDPSession(page);
-  await client.send("WebAuthn.enable");
-  await client.send("WebAuthn.addVirtualAuthenticator", {
-    options: {
-      protocol: "ctap2",
-      transport: "internal",
-      hasResidentKey: true,
-      hasUserVerification: true,
-      isUserVerified: true,
-      automaticPresenceSimulation: true,
-    },
-  });
-}
 
 test("registrieren, abmelden, mit Passkey wieder anmelden", async ({
   page,
