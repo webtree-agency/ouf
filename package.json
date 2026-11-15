@@ -1,0 +1,76 @@
+{
+  "name": "ouf",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --port 3400",
+    "build": "next build",
+    "start": "next start --port 3400",
+    "start:standalone": "cp -r .next/static .next/standalone/.next/static && cp -r public .next/standalone/public && node .next/standalone/server.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "typecheck": "next typegen && tsc --noEmit",
+    "test:unit": "node --test --experimental-strip-types \"src/**/*.test.ts\"",
+    "test:integration": "node --experimental-strip-types scripts/with-lock.mts test-db -- sh -c 'pnpm test:reset && node --env-file-if-exists=.env.local --test --experimental-strip-types \"src/**/*.itest.ts\"'",
+    "test:e2e": "node --experimental-strip-types scripts/with-lock.mts test-db -- playwright test",
+    "test:reset": "node --env-file-if-exists=.env.local --experimental-strip-types scripts/reset-test-db.mts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:studio": "drizzle-kit studio",
+    "dev:konto": "node --env-file-if-exists=.env.local --experimental-strip-types scripts/create-account.mts",
+    "dev:seed": "node --env-file-if-exists=.env.local --experimental-strip-types scripts/seed.mts",
+    "icons": "node --experimental-strip-types scripts/icons.mts",
+    "prepare": "husky"
+  },
+  "dependencies": {
+    "@simplewebauthn/browser": "13.3.0",
+    "@simplewebauthn/server": "13.3.2",
+    "@tailwindcss/postcss": "4.3.3",
+    "apexcharts": "4.7.0",
+    "clsx": "2.1.1",
+    "drizzle-orm": "0.45.2",
+    "next": "16.4.2",
+    "postgres": "3.4.9",
+    "qrcode-generator": "2.0.4",
+    "react": "19.2.8",
+    "react-apexcharts": "1.9.0",
+    "react-dom": "19.2.8",
+    "tailwind-merge": "2.6.1",
+    "tailwindcss": "4.3.3",
+    "ts-fsrs": "6.0.0",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.62.0",
+    "@svgr/webpack": "8.1.0",
+    "@types/node": "20.19.43",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "drizzle-kit": "0.31.10",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.0.7",
+    "husky": "9.1.7",
+    "lint-staged": "17.2.0",
+    "postcss": "^8",
+    "prettier": "3.9.6",
+    "prettier-plugin-tailwindcss": "0.8.1",
+    "typescript": "5.9.3"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "packageManager": "pnpm@11.5.0",
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{css,md,json,yml,yaml}": [
+      "prettier --write"
+    ]
+  }
+}

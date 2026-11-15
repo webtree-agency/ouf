@@ -30,3 +30,29 @@ Je Entscheid: was gilt, was verworfen wurde, warum. Neueste unten.
   Verlauf seinen Urheber braucht. Hier gehören die Daten der Person, und wer
   geht, nimmt sie mit. Der Schutz des Protokolls lässt das nur in dieser einen
   Transaktion zu.
+
+## Block 1
+
+- **Eigene Ports: App 3400, E2E 3401, DB 5440 und 5441.** Das Cockpit belegt
+  3000, 5433 und 5434 auf demselben Rechner. Ein E2E-Lauf startet immer einen
+  eigenen Server (`reuseExistingServer: false`), statt einen gefundenen zu
+  prüfen.
+- **Icons mit dem Chromium von Playwright gerendert** (`pnpm icons`). Verworfen:
+  `sharp` als eigenes Paket. Playwright ist für die Tests ohnehin da.
+- **Wortmarke als Pfade, nicht als Text.** So hängt das Logo an keiner geladenen
+  Schrift. Verworfen: `<text>` mit Geist im SVG; im PNG fiele es auf eine
+  Systemschrift zurück.
+- **Dunkelmodus folgt zuerst dem System** (`auto`), der Schalter im
+  Benutzermenü legt ihn fest. Im Cockpit ist Hell die Vorgabe; gelernt wird
+  oft abends.
+- **Geist über `next/font/google`.** Die Schrift wird beim Bauen geladen und
+  von ouf. selbst ausgeliefert; zur Laufzeit fragt kein Browser bei Google an.
+  Verworfen: das Paket `geist`, ein Paket mehr für dieselbe Datei.
+- **`"type": "module"` in `package.json`.** Node 24 warnt sonst bei jedem
+  Testlauf, dass es die Dateien zweimal liest.
+- **E-Mail ganz klein.** Die Adresse ist hier Kennung des Kontos. Im Cockpit
+  bleibt der Teil vor dem @ unverändert, weil dorthin Mails gehen.
+- **Bausteine gekürzt übernommen.** `fields.ts` kennt nur Text, Pflichttext,
+  E-Mail, Anzahl und Tags; `PageHeading` ohne Spur und Reiter;
+  Sicherheitskopfzeilen ohne die Ausnahmen des Cockpits. Was hier nicht
+  gebraucht wird, liegt im Cockpit.

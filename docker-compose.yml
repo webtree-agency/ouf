@@ -1,0 +1,50 @@
+# Nur für die Entwicklung. Beide Ports nur auf dem eigenen Rechner (§8).
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ouf
+      POSTGRES_PASSWORD: ouf
+      POSTGRES_DB: ouf
+    ports:
+      - "127.0.0.1:5440:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ouf -d ouf"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Ohne Volume: der Bestand darf jederzeit weg. Im Arbeitsspeicher, weil
+  # jede Integrationsdatei ihre eigene Datenbank bekommt (`db/testing.ts`).
+  postgres-test:
+    image: postgres:16-alpine
+    shm_size: 256mb
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ouf
+      POSTGRES_PASSWORD: ouf
+      POSTGRES_DB: ouf_test
+    ports:
+      - "127.0.0.1:5441:5432"
+    tmpfs:
+      - /var/lib/postgresql/data:size=1g,nr_inodes=1000000
+    # Für eine Wegwerf-Datenbank richtig, für jede andere falsch.
+    command:
+      - postgres
+      - -c
+      - fsync=off
+      - -c
+      - synchronous_commit=off
+      - -c
+      - full_page_writes=off
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ouf -d ouf_test"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres-data:
