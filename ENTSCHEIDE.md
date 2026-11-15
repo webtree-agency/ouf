@@ -56,3 +56,25 @@ Je Entscheid: was gilt, was verworfen wurde, warum. Neueste unten.
   E-Mail, Anzahl und Tags; `PageHeading` ohne Spur und Reiter;
   Sicherheitskopfzeilen ohne die Ausnahmen des Cockpits. Was hier nicht
   gebraucht wird, liegt im Cockpit.
+
+## Block 2
+
+- **Das Konto entsteht erst, wenn der Passkey liegt.** Adresse und Name stehen
+  bis dahin an der Challenge (fünf Minuten, einmalig). Verworfen: das Konto
+  vorher anlegen; ein Abbruch liesse ein Konto ohne Zugang zurück, das die
+  Adresse sperrt.
+- **Die Registrierung sagt, wenn eine Adresse vergeben ist.** Ohne Mail an die
+  Adresse gibt es keinen Weg, das zu verbergen, ohne dass sich jemand mit
+  vergebener Adresse im Kreis dreht. Gegen das Durchprobieren steht das
+  Rate-Limit je IP. Verworfen: die gleiche Antwort wie beim Anmelden; sie
+  verlangte eine Bestätigungsmail und damit einen fremden Dienst.
+- **Keine gegenseitige Wiederherstellung.** Im Cockpit schalten sich zwei
+  Admins gegenseitig frei. Hier gibt es niemanden; der Notfallweg sind Code-App
+  und Ersatzcodes. Wer beides verliert, legt ein neues Konto an.
+- **Der lokale Kurzweg bestätigt auch den frischen Faktor** (`reconfirmLocally`),
+  unter denselben drei Bedingungen. Sonst liesse sich lokal nichts prüfen, was
+  einen Passkey verlangt.
+- **`qrcode-generator` für den QR-Code der Code-App**, aus dem Cockpit
+  übernommen, gleiche Version. Ohne ihn müsste man den Schlüssel abtippen.
+- **Die Sperre meldet sich im Logger**, nicht als Meldung an Admins; ouf. hat
+  keine.

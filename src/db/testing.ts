@@ -4,7 +4,7 @@ import { sql } from "drizzle-orm";
 import { migrate } from "drizzle-orm/postgres-js/migrator";
 import postgres from "postgres";
 
-import { closeDb, getDb } from "./index.ts";
+import { closeDb, getDb, schema } from "./index.ts";
 
 /**
  * **Jede Testdatei bekommt ihre eigene Datenbank**, benannt nach ihrem Pfad.
@@ -128,4 +128,18 @@ export async function truncateAll(): Promise<void> {
     await tx.execute(sql`set local session_replication_role = replica`);
     await tx.execute(sql.raw(deletes.join(" ")));
   });
+}
+
+export async function seedUser(
+  options: { email?: string; name?: string; lockedUntil?: Date | null } = {},
+): Promise<string> {
+  const [user] = await getDb()
+    .insert(schema.users)
+    .values({
+      email: options.email ?? "jann@ouf.local",
+      name: options.name ?? "Jann",
+      lockedUntil: options.lockedUntil ?? null,
+    })
+    .returning({ id: schema.users.id });
+  return user.id;
 }

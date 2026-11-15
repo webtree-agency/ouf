@@ -1,15 +1,24 @@
 import AppHeader from "@/components/shell/AppHeader";
 import AppShell from "@/components/shell/AppShell";
+import { sessionOrLogin } from "@/lib/auth/pageAccess";
 
-async function signOut() {
-  "use server";
-}
+import { signOut } from "./konto/actions";
 
-export default function AppLayout({ children }: { children: React.ReactNode }) {
+export default async function AppLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const session = await sessionOrLogin();
+
   return (
     <AppShell
       header={
-        <AppHeader name="Jann" email="jann@ouf.local" signOut={signOut} />
+        <AppHeader
+          name={session.name}
+          email={session.email}
+          signOut={signOut}
+        />
       }
     >
       {children}

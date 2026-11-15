@@ -55,26 +55,30 @@ export const Modal: React.FC<ModalProps> = ({
   // das ganze Formular deren Ausrichtung.
   const contentClasses = isFullscreen
     ? "w-full h-full text-left"
-    : "relative w-full rounded-3xl bg-white text-left dark:bg-gray-900";
+    : "relative w-full rounded-2xl bg-white text-left dark:bg-gray-900";
 
   return (
     <div ref={rootRef} className="modal fixed inset-0 z-99999 overflow-y-auto">
       {!isFullscreen && (
         <div
-          className="fixed inset-0 h-full w-full bg-gray-400/50 backdrop-blur-[32px]"
+          className="fixed inset-0 h-full w-full bg-gray-950/40 backdrop-blur-sm"
           onClick={onClose}
         ></div>
       )}
       {/* Mittig über eine Hülle mit min-h-full: Ein Dialog, höher als der Bildschirm, ragte sonst oben unerreichbar hinaus. */}
-      <div className="flex min-h-full items-center justify-center">
+      <div className="flex min-h-full items-center justify-center p-4">
         <div
           ref={modalRef}
+          role="dialog"
+          aria-modal="true"
           className={`${contentClasses} ${className}`}
           onClick={(e) => e.stopPropagation()}
         >
           {showCloseButton && (
             <button
+              type="button"
               onClick={onClose}
+              aria-label="Schliessen"
               className="absolute top-3 right-3 z-999 flex h-9.5 w-9.5 items-center justify-center rounded-full bg-gray-100 text-gray-400 transition-colors hover:bg-gray-200 hover:text-gray-700 sm:top-6 sm:right-6 sm:h-11 sm:w-11 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
             >
               <svg

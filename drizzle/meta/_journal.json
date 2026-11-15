@@ -8,6 +8,13 @@
       "when": 1794782285866,
       "tag": "0000_sicherheit",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794782641027,
+      "tag": "0001_anmeldung",
+      "breakpoints": true
     }
   ]
 }
