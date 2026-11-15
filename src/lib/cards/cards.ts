@@ -23,7 +23,7 @@ async function ownedDeck(tx: Executor, userId: string, deckId: string) {
   return deck;
 }
 
-function values(input: CardInput, code: string) {
+export function cardValues(input: CardInput, code: string) {
   return {
     deckId: input.deckId,
     front: input.front,
@@ -47,7 +47,7 @@ export async function createCard(
     const deck = await ownedDeck(tx, userId, input.deckId);
     const [card] = await tx
       .insert(schema.cards)
-      .values(values(input, deck.code))
+      .values(cardValues(input, deck.code))
       .returning({ id: schema.cards.id });
 
     await tx.insert(schema.cardSchedules).values(
@@ -87,7 +87,7 @@ export async function updateCard(
 
     await tx
       .update(schema.cards)
-      .set({ ...values(input, deck.code), updatedAt: new Date() })
+      .set({ ...cardValues(input, deck.code), updatedAt: new Date() })
       .where(eq(schema.cards.id, cardId));
 
     if (input.reverse) {

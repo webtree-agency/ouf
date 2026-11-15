@@ -27,6 +27,8 @@ interface ButtonProps {
    * Server unsere Adresse im `Referer`, und die trägt bei uns Token (§8).
    */
   newTab?: boolean;
+  /** Ein Download: ein schlichtes `<a>`, kein Link des Routers, der vorlädt. */
+  download?: boolean;
   /**
    * Der Name für die Vorlesehilfe, wo die Beschriftung allein nicht reicht —
    * fünf Knöpfe „Durchgeführt" untereinander sind vorgelesen fünfmal dasselbe.
@@ -50,6 +52,7 @@ const Button: React.FC<ButtonProps> = ({
   type = "submit",
   href,
   newTab = false,
+  download = false,
   ariaLabel,
 }) => {
   // **Beide Grössen sind 44 px hoch** (`h-11`), so hoch wie jedes Eingabefeld
@@ -86,6 +89,14 @@ const Button: React.FC<ButtonProps> = ({
       {endIcon && <span className="flex items-center">{endIcon}</span>}
     </>
   );
+
+  if (href && download) {
+    return (
+      <a href={href} download className={classes} aria-label={ariaLabel}>
+        {inhalt}
+      </a>
+    );
+  }
 
   if (href) {
     return (

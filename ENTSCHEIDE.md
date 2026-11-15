@@ -142,3 +142,24 @@ Je Entscheid: was gilt, was verworfen wurde, warum. Neueste unten.
 - **`pnpm dev:seed --verlauf`** spielt 30 Tage Lernen über die echte
   Lernlogik ein, damit die Statistik lokal etwas zeigt. Nicht in den
   Migrationen.
+
+## Block 6
+
+- **Installierbar über Manifest und Icons, ohne Service Worker.** Chrome und
+  Edge bieten die Installation ohne ihn an, iOS braucht ihn für „Zum
+  Home-Bildschirm" nicht. Verworfen: ein Service Worker für Offline; ouf.
+  braucht die Datenbank, offline gäbe es nur eine Fehlerseite in schön.
+- **`apple-mobile-web-app-capable` steht von Hand im Layout.** Next 16 schreibt
+  für `appleWebApp.capable` nur noch `mobile-web-app-capable`.
+- **CSV und TSV ohne Paket**, Lesen und Schreiben nach RFC 4180 in
+  `lib/transfer/delimited.ts`. Kopfzeile auf Deutsch oder Englisch, ohne
+  Kopfzeile gilt Ankis Textexport (Vorderseite, Rückseite, …); Ankis HTML wird
+  zu Text. Der Export trägt ein BOM, sonst zeigt Excel keine Akzente.
+- **Formeln werden beim Export entschärft**, nur `=`, `+` und `@` am Anfang.
+  Das Minus bleibt, sonst würde aus dem Tag „-er" etwas anderes.
+- **Import in einer Transaktion, Dubletten übersprungen.** Eine Spalte „deck"
+  verteilt auf Decks dieses Namens und legt fehlende an; sonst geht alles ins
+  gewählte Deck. Höchstens 2 MB und 5000 Zeilen.
+- **Kein Import von `.apkg`.** Dafür bräuchte es ein ZIP- und ein
+  SQLite-Paket (sql.js mit WebAssembly), und beides ist nicht unvermeidbar:
+  Anki exportiert „Notizen als Text", und das liest ouf. ein.

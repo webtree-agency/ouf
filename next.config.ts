@@ -15,6 +15,8 @@ const SVGR = {
 const nextConfig: NextConfig = {
   output: "standalone",
   poweredByHeader: false,
+  // Ein Import darf 2 MB haben; Server Actions nehmen von Haus aus nur 1 MB.
+  experimental: { serverActions: { bodySizeLimit: "3mb" } },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,

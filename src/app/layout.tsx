@@ -17,6 +17,9 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false, nocache: true },
   appleWebApp: { capable: true, title: "ouf.", statusBarStyle: "default" },
   formatDetection: { telephone: false },
+  // Next 16 schreibt für `appleWebApp.capable` nur `mobile-web-app-capable`;
+  // ältere iPhones öffnen ohne das Apple-Tag im Browser statt als App.
+  other: { "apple-mobile-web-app-capable": "yes" },
 };
 
 export const viewport: Viewport = {
