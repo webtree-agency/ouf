@@ -214,9 +214,11 @@ Jann wollte weg vom Cockpit: weniger Verwaltung, mehr App, wie die Vorlage mit
   Verworfen: «ouf.» auf dunklem Grund (zu viel Text, Jann wollte keinen
   Grund) und «o.» mit Punkt. Ohne maskierbares Icon; Android legt das Zeichen
   selbst auf eine Fläche.
-- **Logo geometrisch statt Pinsel:** alle Striche so stark wie der Ring, Bögen
-  als Kreise, alles im Verlauf. Verworfen: die Pinselfläche (zu verspielt) und
-  «uf» in Tinte neben dem Ring (zwei Stile in einem Wort).
+- **Logo in Outfit, nur der Punkt im Verlauf** (Jann, aus sechs Vorschlägen
+  mit Kanit, Outfit, Sora, Lexend und Geist). Als Pfade aus der Schriftdatei,
+  nicht als geladene Schrift. Verworfen: der Pinsel (verspielt), die selbst
+  gezeichneten geometrischen Buchstaben (das «u» passte nicht zum «o») und alles
+  im Verlauf (unruhig).
 
 ## Animationen beim Lernen (16.11.2026)
 

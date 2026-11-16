@@ -1,16 +1,9 @@
-import {
-  DOT,
-  LETTER_PATHS,
-  LOGO_VIEWBOX,
-  RING,
-  SHEEN,
-  STROKE_WIDTH,
-} from "./logoPaths";
+import { DOT_PATH, LETTERS_PATH, LOGO_VIEWBOX } from "./logoPaths";
 
 /**
- * «ouf.» in einem Zug: Ring, Striche und Punkt im Verlauf des App-Icons. Die
- * Kennung des Verlaufs ist fest; zwei Logos auf einer Seite teilen dieselbe
- * Definition.
+ * «ouf.» in Outfit: die Schrift in Tinte, dunkel in Weiss, nur der Punkt im
+ * blauen Verlauf des App-Icons. Die Kennung des Verlaufs ist fest; zwei Logos
+ * auf einer Seite teilen dieselbe Definition.
  */
 export default function BrandLogo({
   className = "h-8",
@@ -25,31 +18,13 @@ export default function BrandLogo({
       className={`w-auto ${className}`}
     >
       <defs>
-        <linearGradient
-          id="ouf-sheen"
-          gradientUnits="userSpaceOnUse"
-          x1="48"
-          y1="12"
-          x2="178"
-          y2="74"
-        >
-          {SHEEN.map(([offset, color]) => (
-            <stop key={offset} offset={offset} stopColor={color} />
-          ))}
+        <linearGradient id="ouf-dot" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#89b1e3" />
+          <stop offset="1" stopColor="#4270aa" />
         </linearGradient>
       </defs>
-      <g
-        fill="none"
-        stroke="url(#ouf-sheen)"
-        strokeWidth={STROKE_WIDTH}
-        strokeLinecap="butt"
-      >
-        <circle cx={RING.cx} cy={RING.cy} r={RING.r} />
-        {LETTER_PATHS.map((d) => (
-          <path key={d} d={d} />
-        ))}
-      </g>
-      <circle cx={DOT.cx} cy={DOT.cy} r={DOT.r} fill="url(#ouf-sheen)" />
+      <path d={LETTERS_PATH} className="fill-gray-900 dark:fill-white" />
+      <path d={DOT_PATH} fill="url(#ouf-dot)" />
     </svg>
   );
 }

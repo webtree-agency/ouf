@@ -16,11 +16,10 @@ wofür sie gelten. Leitsatz: weniger ist mehr.
 Schrift und keine andere Strichstärke; `font-semibold` und `font-bold` sind in
 `globals.css` gar nicht erst vorhanden.
 
-**Logo:** «ouf.» geometrisch, eng gesetzt und ohne Fläche. Die Strichenden sind
-gerade abgeschnitten, nur der Punkt ist rund. Alle Striche sind so stark wie
-der Ring des «o», jeder Bogen ist ein Kreis mit seinem Radius, die x-Höhe ist
-sein Durchmesser. Alles im blauen Verlauf, in beiden Modi gleich. Pfade in
-`components/brand/logoPaths.ts`, die Komponente in `BrandLogo.tsx`.
+**Logo:** «ouf.» in Outfit SemiBold, Laufweite -3 %, als Pfade
+(`components/brand/logoPaths.ts`, `BrandLogo.tsx`); die Seite lädt keine zweite
+Schrift. Die Buchstaben in `gray-900`, dunkel in Weiss, nur der Punkt im blauen
+Verlauf. In der Kopfzeile `h-7`, ab `md` `h-8`.
 
 **App-Icon:** nur das «o», gross und dick, im Verlauf, ohne Grund. Favicon,
 Apple-Icon und Manifest-Icons entstehen mit `pnpm icons` (`appIconSvg`).
