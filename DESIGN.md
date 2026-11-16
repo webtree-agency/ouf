@@ -67,8 +67,9 @@ der Oberfläche (Jann, 16.11.2026: das mittlere Blau wirkt wie das Cockpit),
 - Seitengrund `bg-canvas`, dunkel `bg-gray-950`.
 - Karte `rounded-2xl border border-gray-200 bg-white`, dunkel
   `dark:border-gray-800 dark:bg-gray-900`.
-- Kopfzeile auf `canvas`, ohne Rand, dunkel `gray-950`. Am Handy die Leiste
-  unten, ab `md` die Navigation als Pillen in der Kopfzeile.
+- Kopfzeile auf `canvas`, ohne Rand, dunkel `gray-950`. Die Navigation ist
+  eine schwebende Pille unten, Glas (`bg-white/70 backdrop-blur-xl`, dunkel
+  `gray-900/60`), am Handy Symbol über Text, ab `md` daneben.
 - **„Heute" ist die einzige pastellblaue Fläche** (`bg-brand-300`, dunkel
   `brand-300/10`), mit dem dunklen Knopf darin. Ein Deck ist eine weisse Zeile
   mit Symbol in `brand-100`, die ganz klickbar ist.

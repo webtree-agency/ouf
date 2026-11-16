@@ -229,6 +229,12 @@ Jann wollte weg vom Cockpit: weniger Verwaltung, mehr App, wie die Vorlage mit
   Verworfen: eine Drehung der Karte beim Aufdecken; sie verzögert das Lesen der
   Antwort.
 
+## Navigation als Pille (16.11.2026)
+
+- **Unten schwebend, aus Glas, auf jeder Breite** (Jann). Die Links oben in der
+  Kopfzeile sind weg. Verworfen: oben am Laptop, unten am Handy; zwei Orte für
+  dieselben fünf Ziele.
+
 ## Vorschläge für alle Projekte
 
 - **`apple-mobile-web-app-capable` von Hand setzen**, wo `appleWebApp` steht.

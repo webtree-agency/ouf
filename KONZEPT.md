@@ -5,9 +5,9 @@ Knöpfen. Eine Person, ein Konto, ihre Sprachen, ihre Decks.
 
 ## Seitenaufbau
 
-Eine Kopfzeile mit Logo, Navigation (ab `md`), **Sprachauswahl**, Serie und
-Benutzermenü; am Handy liegt die Navigation unten im Daumenbereich, ausser beim
-Lernen. Keine Seitenleiste. Alles unter der Shell zeigt nur die gewählte
+Eine Kopfzeile mit Logo, **Sprachauswahl**, Serie und Benutzermenü. Die
+Navigation schwebt als Pille aus Glas unten, auf jeder Breite; am Handy fehlt
+sie beim Lernen. Keine Seitenleiste. Alles unter der Shell zeigt nur die gewählte
 Sprache.
 
 | Adresse                      | Inhalt                                                                      |
