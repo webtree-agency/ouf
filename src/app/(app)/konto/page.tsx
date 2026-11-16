@@ -4,6 +4,7 @@ import AccountDevices from "@/components/account/AccountDevices";
 import AccountEmergency from "@/components/account/AccountEmergency";
 import AccountName from "@/components/account/AccountName";
 import AccountPasskeys from "@/components/account/AccountPasskeys";
+import AccountUsage from "@/components/account/AccountUsage";
 import DeleteAccount from "@/components/account/DeleteAccount";
 import PageHeading from "@/components/common/PageHeading";
 import { hasConfirmedTotp } from "@/lib/auth/factors";
@@ -13,17 +14,19 @@ import {
   listPasskeys,
   listSessions,
 } from "@/lib/queries/credentials";
+import { monthUsage } from "@/lib/queries/usage";
 
 export const metadata: Metadata = { title: "Konto" };
 
 export default async function AccountPage() {
   const session = await sessionOrLogin();
-  const [passkeys, devices, totpConfirmed, recoveryCodesLeft] =
+  const [passkeys, devices, totpConfirmed, recoveryCodesLeft, usage] =
     await Promise.all([
       listPasskeys(session.userId),
       listSessions(session.userId),
       hasConfirmedTotp(session.userId),
       countUnusedRecoveryCodes(session.userId),
+      monthUsage(session.userId, new Date()),
     ]);
 
   return (
@@ -39,6 +42,7 @@ export default async function AccountPage() {
           />
         </div>
         <div className="space-y-6">
+          <AccountUsage tasks={usage.tasks} total={usage.total} />
           <AccountEmergency
             totpConfirmed={totpConfirmed}
             recoveryCodesLeft={recoveryCodesLeft}

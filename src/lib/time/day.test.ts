@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 
-import { addDays, dayKey, endOfDay, startOfDay } from "./day.ts";
+import { addDays, dayKey, endOfDay, startOfDay, startOfMonth } from "./day.ts";
 
 test("ein Tag beginnt um Mitternacht in Zürich, im Winter UTC+1", () => {
   const abends = new Date("2026-11-15T22:30:00Z");
@@ -43,4 +43,12 @@ test("zählt Tage über die Zeitumstellung hinweg", () => {
     dayKey(addDays(new Date("2026-11-15T10:00:00Z"), -1)),
     "2026-11-14",
   );
+});
+
+test("ein Monat beginnt am Ersten um Mitternacht in Zürich", () => {
+  const start = startOfMonth(new Date("2026-11-16T21:00:00Z"));
+  assert.equal(start.toISOString(), "2026-10-31T23:00:00.000Z");
+  // Kurz nach Mitternacht am Ersten zählt in Zürich schon der neue Monat.
+  const first = startOfMonth(new Date("2026-11-30T23:30:00Z"));
+  assert.equal(first.toISOString(), "2026-11-30T23:00:00.000Z");
 });

@@ -6,50 +6,95 @@ import { DomainError } from "../domainError.ts";
 import type { LanguageProfile } from "../languages/catalog.ts";
 
 /**
- * **Der einzige Ort, der Claude kennt** (§2, Adapter). Aus dem Diktierten wird
- * ein Vorschlag für die Karte; gespeichert wird er erst, wenn man ihn bestätigt.
+ * **Der einzige Ort, der Claude kennt** (§2, Adapter). Jede Antwort ist ein
+ * Vorschlag; gespeichert wird erst, was man bestätigt.
  */
-export const suggestion = z.object({
-  front: z.string(),
-  back: z.string(),
-  gender: z.enum(["m", "f", ""]),
-  example: z.string(),
-});
-
-export type Suggestion = z.infer<typeof suggestion>;
 
 // Das kleinste Modell reicht für ein Wort und einen Satz (Jann, 16.11.2026).
 const MODEL = "claude-haiku-5-5";
 
-export function instructions(language: LanguageProfile): string {
+export type Tokens = { inputTokens: number; outputTokens: number };
+export type Answer<T> = { value: T; tokens: Tokens };
+
+async function ask<T>(
+  system: string,
+  input: string,
+  schema: z.ZodType<T>,
+): Promise<Answer<T> & { refused: boolean }> {
+  const response = await new Anthropic().messages.parse({
+    model: MODEL,
+    max_tokens: 1024,
+    system,
+    messages: [{ role: "user", content: input }],
+    output_config: { effort: "low", format: zodOutputFormat(schema) },
+  });
+  const tokens = {
+    inputTokens: response.usage.input_tokens,
+    outputTokens: response.usage.output_tokens,
+  };
+  const value = response.parsed_output;
+  if (response.stop_reason === "refusal" || !value)
+    return { value: null as T, tokens, refused: true };
+  return { value, tokens, refused: false };
+}
+
+const NOT_A_CARD = "Daraus liess sich keine Karte machen.";
+
+export const cardSuggestion = z.object({
+  front: z.string(),
+  back: z.string(),
+  gender: z.enum(["m", "f", ""]),
+});
+export type CardSuggestion = z.infer<typeof cardSuggestion>;
+
+export function cardInstructions(language: LanguageProfile): string {
   return [
     `Du füllst eine Karteikarte zum ${language.name}lernen für eine deutschsprachige Person.`,
-    `Du bekommst eine Abschrift von Diktiertem. Darin steht ein Wort oder Ausdruck auf ${language.name}, auf Deutsch oder beides, manchmal mit falsch erkannten Wörtern.`,
-    `front: der Ausdruck auf ${language.name}, so wie man ihn lernt, ohne Punkt am Ende. Ein Nomen mit bestimmtem Artikel (le, la); nur wo er zu l' wird, mit un oder une, damit das Genus sichtbar bleibt. Steht nur Deutsch da, nimm das Wort, das man im Alltag sagt. Also «le vélo», «la bagnole», «un arbre» (nicht «l'arbre»).`,
-    "back: die deutsche Bedeutung, knapp, ohne Punkt am Ende, ein Nomen mit Artikel. Nimm die deutsche Übersetzung aus dem Diktat, wenn sie passt.",
+    `Du bekommst Diktiertes oder Getipptes. Darin steht ein Wort oder Ausdruck auf ${language.name}, auf Deutsch oder beides, manchmal mit falsch erkannten Wörtern.`,
+    `front: der Ausdruck auf ${language.name}, so wie man ihn lernt, richtig geschrieben, ohne Punkt am Ende. Ein Nomen mit bestimmtem Artikel (le, la); nur wo er zu l' wird, mit un oder une, damit das Genus sichtbar bleibt. Steht nur Deutsch da, nimm das Wort, das man im Alltag sagt. Also «le vélo», «la bagnole», «un arbre» (nicht «l'arbre»).`,
+    "back: die deutsche Bedeutung, knapp, ohne Punkt am Ende, ein Nomen mit Artikel. Steht schon eine Rückseite da, übernimm sie.",
     language.genders
       ? 'gender: "m" oder "f" bei einem Nomen, sonst "".'
       : 'gender: immer "".',
-    `example: ein kurzer, alltäglicher Beispielsatz auf ${language.name} mit dem Ausdruck.`,
     "Ist kein Ausdruck zu erkennen, lass alle Felder leer.",
   ].join("\n");
 }
 
 export async function suggestCard(
-  transcript: string,
+  input: string,
   language: LanguageProfile,
-): Promise<Suggestion> {
-  const client = new Anthropic();
-  const response = await client.messages.parse({
-    model: MODEL,
-    max_tokens: 1024,
-    system: instructions(language),
-    messages: [{ role: "user", content: transcript }],
-    output_config: { effort: "low", format: zodOutputFormat(suggestion) },
-  });
-  const parsed = response.parsed_output;
-  if (response.stop_reason === "refusal" || !parsed || !parsed.front) {
-    throw new DomainError("Daraus liess sich keine Karte machen.");
-  }
-  return parsed;
+): Promise<Answer<CardSuggestion>> {
+  const answer = await ask(cardInstructions(language), input, cardSuggestion);
+  if (answer.refused || !answer.value.front) throw new DomainError(NOT_A_CARD);
+  return answer;
+}
+
+const exampleSuggestion = z.object({ example: z.string() });
+
+export function exampleInstructions(language: LanguageProfile): string {
+  return [
+    `Schreib einen kurzen, alltäglichen Beispielsatz auf ${language.name} mit dem Ausdruck von der Vorderseite einer Karteikarte, so wie man ihn wirklich sagt.`,
+    "Nur der Satz, ohne Übersetzung. Steht ein bisheriger Satz da, schreib einen anderen.",
+  ].join("\n");
+}
+
+export async function suggestExample(
+  card: { front: string; back: string; previous: string },
+  language: LanguageProfile,
+): Promise<Answer<string>> {
+  const input = [
+    `Vorderseite: ${card.front}`,
+    card.back && `Rückseite: ${card.back}`,
+    card.previous && `Bisheriger Satz: ${card.previous}`,
+  ]
+    .filter(Boolean)
+    .join("\n");
+  const answer = await ask(
+    exampleInstructions(language),
+    input,
+    exampleSuggestion,
+  );
+  if (answer.refused || !answer.value.example)
+    throw new DomainError("Dazu fiel kein Satz ein.");
+  return { value: answer.value.example, tokens: answer.tokens };
 }

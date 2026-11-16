@@ -19,3 +19,22 @@ const countFormatter = new Intl.NumberFormat("de-CH", {
 export function formatCount(value: number): string {
   return swissDigits(countFormatter.format(value));
 }
+
+const dollarFormatter = new Intl.NumberFormat("de-CH", {
+  minimumFractionDigits: 2,
+  maximumFractionDigits: 2,
+});
+const centFractionFormatter = new Intl.NumberFormat("de-CH", {
+  minimumFractionDigits: 4,
+  maximumFractionDigits: 4,
+});
+
+/**
+ * Dollar für die Kosten von Diktat und Vorschlägen. Ein Vorschlag kostet
+ * Hundertstel eines Cents; darunter wären es lauter „0.00 $".
+ */
+export function formatDollars(value: number): string {
+  if (value > 0 && value < 0.0001) return "unter 0.0001 $";
+  const formatter = value < 0.01 ? centFractionFormatter : dollarFormatter;
+  return `${swissDigits(formatter.format(value))} $`;
+}

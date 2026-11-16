@@ -1,11 +1,15 @@
 "use client"; // Gesteuerte Felder.
 
+import type { ReactNode } from "react";
+
 import Checkbox from "@/components/form/input/Checkbox";
 import Input from "@/components/form/input/InputField";
 import Label from "@/components/form/Label";
 import { genderFromArticle } from "@/lib/cards/gender";
-import { GENDER_LABELS, type Gender } from "@/lib/languages/catalog";
+import type { Gender } from "@/lib/languages/catalog";
 import type { Duplicate } from "@/lib/queries/cards";
+import DuplicateNotice from "./DuplicateNotice";
+import GenderField from "./GenderField";
 
 export type CardValues = {
   deckId: string;
@@ -20,11 +24,21 @@ export type CardValues = {
   genderTouched: boolean;
 };
 
-const GENDERS: { value: Gender | ""; label: string }[] = [
-  { value: "m", label: "m" },
-  { value: "f", label: "f" },
-  { value: "", label: "–" },
-];
+export type AssistField = "front" | "back" | "example";
+
+/** Was das Diktat und die Vorschläge an den Feldern zeigen (`useCardAssist`). */
+export type FieldAssist = {
+  /** Felder, für die gerade ein Vorschlag kommt: grau, sie atmen leise. */
+  loading: ReadonlySet<AssistField>;
+  /** Was diktiert wurde, grau in der Vorderseite, bis der Vorschlag da ist. */
+  ghost: string;
+  /** Zählt je Feld die Vorschläge; ein neuer kommt weich herein. */
+  revealed: Partial<Record<AssistField, number>>;
+  frontHint?: ReactNode;
+  exampleAction?: ReactNode;
+};
+
+const NO_ASSIST: FieldAssist = { loading: new Set(), ghost: "", revealed: {} };
 
 export default function CardFields({
   values,
@@ -33,6 +47,7 @@ export default function CardFields({
   genders,
   duplicates,
   autoFocus = false,
+  assist = NO_ASSIST,
 }: {
   values: CardValues;
   onChange: (next: CardValues) => void;
@@ -41,7 +56,19 @@ export default function CardFields({
   genders: boolean;
   duplicates: Duplicate[];
   autoFocus?: boolean;
+  assist?: FieldAssist;
 }) {
+  // Ein neuer Schlüssel je Vorschlag baut das Feld neu, und es kommt weich herein.
+  const keyOf = (field: AssistField) =>
+    `${field}-${assist.revealed[field] ?? 0}`;
+  const busy = (field: AssistField) => ({
+    readOnly: assist.loading.has(field),
+    className: assist.loading.has(field)
+      ? "motion-safe:animate-pulse"
+      : assist.revealed[field]
+        ? "motion-safe:animate-reveal"
+        : "",
+  });
   const set = (patch: Partial<CardValues>) => onChange({ ...values, ...patch });
 
   function setFront(front: string) {
@@ -59,6 +86,9 @@ export default function CardFields({
         <div>
           <Label htmlFor="card-front">Vorderseite</Label>
           <Input
+            key={keyOf("front")}
+            {...busy("front")}
+            placeholder={assist.loading.has("front") ? assist.ghost : undefined}
             id="card-front"
             autoFocus={autoFocus}
             autoComplete="off"
@@ -69,24 +99,14 @@ export default function CardFields({
             error={Boolean(fields.front)}
             hint={fields.front}
           />
-          {duplicates.length > 0 && (
-            <p
-              role="status"
-              className="text-theme-xs text-warning-700 dark:text-warning-400 mt-1.5"
-            >
-              Gibt es schon:{" "}
-              {duplicates
-                .map(
-                  (duplicate) =>
-                    `${duplicate.front} · ${duplicate.back} (${duplicate.deckName})`,
-                )
-                .join("; ")}
-            </p>
-          )}
+          <DuplicateNotice duplicates={duplicates} />
+          {assist.frontHint}
         </div>
         <div>
           <Label htmlFor="card-back">Rückseite</Label>
           <Input
+            key={keyOf("back")}
+            {...busy("back")}
             id="card-back"
             autoComplete="off"
             value={values.back}
@@ -98,46 +118,20 @@ export default function CardFields({
       </div>
 
       {genders && (
-        <fieldset>
-          <legend className="mb-1.5 text-sm font-medium text-gray-700 dark:text-gray-400">
-            Genus
-          </legend>
-          <div className="inline-flex rounded-lg border border-gray-300 p-0.5 dark:border-gray-700">
-            {GENDERS.map((option) => (
-              <label
-                key={option.value || "keins"}
-                title={
-                  option.value ? GENDER_LABELS[option.value] : "kein Genus"
-                }
-                className={`text-theme-sm has-focus-visible:ring-brand-500 flex h-10 min-w-12 cursor-pointer items-center justify-center rounded-md px-3 font-medium has-focus-visible:ring-2 ${
-                  values.gender === option.value
-                    ? "bg-brand-50 dark:bg-brand-300/10 dark:text-brand-300 text-gray-900"
-                    : "text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white/90"
-                }`}
-              >
-                <input
-                  type="radio"
-                  name="card-gender"
-                  value={option.value}
-                  checked={values.gender === option.value}
-                  onChange={() =>
-                    set({ gender: option.value, genderTouched: true })
-                  }
-                  className="sr-only"
-                />
-                <span aria-hidden>{option.label}</span>
-                <span className="sr-only">
-                  {option.value ? GENDER_LABELS[option.value] : "kein Genus"}
-                </span>
-              </label>
-            ))}
-          </div>
-        </fieldset>
+        <GenderField
+          value={values.gender}
+          onChange={(gender) => set({ gender, genderTouched: true })}
+        />
       )}
 
       <div>
-        <Label htmlFor="card-example">Beispielsatz</Label>
+        <div className="flex items-end justify-between gap-3">
+          <Label htmlFor="card-example">Beispielsatz</Label>
+          {assist.exampleAction}
+        </div>
         <Input
+          key={keyOf("example")}
+          {...busy("example")}
           id="card-example"
           autoComplete="off"
           value={values.example}

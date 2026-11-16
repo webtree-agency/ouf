@@ -24,9 +24,11 @@ function answering(status: number, body: unknown) {
 }
 
 test("schickt die Aufnahme als Base64 mit dem Token an das eigene Konto", async () => {
-  const { fake, calls } = answering(200, { result: { text: " la bagnole " } });
-  const text = await transcribe(new Blob(["abc"]), fake, ENV);
-  assert.equal(text, "la bagnole");
+  const { fake, calls } = answering(200, {
+    result: { text: " la bagnole ", transcription_info: { duration: 1.25 } },
+  });
+  const result = await transcribe(new Blob(["abc"]), fake, ENV);
+  assert.deepEqual(result, { text: "la bagnole", audioMs: 1250 });
   assert.match(calls[0].url, /accounts\/konto\/ai\/run\/@cf\/openai\/whisper/);
   assert.equal(
     (calls[0].init.headers as Record<string, string>).Authorization,

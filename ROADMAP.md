@@ -36,8 +36,10 @@ merkt sich keinen Entwurf.
    lassen?
 3. **Weitere Sprachen mit Genus?** Italienisch, Spanisch und Portugiesisch
    haben eines; vorbereitet ist auf Wunsch nur Französisch.
-4. **Diktat beim Erfassen**: gebaut (16.11.2026). Offen ist nur die
-   Ausgabegrenze in der Anthropic Console (2 bis 3 $ im Monat).
+4. **Erfassen, das Spass macht** (Jann, 16.11.2026). Gebaut: Diktat,
+   Vorschlagen, Satz auf Wunsch, Rechtschreibung, Kosten im Konto. Offen:
+   Vorschau der Karte, Tags als Chips, Emoji und Farbe je Tag, Emoji je Deck,
+   Bewegung beim Speichern. Dazu die Ausgabegrenze in der Anthropic Console.
 5. **`.apkg`** doch bauen, mit den zwei Paketen?
 
 ## Prüfliste

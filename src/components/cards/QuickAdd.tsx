@@ -9,8 +9,8 @@ import DraftNotice from "@/components/common/DraftNotice";
 import SelectField from "@/components/form/SelectField";
 import Button from "@/components/ui/button/Button";
 import { useFormDraft } from "@/hooks/useFormDraft";
-import CardFields, { draftOf, type CardValues } from "./CardFields";
-import Dictate from "./Dictate";
+import AssistedFields from "./AssistedFields";
+import { draftOf, type CardValues } from "./CardFields";
 import { useDuplicates } from "./useDuplicates";
 
 type Sticky = Pick<CardValues, "tags" | "reverse">;
@@ -124,31 +124,16 @@ function QuickAddForm({
         <DraftNotice savedAt={draft.restoredAt} onDiscard={draft.discard} />
       )}
       {error && <AuthNotice tone="error">{error}</AuthNotice>}
-      {dictation && (
-        <Dictate
-          language={dictation}
-          onSuggestion={(suggestion) => {
-            draft.setValues({
-              ...draft.values,
-              ...suggestion,
-              gender: genders ? suggestion.gender : "",
-              genderTouched: true,
-            });
-            // Enter in der Vorderseite speichert, wie beim Tippen.
-            form.current?.querySelector<HTMLElement>("#card-front")?.focus();
-          }}
-        />
-      )}
-      <CardFields
+      <AssistedFields
         values={draft.values}
-        onChange={(next) => {
+        setValues={(next) => {
           draft.setValues(next);
           if (Object.keys(fields).length) setFields({});
         }}
         fields={fields}
         genders={genders}
         duplicates={duplicates}
-        autoFocus
+        dictation={dictation}
       />
       <div className="flex flex-wrap items-center gap-3">
         <Button type="submit" disabled={pending}>

@@ -345,8 +345,8 @@ no-referrer`, `X-Content-Type-Options: nosniff`, `X-Frame-Options: DENY`,
   `Disallow: /`.
 - Secrets nur aus der Umgebung, nie im Repo, nie im Client-Bündel, nie auf dem
   Bildschirm.
-- **Kein fremder Dienst**, ausser beim Erfassen (Diktat und Vorschlag der
-  Karte, `ENTSCHEIDE.md`). Die Sprachausgabe ist die des Browsers.
+- **Kein fremder Dienst**, ausser beim Erfassen: Whisper, Claude Haiku und
+  LanguageTool (`ENTSCHEIDE.md`). Die Sprachausgabe ist die des Browsers.
 
 ---
 

@@ -35,6 +35,11 @@ export function endOfDay(date: Date): Date {
   );
 }
 
+/** Mitternacht in Zürich am Ersten des Monats von `date`. */
+export function startOfMonth(date: Date): Date {
+  return startOfDay(new Date(`${dayKey(date).slice(0, 7)}-01T12:00:00Z`));
+}
+
 export function addDays(date: Date, days: number): Date {
   return startOfDay(
     new Date(startOfDay(date).getTime() + days * DAY_MS + 12 * 60 * 60 * 1000),

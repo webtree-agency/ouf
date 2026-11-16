@@ -23,7 +23,7 @@ export async function transcribe(
   audio: Blob,
   fetchImpl: typeof fetch = fetch,
   env: Env = process.env,
-): Promise<string> {
+): Promise<{ text: string; audioMs: number }> {
   if (audio.size === 0) throw new DomainError("Es kam keine Aufnahme an.");
   if (audio.size > MAX_AUDIO_BYTES)
     throw new DomainError("Die Aufnahme ist zu lang.");
@@ -41,8 +41,11 @@ export async function transcribe(
     },
   );
   if (!response.ok) throw new Error(`Whisper antwortet mit ${response.status}`);
-  const body = (await response.json()) as { result?: { text?: string } };
+  const body = (await response.json()) as {
+    result?: { text?: string; transcription_info?: { duration?: number } };
+  };
   const text = body.result?.text?.trim() ?? "";
   if (!text) throw new DomainError("Es war nichts zu verstehen.");
-  return text;
+  const seconds = body.result?.transcription_info?.duration ?? 0;
+  return { text, audioMs: Math.round(seconds * 1000) };
 }

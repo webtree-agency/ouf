@@ -82,9 +82,13 @@ Reine Funktionen in `lib/learning/`, ts-fsrs nur in `scheduler.ts`.
   der Fokus wieder vorne, das Deck bleibt gewählt (`?deck=`). Eine Dublette in
   der Sprache wird beim Tippen gemeldet, gespeichert werden darf sie trotzdem.
   „la …" setzt Genus weiblich, „le …" männlich, bei „l'…" wählt man selbst.
-- **Diktat**: „Diktieren“, Wort sagen (gern mit Übersetzung), „Fertig“. Whisper
-  schreibt ab, Claude Haiku füllt Vorder- und Rückseite, Genus und
-  Beispielsatz vor; Enter speichert wie beim Tippen. Höchstens 30 Sekunden.
+- **Diktat und Vorschläge**: „Diktieren“, Wort sagen (gern mit Übersetzung),
+  „Fertig“. Die Abschrift steht sofort grau in der Vorderseite, dann füllt
+  Claude Haiku Vorder- und Rückseite und Genus. „Vorschlagen“ tut dasselbe aus
+  Getipptem, „Neu vorschlagen“ will etwas anderes. Den Beispielsatz gibt es nur
+  über ✦ am Feld. Unter der Vorderseite steht „Meintest du …?“, wenn
+  LanguageTool einen Fehler findet. Enter speichert wie beim Tippen. Was es
+  kostet, steht im Konto.
 - **Listen** wie im Cockpit: Zustand in der Adresse, `scroll: false`, 10 · 30 ·
   50 · 100 je Seite.
 - **Sprache wechseln**: Auswahl oben in der Shell, ein Klick. Gespeichert am

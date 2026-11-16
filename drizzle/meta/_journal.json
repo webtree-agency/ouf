@@ -36,6 +36,13 @@
       "when": 1794783763961,
       "tag": "0004_protokoll-nur-anfuegen",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1794865599281,
+      "tag": "0005_ki-verbrauch",
+      "breakpoints": true
     }
   ]
 }

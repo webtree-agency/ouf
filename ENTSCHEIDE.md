@@ -266,6 +266,22 @@ Jann wollte weg vom Cockpit: weniger Verwaltung, mehr App, wie die Vorlage mit
 - **Claude Haiku 5.5 mit Aufwand „low“** (Jann): Ein Wort und ein Satz
   brauchen kein grösseres Modell, gut zwei Sekunden je Vorschlag. Die
   Ausgabegrenze von 2 bis 3 $ im Monat setzt Jann in der Console.
+- **Beispielsatz nur auf Wunsch** (Jann): ✦ neben dem Feld, ein zweiter Klick
+  schlägt einen anderen vor. Das Diktat füllt nur Vorder-, Rückseite und Genus.
+  „Vorschlagen“ geht auch aus Getipptem, „Neu vorschlagen“ will etwas anderes.
+- **Erst die Abschrift, dann der Vorschlag**, zwei Aufrufe statt einem: Was
+  diktiert wurde, steht sofort grau in der Vorderseite, die Felder atmen, bis
+  der Vorschlag da ist, und er kommt weich herein.
+- **Rechtschreibung über LanguageTool** (`api.languagetool.org`), nicht über
+  Claude (Jann: „überall so günstig wie möglich“): kostenlos, ohne Schlüssel,
+  kennt Akzente und Genus („le maison“ → „la maison“). Geprüft wird die
+  Vorderseite, wenn man 700 ms innehält. Fällt der Dienst aus, fehlt nur der
+  Hinweis.
+- **Kosten im Konto**: Jeder Aufruf an Claude und Whisper landet in
+  `ai_usage` (Tokens, Tonlänge), gerechnet wird beim Lesen zu Listenpreisen
+  (`lib/capture/pricing.ts`). Verworfen: die Abrechnung von Anthropic abfragen;
+  das braucht einen Admin-Schlüssel, und die Zahl gälte für die ganze
+  Organisation, nicht für ouf.
 - **`Permissions-Policy: microphone=(self)`** statt `microphone=()`: Sonst
   verweigert der Browser das Mikrofon still, auch nach der Freigabe.
 
