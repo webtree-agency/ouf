@@ -1,10 +1,11 @@
 "use client"; // Formular mit Fokus, Entwurf und Dublettenprüfung.
 
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { createCardAction } from "@/app/(app)/karten/actions";
 import AuthNotice from "@/components/common/AuthNotice";
+import ComponentCard from "@/components/common/ComponentCard";
 import DraftNotice from "@/components/common/DraftNotice";
 import SelectField from "@/components/form/SelectField";
 import Button from "@/components/ui/button/Button";
@@ -12,6 +13,7 @@ import { useFormDraft } from "@/hooks/useFormDraft";
 import type { TagLook } from "@/lib/tags/colors";
 import AssistedFields from "./AssistedFields";
 import { draftOf, type CardValues } from "./CardFields";
+import { PreviewStack } from "./CardPreview";
 import { useDuplicates } from "./useDuplicates";
 
 type Sticky = Pick<CardValues, "tags" | "reverse">;
@@ -28,6 +30,7 @@ export default function QuickAdd({
   language,
   dictation,
   tagOptions,
+  aside,
 }: {
   decks: { value: string; label: string }[];
   deckId: string;
@@ -36,43 +39,69 @@ export default function QuickAdd({
   language: string;
   dictation: string | null;
   tagOptions: TagLook[];
+  /** Was rechts unter der Vorschau steht: die zuletzt erfassten Karten. */
+  aside: React.ReactNode;
 }) {
   const router = useRouter();
   const [round, setRound] = useState(0);
   const [sticky, setSticky] = useState<Sticky>({ tags: "", reverse: false });
   const [saved, setSaved] = useState<string | null>(null);
+  const [preview, setPreview] = useState<CardValues | null>(null);
+  const [leaving, setLeaving] = useState<CardValues | null>(null);
+  const looks = new Map(tagOptions.map((tag) => [tag.name, tag]));
 
   return (
-    <div className="space-y-6">
-      <SelectField
-        id="card-deck"
-        label="Deck"
-        value={deckId}
-        options={decks}
-        onChange={(id) =>
-          router.replace(`/karten/neu?deck=${id}`, { scroll: false })
-        }
-      />
-      <QuickAddForm
-        key={`${deckId}-${round}`}
-        deckId={deckId}
-        genders={genders}
-        language={language}
-        dictation={dictation}
-        tagOptions={tagOptions}
-        sticky={sticky}
-        onSaved={(values) => {
-          setSticky({ tags: values.tags, reverse: values.reverse });
-          setSaved(values.front.trim());
-          setRound((value) => value + 1);
-        }}
-      />
-      <p
-        role="status"
-        className="text-theme-sm text-success-700 dark:text-success-400 min-h-5"
-      >
-        {saved && `Gespeichert: ${saved}`}
-      </p>
+    <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
+      <div className="space-y-6 xl:col-span-2">
+        <ComponentCard>
+          <div className="space-y-6">
+            <SelectField
+              id="card-deck"
+              label="Deck"
+              value={deckId}
+              options={decks}
+              onChange={(id) =>
+                router.replace(`/karten/neu?deck=${id}`, { scroll: false })
+              }
+            />
+            <QuickAddForm
+              key={`${deckId}-${round}`}
+              deckId={deckId}
+              genders={genders}
+              language={language}
+              dictation={dictation}
+              tagOptions={tagOptions}
+              sticky={sticky}
+              onValues={setPreview}
+              onSaved={(values) => {
+                setSticky({ tags: values.tags, reverse: values.reverse });
+                setSaved(values.front.trim());
+                setLeaving(values);
+                setRound((value) => value + 1);
+              }}
+            />
+            <p
+              key={round}
+              role="status"
+              className="text-theme-sm text-success-700 dark:text-success-400 motion-safe:animate-pop min-h-5"
+            >
+              {saved && `Gespeichert: ${saved}`}
+            </p>
+          </div>
+        </ComponentCard>
+      </div>
+      <div className="space-y-6 self-start xl:sticky xl:top-6">
+        {preview && (
+          <PreviewStack
+            round={round}
+            values={preview}
+            leaving={leaving}
+            onLeft={() => setLeaving(null)}
+            looks={looks}
+          />
+        )}
+        {aside}
+      </div>
     </div>
   );
 }
@@ -84,6 +113,7 @@ function QuickAddForm({
   dictation,
   tagOptions,
   sticky,
+  onValues,
   onSaved,
 }: {
   deckId: string;
@@ -92,10 +122,14 @@ function QuickAddForm({
   dictation: string | null;
   tagOptions: TagLook[];
   sticky: Sticky;
+  /** Meldet jeden Stand nach oben, für die Vorschau. */
+  onValues: (values: CardValues) => void;
   onSaved: (values: CardValues) => void;
 }) {
   const form = useRef<HTMLFormElement>(null);
-  const draft = useFormDraft<CardValues>(`karte-neu:${deckId}`, {
+  // Einmal festgehalten: Ein neues Objekt je Rendern liesse die Vorschau
+  // pausenlos neu melden, und die Antwort des Servers käme nie an die Reihe.
+  const [empty] = useState<CardValues>(() => ({
     deckId,
     front: "",
     back: "",
@@ -104,11 +138,13 @@ function QuickAddForm({
     gender: "",
     genderTouched: false,
     ...sticky,
-  });
+  }));
+  const draft = useFormDraft<CardValues>(`karte-neu:${deckId}`, empty);
   const [fields, setFields] = useState<Record<string, string>>({});
   const [error, setError] = useState<string | null>(null);
   const [pending, setPending] = useState(false);
   const duplicates = useDuplicates(draft.values.front);
+  useEffect(() => onValues(draft.values), [draft.values, onValues]);
 
   async function submit(event: React.FormEvent) {
     event.preventDefault();

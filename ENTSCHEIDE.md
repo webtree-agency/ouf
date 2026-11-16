@@ -325,6 +325,14 @@ Jann wollte weg vom Cockpit: weniger Verwaltung, mehr App, wie die Vorlage mit
 - **Im Formular Chips**: Antippen wählt einen vorhandenen, Enter oder Komma
   legt einen neuen an, × oder Rücktaste nimmt ihn weg.
 
+## Vorschau beim Erfassen (16.11.2026)
+
+- **Die Karte steht rechts als Vorschau** (am Handy unter dem Formular), so
+  wie sie beim Lernen aussieht; Antippen dreht sie um. Beim Speichern gleitet
+  sie nach rechts hinaus wie eine bewertete Lernkarte, die leere kommt herein,
+  und die neue steht oben in „Zuletzt erfasst“. Dieselben Bewegungen wie beim
+  Lernen, keine neuen.
+
 ## Vorschläge für alle Projekte
 
 - **`apple-mobile-web-app-capable` von Hand setzen**, wo `appleWebApp` steht.

@@ -92,7 +92,7 @@ export default function TagInput({
           className="text-theme-sm h-8 min-w-24 flex-1 bg-transparent px-1 text-gray-800 focus:outline-hidden dark:text-white/90"
         />
       </div>
-      {matches.length > 0 && (
+      {focused && matches.length > 0 && (
         <div className="mt-2 flex flex-wrap gap-1.5">
           {matches.map((tag) => (
             <button

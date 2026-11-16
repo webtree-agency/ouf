@@ -46,24 +46,18 @@ export default async function NewCardPage({
   return (
     <>
       <PageHeading title="Karte erfassen" />
-      <div className="grid grid-cols-1 gap-6 xl:grid-cols-3">
-        <div className="xl:col-span-2">
-          <ComponentCard>
-            <QuickAdd
-              decks={decks.map((entry) => ({
-                value: entry.id,
-                label: deckLabel(entry),
-              }))}
-              deckId={deck.id}
-              genders={language.genders}
-              language={language.name}
-              dictation={dictationConfigured() ? language.name : null}
-              tagOptions={tags}
-            />
-          </ComponentCard>
-        </div>
-        <RecentCards cards={recent} />
-      </div>
+      <QuickAdd
+        decks={decks.map((entry) => ({
+          value: entry.id,
+          label: deckLabel(entry),
+        }))}
+        deckId={deck.id}
+        genders={language.genders}
+        language={language.name}
+        dictation={dictationConfigured() ? language.name : null}
+        tagOptions={tags}
+        aside={<RecentCards cards={recent} />}
+      />
     </>
   );
 }

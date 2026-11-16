@@ -38,8 +38,8 @@ merkt sich keinen Entwurf.
    haben eines; vorbereitet ist auf Wunsch nur Französisch.
 4. **Erfassen, das Spass macht** (Jann, 16.11.2026). Gebaut: Diktat,
    Vorschlagen, Satz auf Wunsch, Rechtschreibung, Übersetzen auf Klick,
-   Kosten im Konto, Emoji je Deck. Tags mit Emoji und Farbe. Offen: Vorschau der
-   Karte, Bewegung beim Speichern, flexibel lernen, DeepL-Weiche. Dazu die Ausgabegrenze in der Anthropic Console.
+   Kosten im Konto, Emoji je Deck. Tags mit Emoji und Farbe. Vorschau und Bewegung beim
+   Speichern. Offen: flexibel lernen, DeepL-Weiche. Dazu die Ausgabegrenze in der Anthropic Console.
 5. **`.apkg`** doch bauen, mit den zwei Paketen?
 
 ## Prüfliste
