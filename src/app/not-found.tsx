@@ -4,7 +4,7 @@ import Button from "@/components/ui/button/Button";
 export default function NotFound() {
   return (
     <div className="flex min-h-dvh flex-col items-center justify-center gap-6 p-6 text-center">
-      <BrandLogo className="h-14" />
+      <BrandLogo className="h-10" />
       <h1 className="text-title-sm font-medium text-gray-800 dark:text-white/90">
         Diese Seite gibt es nicht
       </h1>

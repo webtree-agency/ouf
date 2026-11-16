@@ -23,7 +23,7 @@ export default function AppHeader({
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-3 px-4 md:h-20 md:px-6">
         <div className="flex items-center gap-6">
           <Link href="/" aria-label="Zur Übersicht">
-            <BrandLogo className="h-12 md:h-14" />
+            <BrandLogo className="h-7 md:h-8" />
           </Link>
           <NavLinks />
         </div>
