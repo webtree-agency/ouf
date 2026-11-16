@@ -30,7 +30,7 @@ export default function BrandLogo({
           gradientUnits="userSpaceOnUse"
           x1="48"
           y1="12"
-          x2="196"
+          x2="178"
           y2="74"
         >
           {SHEEN.map(([offset, color]) => (
@@ -42,7 +42,7 @@ export default function BrandLogo({
         fill="none"
         stroke="url(#ouf-sheen)"
         strokeWidth={STROKE_WIDTH}
-        strokeLinecap="round"
+        strokeLinecap="butt"
       >
         <circle cx={RING.cx} cy={RING.cy} r={RING.r} />
         {LETTER_PATHS.map((d) => (

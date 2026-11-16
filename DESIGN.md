@@ -16,7 +16,8 @@ wofür sie gelten. Leitsatz: weniger ist mehr.
 Schrift und keine andere Strichstärke; `font-semibold` und `font-bold` sind in
 `globals.css` gar nicht erst vorhanden.
 
-**Logo:** «ouf.» geometrisch und ohne Fläche. Alle Striche sind so stark wie
+**Logo:** «ouf.» geometrisch, eng gesetzt und ohne Fläche. Die Strichenden sind
+gerade abgeschnitten, nur der Punkt ist rund. Alle Striche sind so stark wie
 der Ring des «o», jeder Bogen ist ein Kreis mit seinem Radius, die x-Höhe ist
 sein Durchmesser. Alles im blauen Verlauf, in beiden Modi gleich. Pfade in
 `components/brand/logoPaths.ts`, die Komponente in `BrandLogo.tsx`.
