@@ -39,7 +39,7 @@ merkt sich keinen Entwurf.
 4. **Erfassen, das Spass macht** (Jann, 16.11.2026). Gebaut: Diktat,
    Vorschlagen, Satz auf Wunsch, Rechtschreibung, Übersetzen auf Klick,
    Kosten im Konto, Emoji je Deck. Tags mit Emoji und Farbe. Vorschau und Bewegung beim
-   Speichern. Offen: flexibel lernen, DeepL-Weiche. Dazu die Ausgabegrenze in der Anthropic Console.
+   Speichern. Flexibel lernen. Offen: DeepL-Weiche. Dazu die Ausgabegrenze in der Anthropic Console.
 5. **`.apkg`** doch bauen, mit den zwei Paketen?
 
 ## Prüfliste

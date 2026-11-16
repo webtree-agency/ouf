@@ -74,6 +74,9 @@ Reine Funktionen in `lib/learning/`, ts-fsrs nur in `scheduler.ts`.
 
 ## Bedienung
 
+- **Wie lernen**: über der Karte zum Aufklappen, alles als Chips (fällig oder
+  alles, geplant oder zufällig, Richtung, Stufe, Genus, Deck, Tag), in der
+  Adresse gespeichert. Siehe `ENTSCHEIDE.md`, „Flexibel lernen“.
 - **Lernen**: Leertaste oder Enter deckt auf, 1 bis 4 bewertet (Nochmal, Schwer,
   Gut, Leicht), Z nimmt die letzte Bewertung zurück. Am Handy liegen die Knöpfe
   unten, gross, im Daumenbereich. Vorlesen über die Sprachausgabe des Browsers in

@@ -19,9 +19,17 @@ export type Queue = {
 
 export type QueueCounts = { neu: number; lernen: number; faellig: number };
 
-export function pickNext(queue: Queue, now: Date): QueueItem | null {
+export function pickNext(
+  queue: Queue,
+  now: Date,
+  /** Zufällig statt geplant: Lernschritte bleiben vorn, der Rest wird gemischt. */
+  random?: () => number,
+): QueueItem | null {
   const learningNow = queue.learning.filter((item) => item.dueAt <= now);
   if (learningNow.length) return earliest(learningNow);
+  const rest = [...queue.reviews, ...queue.fresh];
+  if (random && rest.length)
+    return rest[Math.min(rest.length - 1, Math.floor(random() * rest.length))];
   if (queue.reviews.length) return earliest(queue.reviews);
   if (queue.fresh.length) return queue.fresh[0];
 

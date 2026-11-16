@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { rate, undo } from "@/app/(app)/lernen/actions";
 import AuthNotice from "@/components/common/AuthNotice";
 import { RegenerateIcon } from "@/icons";
+import type { LearnFilter } from "@/lib/learning/filter";
 import type { Rating } from "@/lib/learning/scheduler";
 import type { StudyState } from "@/lib/learning/session";
 import LearnDone from "./LearnDone";
@@ -20,10 +21,11 @@ const MOTION = {
 
 export default function LearnSession({
   initial,
-  deckId,
+  filter,
 }: {
   initial: StudyState;
-  deckId: string | null;
+  /** Wie gelernt wird; geht mit jeder Bewertung mit, für die nächste Karte. */
+  filter: LearnFilter;
 }) {
   const [state, setState] = useState(initial);
   const [revealed, setRevealed] = useState(false);
@@ -56,7 +58,7 @@ export default function LearnSession({
           rating,
           reps: card.reps,
           durationMs: Date.now() - shownAt.current,
-          deckId,
+          filter,
         });
         if (result.ok) show(result.data);
         else {
@@ -65,17 +67,17 @@ export default function LearnSession({
         }
       });
     },
-    [card, revealed, pending, deckId, show],
+    [card, revealed, pending, filter, show],
   );
 
   const doUndo = useCallback(() => {
     if (!state.canUndo || pending) return;
     startTransition(async () => {
-      const result = await undo(deckId);
+      const result = await undo(filter);
       if (result.ok) show(result.data);
       else setError(result.message);
     });
-  }, [state.canUndo, pending, deckId, show]);
+  }, [state.canUndo, pending, filter, show]);
 
   useEffect(() => {
     function onKey(event: KeyboardEvent) {
@@ -178,7 +180,7 @@ export default function LearnSession({
           </div>
         </>
       ) : (
-        <LearnDone hasWaiting={lernen > 0} />
+        <LearnDone hasWaiting={lernen > 0} filter={filter} />
       )}
     </div>
   );

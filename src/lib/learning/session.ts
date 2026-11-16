@@ -125,7 +125,8 @@ export async function studyState(
   show?: string,
 ): Promise<StudyState> {
   const queue = await loadQueue(scope, now);
-  const next = show ?? pickNext(queue, now)?.scheduleId;
+  const random = scope.filter?.random ? Math.random : undefined;
+  const next = show ?? pickNext(queue, now, random)?.scheduleId;
   return {
     card: next ? await loadCard(next, now) : null,
     counts: countQueue(queue),

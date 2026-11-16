@@ -99,3 +99,15 @@ test("zählt neu, im Lernschritt und fällig", () => {
     { neu: 0, lernen: 1, faellig: 2 },
   );
 });
+
+test("zufällig: Lernschritte bleiben vorn, Fällige und Neue werden gemischt", () => {
+  const queue = {
+    learning: [item("l", min(5))],
+    reviews: [item("r1", min(-600)), item("r2", min(-10))],
+    fresh: [item("n", now)],
+  };
+  assert.equal(pickNext(queue, now, () => 0.99)?.scheduleId, "n");
+  assert.equal(pickNext(queue, now, () => 0.5)?.scheduleId, "r2");
+  const dran = { ...queue, learning: [item("l", min(-1))] };
+  assert.equal(pickNext(dran, now, () => 0.99)?.scheduleId, "l");
+});

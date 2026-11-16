@@ -333,6 +333,28 @@ Jann wollte weg vom Cockpit: weniger Verwaltung, mehr App, wie die Vorlage mit
   und die neue steht oben in „Zuletzt erfasst“. Dieselben Bewegungen wie beim
   Lernen, keine neuen.
 
+## Flexibel lernen (16.11.2026)
+
+- **„Wie lernen“ über der Lernkarte**, zugeklappt mit einer Zeile, was gewählt
+  ist; aufgeklappt Chips zum Antippen (Jann: „nirgendwo eingrenzen, schön
+  interaktiv“): Was fällig ist oder alles üben, wie geplant oder zufällig,
+  Richtung, Stufe (neu, am Lernen, schwierig, sitzt), Genus, Deck, Tag. Jeder
+  Chip ist ein Link, die Auswahl steht in der Adresse (`?umfang=alle&tag=essen`),
+  ein zweites Antippen hebt eine Einschränkung auf. Verworfen: Auswahllisten
+  wie in der Kartenliste; sieben Listen über der Karte wären ein Formular.
+- **Alles üben** heisst: jede Karte der Auswahl, die heute noch nicht dran war,
+  ohne Tageslimit für Neue; die Bewertung zählt für FSRS wie jede andere.
+  Verworfen: Üben ohne Wirkung auf den Plan (wie Ankis „Cram“); zwei Arten
+  Bewertung wären mehr Erklärung als Nutzen.
+- **Zufällig** mischt Fälliges und Neues; Lernschritte, die gerade dran sind,
+  bleiben vorn, sonst vergässe man sie.
+- **Schwierig** ist, was zweimal oder öfter vergessen wurde oder eine
+  FSRS-Schwierigkeit ab 7 hat; **sitzt** ist eine Wiederholung mit
+  Stabilität ab 21 Tagen.
+- **Deutsch → Französisch** gibt es nur für Karten mit „umgekehrt abfragen“.
+  Fehlt es in der Auswahl, schaltet „Für alle einschalten“ es für deren Karten
+  ein, ausdrücklich, nie beim Laden der Seite.
+
 ## Vorschläge für alle Projekte
 
 - **`apple-mobile-web-app-capable` von Hand setzen**, wo `appleWebApp` steht.

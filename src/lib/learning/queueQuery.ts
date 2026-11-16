@@ -1,15 +1,56 @@
-import { and, asc, eq, gte, isNull, lt, sql } from "drizzle-orm";
+import { and, asc, eq, gte, isNull, lt, sql, type SQL } from "drizzle-orm";
 
 import { getDb, schema } from "../../db/index.ts";
 import { ACTIVE_SCHEDULE } from "../queries/decks.ts";
 import { endOfDay, startOfDay } from "../time/day.ts";
+import type { Level, LearnFilter } from "./filter.ts";
 import { remainingNew, withinNewLimits, type Queue } from "./queue.ts";
 
 export type QueueScope = {
   userId: string;
   languageId: string;
-  deckId?: string;
+  /** Wie gelernt wird; ohne Angabe das Fällige aller Decks. */
+  filter?: LearnFilter;
 };
+
+const status = schema.cardSchedules.scheduleStatus;
+
+/** Was eine Stufe heisst: schwer ist, was oft vergessen wurde oder schwer bleibt. */
+const LEVEL: Record<Level, SQL> = {
+  neu: sql`${status} = 'new'`,
+  lernen: sql`${status} = 'learning'`,
+  schwer: sql`${status} <> 'new' and (${schema.cardSchedules.lapses} >= 2 or ${schema.cardSchedules.difficulty} >= 7)`,
+  sitzt: sql`${status} = 'review' and ${schema.cardSchedules.stability} >= 21`,
+};
+
+/** Die gewählten Einschränkungen, ohne die Frage, was heute dran ist. */
+export function filterConditions(filter: LearnFilter | undefined): SQL[] {
+  if (!filter) return [];
+  const conditions: SQL[] = [];
+  if (filter.deckId) conditions.push(eq(schema.decks.id, filter.deckId));
+  if (filter.tag)
+    conditions.push(sql`${schema.cards.tags} @> array[${filter.tag}]::text[]`);
+  if (filter.gender) conditions.push(eq(schema.cards.gender, filter.gender));
+  if (filter.direction)
+    conditions.push(
+      eq(
+        schema.cardSchedules.direction,
+        filter.direction === "vor" ? "forward" : "reverse",
+      ),
+    );
+  if (filter.level) conditions.push(LEVEL[filter.level]);
+  return conditions;
+}
+
+/**
+ * Was heute drankommt. Sonst: Neues und Fälliges. Beim Üben alles, was heute
+ * noch nicht dran war, dazu die Lernschritte von heute.
+ */
+function todayCondition(all: boolean, now: Date): SQL {
+  const dueToday = lt(schema.cardSchedules.dueAt, endOfDay(now));
+  if (!all) return sql`(${status} = 'new' or ${dueToday})`;
+  return sql`((${status} = 'learning' and ${dueToday}) or ${schema.cardSchedules.lastReviewAt} is null or ${schema.cardSchedules.lastReviewAt} < ${startOfDay(now).toISOString()}::timestamptz)`;
+}
 
 /** Bewertungen von heute, die nicht zurückgenommen wurden. */
 export function countedReviews(userId: string, since: Date) {
@@ -70,9 +111,9 @@ export async function loadQueue(
       and(
         eq(schema.decks.userId, scope.userId),
         eq(schema.decks.languageId, scope.languageId),
-        scope.deckId ? eq(schema.decks.id, scope.deckId) : undefined,
+        ...filterConditions(scope.filter),
         ACTIVE_SCHEDULE,
-        sql`(${schema.cardSchedules.scheduleStatus} = 'new' or ${lt(schema.cardSchedules.dueAt, endOfDay(now))})`,
+        todayCondition(scope.filter?.all ?? false, now),
       ),
     )
     // Neue Karten in der Reihenfolge, in der sie erfasst wurden, vorwärts vor rückwärts.
@@ -99,9 +140,12 @@ export async function loadQueue(
   return {
     learning: rows.filter((row) => row.status === "learning").map(item),
     reviews: rows.filter((row) => row.status === "review").map(item),
-    fresh: withinNewLimits(
-      rows.filter((row) => row.status === "new").map(item),
-      remaining,
-    ),
+    // Beim Üben gilt das Tageslimit nicht: Man hat ausdrücklich alles gewählt.
+    fresh: scope.filter?.all
+      ? rows.filter((row) => row.status === "new").map(item)
+      : withinNewLimits(
+          rows.filter((row) => row.status === "new").map(item),
+          remaining,
+        ),
   };
 }
