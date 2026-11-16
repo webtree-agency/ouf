@@ -30,12 +30,12 @@ export const SHEEN = [
 ];
 
 /**
- * Das App-Icon: nur das «o», gross und dick, ohne Grund (Jann, 16.11.2026).
+ * Das App-Icon: nur das «o», dick, mit Luft zum Rand, ohne Grund (Jann, 16.11.2026).
  * Raster 100 × 100.
  */
 export function appIconSvg(): string {
   const stops = SHEEN.map(
     ([offset, color]) => `<stop offset="${offset}" stop-color="${color}"/>`,
   ).join("");
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="sheen" gradientUnits="userSpaceOnUse" x1="8" y1="8" x2="92" y2="92">${stops}</linearGradient></defs><circle cx="50" cy="50" r="33" fill="none" stroke="url(#sheen)" stroke-width="24"/></svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="sheen" gradientUnits="userSpaceOnUse" x1="13" y1="13" x2="87" y2="87">${stops}</linearGradient></defs><circle cx="50" cy="50" r="27" fill="none" stroke="url(#sheen)" stroke-width="20"/></svg>`;
 }
