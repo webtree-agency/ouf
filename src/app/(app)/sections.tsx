@@ -1,25 +1,15 @@
-import StatTiles from "@/components/stats/StatTiles";
-import TodayDecks from "@/components/stats/TodayDecks";
+import DeckList from "@/components/home/DeckList";
+import TodayCard from "@/components/home/TodayCard";
 import { listDecks } from "@/lib/queries/decks";
-import { tiles } from "@/lib/queries/stats";
 
 type Scope = { userId: string; languageId: string };
 
-export async function TilesSection({ scope }: { scope: Scope }) {
-  return <StatTiles tiles={await tiles(scope)} />;
-}
-
-export async function DecksSection({
-  scope,
-  languageName,
-}: {
-  scope: Scope;
-  languageName: string;
-}) {
+export async function TodaySection({ scope }: { scope: Scope }) {
+  const decks = await listDecks(scope.userId, scope.languageId);
   return (
-    <TodayDecks
-      decks={await listDecks(scope.userId, scope.languageId)}
-      languageName={languageName}
-    />
+    <>
+      <TodayCard decks={decks} />
+      <DeckList decks={decks} />
+    </>
   );
 }

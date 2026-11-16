@@ -15,7 +15,7 @@ export type NavIcon =
 export type NavEntry = { label: string; href: string; icon: NavIcon };
 
 export const MAIN_NAV: readonly NavEntry[] = [
-  { label: "Übersicht", href: "/", icon: "uebersicht" },
+  { label: "Start", href: "/", icon: "uebersicht" },
   { label: "Lernen", href: "/lernen", icon: "lernen" },
   { label: "Karten", href: "/karten", icon: "karten" },
   { label: "Decks", href: "/decks", icon: "decks" },

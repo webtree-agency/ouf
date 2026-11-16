@@ -35,7 +35,7 @@ const Badge: React.FC<BadgeProps> = ({
   const variants = {
     light: {
       primary:
-        "bg-brand-50 text-brand-700 dark:bg-brand-300/10 dark:text-brand-300",
+        "bg-brand-50 text-gray-900 dark:bg-brand-300/10 dark:text-brand-300",
       success:
         "bg-success-50 text-success-600 dark:bg-success-500/15 dark:text-success-500",
       error:
@@ -47,7 +47,7 @@ const Badge: React.FC<BadgeProps> = ({
       dark: "bg-gray-500 text-white dark:bg-white/5 dark:text-white",
     },
     solid: {
-      primary: "bg-brand-600 text-white dark:bg-brand-300 dark:text-gray-900",
+      primary: "bg-gray-800 text-white dark:bg-brand-300 dark:text-gray-900",
       success: "bg-success-500 text-white dark:text-white",
       error: "bg-error-500 text-white dark:text-white",
       warning: "bg-warning-500 text-white dark:text-white",

@@ -54,8 +54,8 @@ export default function Pagination({
             aria-current={target === page ? "page" : undefined}
             className={`flex h-10 w-10 items-center justify-center rounded-lg text-sm font-medium ${
               target === page
-                ? "bg-brand-600 dark:bg-brand-300 text-white dark:text-gray-900"
-                : "hover:text-brand-600 text-gray-700 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-white/[0.03]"
+                ? "dark:bg-brand-300 bg-gray-800 text-white dark:text-gray-900"
+                : "text-gray-700 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-white/[0.03]"
             }`}
           >
             {target}

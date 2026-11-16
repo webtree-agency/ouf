@@ -7,7 +7,7 @@ import { createCard } from "../cards/cards.ts";
 import { createDeck } from "../decks/decks.ts";
 import { addLanguage } from "../languages/languages.ts";
 import { rateCard, studyState, undoLastReview } from "../learning/session.ts";
-import { forecast, history, tiles } from "./stats.ts";
+import { forecast, history, learningStreak, tiles } from "./stats.ts";
 
 before(setupTestDb);
 beforeEach(truncateAll);
@@ -117,4 +117,21 @@ test("die Statistik zeigt nur die eigene Sprache und das eigene Konto", async ()
     (await forecast(fremd, today, 14)).reduce((sum, d) => sum + d.count, 0),
     0,
   );
+});
+
+test("Serie: zählt Lerntage in Folge, eine zurückgenommene Bewertung nicht", async () => {
+  const scope = await setup(6);
+  const vorgestern = new Date(yesterday.getTime() - DAY);
+
+  await rateNext(scope, 3, vorgestern);
+  await rateNext(scope, 3, yesterday);
+  assert.equal(await learningStreak(scope.userId, today), 2);
+
+  await rateNext(scope, 3, today);
+  assert.equal(await learningStreak(scope.userId, today), 3);
+
+  await undoLastReview(scope.userId, scope.languageId, today);
+  assert.equal(await learningStreak(scope.userId, today), 2);
+  const andere = await seedUser({ email: "andere@ouf.local" });
+  assert.equal(await learningStreak(andere, today), 0);
 });

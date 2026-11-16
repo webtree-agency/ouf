@@ -1,31 +1,38 @@
 import Link from "next/link";
 
 import BrandLogo from "@/components/brand/BrandLogo";
-import SidebarToggleButton from "@/components/shell/SidebarToggleButton";
+import NavLinks from "@/components/shell/NavLinks";
+import StreakBadge from "@/components/shell/StreakBadge";
 import UserMenu from "@/components/shell/UserMenu";
 
 export default function AppHeader({
   name,
   email,
+  streak,
   signOut,
   languageSwitcher,
 }: {
   name: string;
   email: string;
+  streak: number;
   signOut: () => Promise<void>;
   languageSwitcher?: React.ReactNode;
 }) {
   return (
-    <header className="sticky top-0 z-30 flex w-full items-center justify-between gap-3 border-b border-gray-200 bg-white/90 px-3 py-3 backdrop-blur-md xl:px-6 dark:border-gray-800 dark:bg-gray-900/90">
-      <div className="flex items-center gap-3">
-        <SidebarToggleButton />
-        {/* Unter `xl` liegt die Seitenleiste weggeschoben, also fehlte sonst die Marke. */}
-        <Link href="/" aria-label="Zur Übersicht" className="xl:hidden">
-          <BrandLogo className="h-9" />
-        </Link>
-        {languageSwitcher}
+    <header className="bg-canvas/90 sticky top-0 z-30 w-full backdrop-blur-md dark:bg-gray-950/90">
+      <div className="mx-auto flex h-16 max-w-5xl items-center justify-between gap-3 px-4 md:h-20 md:px-6">
+        <div className="flex items-center gap-6">
+          <Link href="/" aria-label="Zur Übersicht">
+            <BrandLogo className="h-12 md:h-14" />
+          </Link>
+          <NavLinks />
+        </div>
+        <div className="flex items-center gap-1">
+          {languageSwitcher}
+          <StreakBadge days={streak} />
+          <UserMenu name={name} email={email} signOut={signOut} />
+        </div>
       </div>
-      <UserMenu name={name} email={email} signOut={signOut} />
     </header>
   );
 }

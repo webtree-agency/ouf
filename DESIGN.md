@@ -16,7 +16,7 @@ wofür sie gelten. Leitsatz: weniger ist mehr.
 Schrift und keine andere Strichstärke; `font-semibold` und `font-bold` sind in
 `globals.css` gar nicht erst vorhanden.
 
-**Logo:** «ouf.» als Striche (schmal, mittelschwer) auf einer leicht gedrehten,
+**Logo:** «ouf.» als kräftige, runde Striche auf einer leicht gedrehten,
 abgerundeten Pinselfläche in `brand-300`. Die Pfade stehen in
 `components/brand/logoPaths.ts`, die Komponente in `BrandLogo.tsx`. Favicon,
 Apple-Icon und Manifest-Icons entstehen daraus mit `pnpm icons`. Das Logo ist in
@@ -47,24 +47,35 @@ schwarz (`gray-950` `#080b10`, `gray-900` `#0f141c`).
 Das Pastell hat auf Hell zu wenig Kontrast für Text (1.6:1 auf Weiss). Daraus
 folgt:
 
-| Wo                        | Hell                                                | Dunkel                           |
-| ------------------------- | --------------------------------------------------- | -------------------------------- |
-| Knopf                     | `bg-brand-600` Weiss · 5.1:1                        | `bg-brand-300` `gray-900` · 12:1 |
-| Link, Text in Markenfarbe | `text-brand-600` · 4.8:1 auf canvas                 | `text-brand-300` · 12:1          |
-| Aktiver Menüpunkt         | `bg-brand-50 text-brand-700` · 6.5:1                | `bg-brand-300/10 text-brand-300` |
-| Nebentext                 | `text-gray-500` · 4.8:1 auf canvas, 5.1:1 auf Weiss | `text-gray-400` · 7.4:1          |
-| Pastell als Fläche        | Logo, Auswahl, Fokusring, Diagramm                  | dieselben                        |
+| Wo                 | Hell                                                | Dunkel                           |
+| ------------------ | --------------------------------------------------- | -------------------------------- |
+| Knopf              | `bg-gray-800` Weiss · 15:1                          | `bg-brand-300` `gray-900` · 12:1 |
+| Link               | `text-gray-900`, Linie `brand-300`                  | `text-brand-300` · 12:1          |
+| Aktiver Menüpunkt  | `bg-brand-300/45 text-gray-900`                     | `bg-brand-300/10 text-brand-300` |
+| Nebentext          | `text-gray-500` · 4.8:1 auf canvas, 5.1:1 auf Weiss | `text-gray-400` · 7.4:1          |
+| Pastell als Fläche | Logo, Auswahl, Fokusring, Diagramm                  | dieselben                        |
 
-**Nie:** Text in `brand-300`, `brand-400` oder `brand-500` auf Hell, `gray-400`
-als Text auf Hell.
+**Nie:** Text in einem Blau auf Hell, `brand-500` bis `brand-700` irgendwo in
+der Oberfläche (Jann, 16.11.2026: das mittlere Blau wirkt wie das Cockpit),
+`gray-400` als Text auf Hell.
 
 ## Flächen
 
 - Seitengrund `bg-canvas`, dunkel `bg-gray-950`.
 - Karte `rounded-2xl border border-gray-200 bg-white`, dunkel
   `dark:border-gray-800 dark:bg-gray-900`.
-- Kopfzeile und Seitenleiste weiss, dunkel `gray-900`.
+- Kopfzeile auf `canvas`, ohne Rand, dunkel `gray-950`. Am Handy die Leiste
+  unten, ab `md` die Navigation als Pillen in der Kopfzeile.
+- **„Heute" ist die einzige pastellblaue Fläche** (`bg-brand-300`, dunkel
+  `brand-300/10`), mit dem dunklen Knopf darin. Ein Deck ist eine weisse Zeile
+  mit Symbol in `brand-100`, die ganz klickbar ist.
 - Schatten nur an Überlagerungen (`shadow-theme-lg`), nicht an Karten.
+
+## Französisch
+
+Die Übersicht grüsst auf Französisch („Bonjour, Jann", ab 18 Uhr „Bonsoir")
+und nennt das Datum französisch („lundi 16 novembre"). Sonst bleibt die
+Oberfläche deutsch.
 
 ## Schriftgrössen
 
@@ -82,10 +93,10 @@ für `text-title-lg` und `text-title-2xl`.
 
 ## Diagramme
 
-ApexCharts, Serien in `brand-600` (dunkel `brand-300`) und `brand-300`/`gray-300`
-als zweite Farbe. Kein Tooltip, keine Legende: Die Zahlen stehen daneben.
+ApexCharts, Serien in `brand-400` (dunkel `brand-300`) und `gray-300` als
+zweite Farbe. Kein Tooltip, keine Legende: Die Zahlen stehen daneben.
 
 ## Bewegung
 
-Nur wo sie etwas erklärt: die Seitenleiste klappt, die Karte deckt ohne
-Animation auf. Kein Konfetti, keine Flammen, keine Abzeichen.
+Nur wo sie etwas erklärt; die Karte deckt ohne Animation auf. Kein Konfetti,
+keine Abzeichen. Die einzige Flamme ist die Serie in der Kopfzeile.

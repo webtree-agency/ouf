@@ -172,6 +172,30 @@ Je Entscheid: was gilt, was verworfen wurde, warum. Neueste unten.
 - **Ungenutzte Bausteine gelöscht** (`TextArea`, `change`, `percent`); was hier
   liegt, läuft auch.
 
+## Nach dem ersten Ansehen (16.11.2026)
+
+Jann wollte weg vom Cockpit: weniger Verwaltung, mehr App, wie die Vorlage mit
+„Salut" und Serie.
+
+- **Knöpfe auf Hell in Tinte (`gray-800`) statt `brand-600`.** Das Pastell
+  bleibt Fläche („Heute", aktive Navigation, Symbole, Linie unter Links).
+  Verworfen: ein dunkleres Blau für Knöpfe; jedes Blau mit genug Kontrast ist
+  das mittlere Blau, das nicht gefiel.
+- **Keine Seitenleiste mehr.** Kopfzeile mit Navigation ab `md`, am Handy eine
+  Leiste unten mit fünf Zielen. Auf `/lernen` fehlt sie, dort liegen die
+  Bewertungsknöpfe. Verworfen: die Seitenleiste nur am Laptop behalten; zwei
+  Navigationen je nach Breite zu pflegen lohnt sich bei fünf Zielen nicht.
+- **Serie in der Kopfzeile, gegen die frühere Regel „keine Serien".** Tage in
+  Folge mit mindestens einer Bewertung, über alle Sprachen, zurückgenommene
+  zählen nicht. Wer heute noch nicht gelernt hat, behält die Serie bis
+  Mitternacht. Verworfen: Serie je Sprache; wer zwei Sprachen lernt, lernt an
+  einem Tag nicht zwingend beide.
+- **Übersicht ohne Kacheln.** Begrüssung, „Heute" mit der Zahl und dem Knopf,
+  darunter die Decks. Die Kacheln stehen weiter unter `/statistik`.
+- **Logo dicker** (Strich 10 statt 6.5), Icons neu erzeugt.
+- **Zwei Icons dazu** (`flame.svg`, `chevron-right.svg`) im Strich des
+  Cockpit-Satzes; der Satz hatte keine Flamme und nur den Pfeil nach links.
+
 ## Vorschläge für alle Projekte
 
 - **`apple-mobile-web-app-capable` von Hand setzen**, wo `appleWebApp` steht.

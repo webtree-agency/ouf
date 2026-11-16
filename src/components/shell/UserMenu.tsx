@@ -8,7 +8,7 @@ import { MENU_ITEM } from "@/components/shell/menuItem";
 import { NAV_ICONS } from "@/components/shell/navIcons";
 import ThemeMenuItem from "@/components/shell/ThemeMenuItem";
 import { useClickOutside } from "@/hooks/useClickOutside";
-import { ChevronDownIcon, LogoutIcon } from "@/icons";
+import { LogoutIcon } from "@/icons";
 import { PERSONAL_LINKS } from "@/lib/navigation";
 
 export default function UserMenu({
@@ -43,16 +43,15 @@ export default function UserMenu({
         onClick={() => setOpen((value) => !value)}
         aria-expanded={open}
         aria-haspopup="menu"
-        className="text-theme-sm flex h-11 items-center gap-2 rounded-lg px-2 font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-white/5"
+        aria-label={`Menü von ${name}`}
+        className="text-theme-sm flex h-11 w-11 items-center justify-center rounded-full font-medium hover:bg-gray-100 dark:hover:bg-white/5"
       >
         <span
           aria-hidden
-          className="bg-brand-100 text-brand-800 dark:bg-brand-300/15 dark:text-brand-300 flex h-8 w-8 items-center justify-center rounded-full"
+          className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-200/70 text-gray-800 dark:bg-white/10 dark:text-white/90"
         >
           {initial(name)}
         </span>
-        <span className="hidden max-w-40 truncate sm:inline">{name}</span>
-        <ChevronDownIcon className={open ? "rotate-180" : ""} />
       </button>
 
       {open && (

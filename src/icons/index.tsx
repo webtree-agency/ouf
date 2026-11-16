@@ -11,6 +11,8 @@ export { default as AlertIcon } from "./alert.svg";
 export { default as InfoIcon } from "./info.svg";
 export { default as ErrorIcon } from "./info-hexa.svg";
 export { default as BoltIcon } from "./bolt.svg";
+// Die Serie in der Kopfzeile; der Satz des Cockpits hat keine Flamme.
+export { default as FlameIcon } from "./flame.svg";
 export { default as ArrowUpIcon } from "./arrow-up.svg";
 export { default as ArrowDownIcon } from "./arrow-down.svg";
 export { default as FolderIcon } from "./folder.svg";
@@ -45,6 +47,7 @@ export { default as EyeCloseIcon } from "./eye-close.svg";
 export { default as TimeIcon } from "./time.svg";
 export { default as CopyIcon } from "./copy.svg";
 export { default as ChevronLeftIcon } from "./chevron-left.svg";
+export { default as ChevronRightIcon } from "./chevron-right.svg";
 export { default as UserCircleIcon } from "./user-circle.svg";
 export { default as TaskIcon } from "./task-icon.svg";
 export { default as ListIcon } from "./list.svg";

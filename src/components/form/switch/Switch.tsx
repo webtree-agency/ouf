@@ -5,7 +5,7 @@ export default function Switch({ checked }: { checked: boolean }) {
       aria-hidden
       className={`relative inline-block h-6 w-11 shrink-0 rounded-full transition duration-150 ${
         checked
-          ? "bg-brand-600 dark:bg-brand-300"
+          ? "dark:bg-brand-300 bg-gray-800"
           : "bg-gray-200 dark:bg-white/10"
       }`}
     >

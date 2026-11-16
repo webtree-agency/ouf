@@ -111,7 +111,7 @@ export default function CardFields({
                 }
                 className={`text-theme-sm has-focus-visible:ring-brand-500 flex h-10 min-w-12 cursor-pointer items-center justify-center rounded-md px-3 font-medium has-focus-visible:ring-2 ${
                   values.gender === option.value
-                    ? "bg-brand-50 text-brand-700 dark:bg-brand-300/10 dark:text-brand-300"
+                    ? "bg-brand-50 dark:bg-brand-300/10 dark:text-brand-300 text-gray-900"
                     : "text-gray-500 hover:text-gray-800 dark:text-gray-400 dark:hover:text-white/90"
                 }`}
               >

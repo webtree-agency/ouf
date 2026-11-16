@@ -18,7 +18,8 @@ sie springt beim Filtern nicht nach oben, der Zurück-Knopf bringt den Filter
 mit, es ist immer nur ein Menü offen. Diese Dinge stehen in §3, „Was man nicht
 sieht, aber sofort merkt", und werden **mitgebaut, nicht nachgereicht.**
 
-**Weniger ist mehr.** Keine Gamification, keine Serien, keine Einstellungsseite
+**Weniger ist mehr.** Keine Gamification ausser der Serie in der Kopfzeile
+(Jann, 16.11.2026), keine Abzeichen, keine Einstellungsseite
 voller Schalter. Eine Einstellung gibt es nur, wenn ohne sie etwas nicht geht.
 Pro Deck ist das das Tageslimit für neue Karten, sonst nichts.
 
@@ -142,9 +143,11 @@ Alles steht in `src/app/globals.css`, erklärt in `DESIGN.md`. **Nur diese Werte
 | Fehler  | `error-*`          | Fehler, Löschen                  |
 | Warnung | `warning-*`        | Achtung, Dublette                |
 
-**Das Pastellblau `brand-300` trägt keinen Text auf Hell.** Knöpfe und Links auf
-Hell sind `brand-600` (AA mit Weiss), im Dunkelmodus `brand-300` mit dunkler
-Schrift. Werte und Kontraste in `DESIGN.md`.
+**Das Pastellblau `brand-300` ist auf Hell Fläche, nie Text.** Knöpfe auf Hell
+sind Tinte (`gray-800`, weisse Schrift), Links Tinte mit pastellblauer Linie;
+im Dunkelmodus `brand-300` mit dunkler Schrift. Das mittlere Blau
+(`brand-500` bis `brand-700`) kommt in der Oberfläche nicht vor. Werte und
+Kontraste in `DESIGN.md`.
 
 ### Schriftgrössen — abschliessende Liste
 
@@ -215,7 +218,7 @@ Mobile first. Jede Seite bei **375, 768 und 1440 px** geprüft. Touch-Ziele
 
 ### Überlagerungen
 
-Eine Überlagerung deckt alles ab, Seitenleiste und Kopfzeile inklusive; sie wird
+Eine Überlagerung deckt alles ab, Kopfzeile und Leiste unten inklusive; sie wird
 dort eingehängt, wo kein Vorfahr einen Stapelkontext aufmacht (Shell oder
 Portal). Die Antwort auf einen Klick steht dort, wo der Klick war. Die frische
 Bestätigung ist ein eigener Dialog über allem (`ReauthDialog`).
@@ -401,7 +404,7 @@ src/
     api/            Dublettenprüfung, Export
   components/
     ui/ form/ common/ charts/   Bausteine
-    shell/          Seitenleiste, Kopfzeile, Sprachauswahl, Benutzermenü
+    shell/          Kopfzeile, Leiste unten, Serie, Sprachauswahl, Benutzermenü
     <bereich>/      fachliche Komponenten
   lib/
     auth/ actions/ http/ validation/ queries/

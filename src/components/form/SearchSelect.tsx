@@ -333,7 +333,7 @@ export default function SearchSelect({
                     onClick={() => wähle(choice)}
                     className={`text-theme-sm flex w-full items-center gap-2.5 truncate rounded-md px-3 py-2.5 text-left ${
                       index === markiert
-                        ? "bg-brand-50 text-brand-700 dark:bg-brand-300/10 dark:text-brand-300"
+                        ? "bg-brand-50 dark:bg-brand-300/10 dark:text-brand-300 text-gray-900"
                         : "text-gray-700 dark:text-gray-300"
                     }`}
                   >

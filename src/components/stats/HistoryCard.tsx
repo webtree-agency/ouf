@@ -50,7 +50,7 @@ export default function HistoryCard({ days }: { days: HistoryDay[] }) {
             <span className="flex items-center gap-1.5">
               <span
                 aria-hidden
-                className="bg-brand-600 dark:bg-brand-300 size-2.5 rounded-full"
+                className="bg-brand-400 dark:bg-brand-300 size-2.5 rounded-full"
               />
               gewusst
             </span>

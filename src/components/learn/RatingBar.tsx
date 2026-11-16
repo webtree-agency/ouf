@@ -12,7 +12,7 @@ const BUTTON =
 const OUTLINE =
   "bg-white text-gray-800 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 dark:bg-gray-900 dark:text-white/90 dark:ring-gray-700 dark:hover:bg-white/5";
 const PRIMARY =
-  "bg-brand-600 text-white hover:bg-brand-700 dark:bg-brand-300 dark:text-gray-900 dark:hover:bg-brand-200";
+  "bg-gray-800 text-white hover:bg-gray-900 dark:bg-brand-300 dark:text-gray-900 dark:hover:bg-brand-200";
 
 /** Vier gleich breite Knöpfe, unter jedem das nächste Intervall. „Gut" ist der Hauptknopf. */
 export default function RatingBar({

@@ -9,7 +9,7 @@ import { MENU_ITEM } from "@/components/shell/menuItem";
 import { Dropdown } from "@/components/ui/dropdown/Dropdown";
 import { CheckLineIcon, ChevronDownIcon, GlobeIcon } from "@/icons";
 
-export type LanguageChoice = { id: string; name: string };
+export type LanguageChoice = { id: string; name: string; code: string };
 
 /** Ein Klick wechselt die Sprache; Übersicht, Decks und Statistik folgen. */
 export default function LanguageSwitcher({
@@ -44,10 +44,14 @@ export default function LanguageSwitcher({
         aria-expanded={open}
         aria-haspopup="menu"
         aria-label={`Sprache: ${active?.name ?? "keine"}`}
-        className="text-theme-sm flex h-11 items-center gap-2 rounded-lg border border-gray-200 px-3 font-medium text-gray-700 hover:bg-gray-100 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-white/5"
+        className="text-theme-sm flex h-11 items-center gap-1.5 rounded-full px-3 font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-white/5"
       >
         <GlobeIcon className="hidden size-5 text-gray-500 sm:block dark:text-gray-400" />
-        <span className={pending ? "opacity-60" : ""}>
+        {/* Am Handy reicht das Kürzel; der Platz gehört der Serie. */}
+        <span className={`uppercase sm:hidden ${pending ? "opacity-60" : ""}`}>
+          {active?.code ?? "?"}
+        </span>
+        <span className={`hidden sm:inline ${pending ? "opacity-60" : ""}`}>
           {active?.name ?? "Sprache"}
         </span>
         <ChevronDownIcon className={`size-5 ${open ? "rotate-180" : ""}`} />
@@ -57,7 +61,7 @@ export default function LanguageSwitcher({
         isOpen={open}
         onClose={() => setOpen(false)}
         toggle={toggle}
-        className="right-auto left-0 w-60 p-2"
+        className="right-0 left-auto w-60 p-2"
       >
         <ul role="menu">
           {languages.map((language) => (
@@ -71,7 +75,7 @@ export default function LanguageSwitcher({
               >
                 <span className="flex-1 text-left">{language.name}</span>
                 {language.id === activeId && (
-                  <CheckLineIcon className="text-brand-600 dark:text-brand-300 size-5" />
+                  <CheckLineIcon className="dark:text-brand-300 size-5 text-gray-900" />
                 )}
               </button>
             </li>

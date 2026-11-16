@@ -47,8 +47,8 @@
   --color-black: #080b10;
 
   /* Aus #BBD3F2 abgeleitet, Farbton fest, Helligkeit in OKLCH gestuft.
-     Das Pastell trägt keinen Text auf Hell; Knöpfe und Links sind brand-600
-     (5.1:1 mit Weiss), im Dunkelmodus brand-300 (12:1 auf gray-900). */
+     Auf Hell ist das Pastell Fläche, Knöpfe sind Tinte (gray-800); im
+     Dunkelmodus trägt brand-300 die Knöpfe (12:1 auf gray-900). */
   --color-brand-25: #f5fbff;
   --color-brand-50: #ebf6ff;
   --color-brand-100: #deefff;
@@ -175,7 +175,7 @@
   @apply text-theme-sm relative flex w-full items-center gap-3 rounded-lg px-3 py-2.5 font-medium;
 }
 @utility menu-item-active {
-  @apply bg-brand-50 text-brand-700 dark:bg-brand-300/10 dark:text-brand-300;
+  @apply bg-brand-300/45 dark:bg-brand-300/10 dark:text-brand-300 text-gray-900;
 }
 @utility menu-item-inactive {
   @apply text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-white/5;
@@ -185,7 +185,7 @@
   @apply flex h-6 w-6 shrink-0 items-center justify-center;
 }
 @utility menu-item-icon-active {
-  @apply text-brand-600 dark:text-brand-300;
+  @apply dark:text-brand-300 text-gray-900;
 }
 @utility menu-item-icon-inactive {
   @apply text-gray-500 group-hover:text-gray-700 dark:text-gray-400 dark:group-hover:text-gray-300;
@@ -196,7 +196,7 @@
   @apply underline decoration-transparent decoration-1 underline-offset-4 transition-[color,text-decoration-color] duration-200 ease-out hover:decoration-current;
 }
 @utility link-brand {
-  @apply text-brand-600 hover:text-brand-700 dark:text-brand-300 dark:hover:text-brand-200 underline decoration-transparent decoration-1 underline-offset-4 transition-[color,text-decoration-color] duration-200 ease-out hover:decoration-current;
+  @apply dark:text-brand-300 decoration-brand-300 dark:decoration-brand-300/40 dark:hover:decoration-brand-300 font-medium text-gray-900 underline decoration-2 underline-offset-4 transition-[text-decoration-color] duration-200 ease-out hover:decoration-gray-900;
 }
 
 @utility no-scrollbar {

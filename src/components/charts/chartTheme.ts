@@ -12,7 +12,7 @@ export function useChartTheme() {
   return {
     text: dark ? "#9ea5b0" : "#666f7e",
     grid: dark ? "#182333" : "#eef0f4",
-    primary: dark ? "#bbd3f2" : "#4270aa",
+    primary: dark ? "#bbd3f2" : "#89b1e3",
     muted: dark ? "#4e5969" : "#ccd1d9",
   };
 }

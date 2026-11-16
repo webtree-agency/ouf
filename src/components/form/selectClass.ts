@@ -24,7 +24,7 @@ export const SELECT_COMPACT =
 export function choiceClass(active: boolean, disabled = false): string {
   return `text-theme-sm inline-flex min-h-11 items-center gap-2 rounded-lg border px-4 font-medium transition-colors ${
     active
-      ? "border-brand-600 bg-brand-50 text-brand-700 dark:border-brand-300 dark:bg-brand-300/10 dark:text-brand-300"
+      ? "border-gray-800 bg-brand-50 text-gray-900 dark:border-brand-300 dark:bg-brand-300/10 dark:text-brand-300"
       : "border-gray-300 text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-white/5"
   } ${disabled ? "cursor-not-allowed opacity-60" : ""}`;
 }

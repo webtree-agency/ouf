@@ -5,23 +5,24 @@ Knöpfen. Eine Person, ein Konto, ihre Sprachen, ihre Decks.
 
 ## Seitenaufbau
 
-Shell wie im Cockpit: einklappbare Seitenleiste links, Kopfzeile mit der
-**Sprachauswahl**, Hell/Dunkel und Benutzermenü. Alles unter der Shell zeigt nur
-die gewählte Sprache.
+Eine Kopfzeile mit Logo, Navigation (ab `md`), **Sprachauswahl**, Serie und
+Benutzermenü; am Handy liegt die Navigation unten im Daumenbereich, ausser beim
+Lernen. Keine Seitenleiste. Alles unter der Shell zeigt nur die gewählte
+Sprache.
 
-| Adresse                      | Inhalt                                                                           |
-| ---------------------------- | -------------------------------------------------------------------------------- |
-| `/`                          | Übersicht: vier Kacheln (fällig, neu, gelernt, Trefferquote), Decks mit „Lernen" |
-| `/lernen` (`?deck=`)         | Eine Karte, aufdecken, bewerten. Ohne Deck alle Decks der Sprache                |
-| `/karten`                    | Liste mit Suche, Filter Deck, Tag, Genus, blätternd, alles in der Adresse        |
-| `/karten/neu` (`?deck=`)     | Schnellerfassung                                                                 |
-| `/karten/[id]`               | Karte bearbeiten oder löschen                                                    |
-| `/decks`                     | Decks der Sprache mit Zahlen, anlegen, umbenennen, Tageslimit, löschen           |
-| `/statistik`                 | Kacheln, Prognose 14 Tage, Verlauf 30 Tage, je mit den Zahlen daneben            |
-| `/daten`                     | Import und Export als CSV/TSV                                                    |
-| `/sprachen`                  | Sprachen anlegen und entfernen                                                   |
-| `/konto`                     | Name, Passkeys, Notfallweg, Geräte, Konto löschen                                |
-| `/anmelden`, `/registrieren` | Passkey; `/anmelden/notfall` mit TOTP oder Ersatzcode                            |
+| Adresse                      | Inhalt                                                                      |
+| ---------------------------- | --------------------------------------------------------------------------- |
+| `/`                          | Begrüssung, „Heute" mit der Zahl und „Lernen", Decks mit dem, was offen ist |
+| `/lernen` (`?deck=`)         | Eine Karte, aufdecken, bewerten. Ohne Deck alle Decks der Sprache           |
+| `/karten`                    | Liste mit Suche, Filter Deck, Tag, Genus, blätternd, alles in der Adresse   |
+| `/karten/neu` (`?deck=`)     | Schnellerfassung                                                            |
+| `/karten/[id]`               | Karte bearbeiten oder löschen                                               |
+| `/decks`                     | Decks der Sprache mit Zahlen, anlegen, umbenennen, Tageslimit, löschen      |
+| `/statistik`                 | Kacheln, Prognose 14 Tage, Verlauf 30 Tage, je mit den Zahlen daneben       |
+| `/daten`                     | Import und Export als CSV/TSV                                               |
+| `/sprachen`                  | Sprachen anlegen und entfernen                                              |
+| `/konto`                     | Name, Passkeys, Notfallweg, Geräte, Konto löschen                           |
+| `/anmelden`, `/registrieren` | Passkey; `/anmelden/notfall` mit TOTP oder Ersatzcode                       |
 
 Leerer Zustand führt weiter: ohne Sprache auf `/sprachen`, ohne Deck auf
 `/decks`, ohne Karte auf `/karten/neu`.

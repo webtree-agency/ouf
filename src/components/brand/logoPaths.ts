@@ -1,7 +1,7 @@
 /**
  * Die Wortmarke als Pfade, nicht als Text: so sieht sie in jedem Browser, im
  * Favicon und im PNG gleich aus, ohne dass eine Schrift geladen sein muss.
- * Raster 200 × 100; die Buchstaben sind Striche, schmal und mittelschwer.
+ * Raster 200 × 100; die Buchstaben sind kräftige, runde Striche.
  */
 export const BRUSH_PATH =
   "M31 29C62 21 131 19 171 23C184 24 189 36 187 50C185 66 181 76 166 78C121 81 70 83 34 79C20 77 13 65 14 50C15 38 20 31 31 29Z";
@@ -15,9 +15,9 @@ export const LETTER_PATHS = [
   "M127 66V30C127 23 130 19 137 19C139 19 141 19.5 142.5 20.5M119 36H139",
 ];
 
-export const DOT = { cx: 150, cy: 62.5, r: 4.2 };
+export const DOT = { cx: 151, cy: 61, r: 6.2 };
 
-export const STROKE_WIDTH = 6.5;
+export const STROKE_WIDTH = 10;
 
 /** Die Fläche fürs quadratische Zeichen (Favicon, App-Icon), Raster 100 × 100. */
 export const SQUARE_BRUSH_PATH =

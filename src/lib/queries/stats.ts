@@ -3,7 +3,8 @@ import { and, eq, gte, isNull, lt, sql } from "drizzle-orm";
 import { getDb, schema } from "../../db/index.ts";
 import { TIME_ZONE } from "../format/dateTime.ts";
 import { fillDays, share, type DayCount } from "../stats/days.ts";
-import { addDays, startOfDay } from "../time/day.ts";
+import { streak } from "../stats/streak.ts";
+import { addDays, dayKey, startOfDay } from "../time/day.ts";
 import { ACTIVE_SCHEDULE, listDecks } from "./decks.ts";
 
 type Scope = { userId: string; languageId: string };
@@ -139,3 +140,31 @@ export async function tiles(scope: Scope, now = new Date()): Promise<Tiles> {
     accuracyBefore: share(monthBefore.remembered, monthBefore.recalls),
   };
 }
+
+/** Tage in Folge gelernt, über alle Sprachen; zurückgenommene zählen nicht. */
+export async function learningStreak(
+  userId: string,
+  now = new Date(),
+): Promise<number> {
+  const rows = await getDb()
+    .selectDistinct({ day: zurichDay(schema.reviews.reviewedAt) })
+    .from(schema.reviews)
+    .leftJoin(
+      schema.reviewUndos,
+      eq(schema.reviewUndos.reviewId, schema.reviews.id),
+    )
+    .where(
+      and(
+        eq(schema.reviews.userId, userId),
+        gte(schema.reviews.reviewedAt, addDays(now, -STREAK_WINDOW)),
+        isNull(schema.reviewUndos.reviewId),
+      ),
+    );
+  return streak(
+    rows.map((row) => row.day),
+    dayKey(now),
+  );
+}
+
+// Weiter zurück schaut niemand nach; die Abfrage bleibt so klein.
+const STREAK_WINDOW = 366;

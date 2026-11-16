@@ -1,33 +1,36 @@
 import { Suspense } from "react";
 
-import PageHeading from "@/components/common/PageHeading";
-import Button from "@/components/ui/button/Button";
-import {
-  TableSkeleton,
-  TilesSkeleton,
-} from "@/components/ui/skeleton/Skeleton";
+import { CardSkeleton, TableSkeleton } from "@/components/ui/skeleton/Skeleton";
+import { frenchDay, greeting } from "@/lib/format/greeting";
 import { requireLanguage } from "@/lib/languages/pageLanguage";
 
-import { DecksSection, TilesSection } from "./sections";
+import { TodaySection } from "./sections";
 
 export default async function OverviewPage() {
   const { session, language } = await requireLanguage();
   const scope = { userId: session.userId, languageId: language.id };
+  const now = new Date();
 
   return (
-    <>
-      <PageHeading
-        title="Übersicht"
-        action={<Button href="/lernen">Alle lernen</Button>}
-      />
-      <div className="space-y-6">
-        <Suspense fallback={<TilesSkeleton />}>
-          <TilesSection scope={scope} />
-        </Suspense>
-        <Suspense fallback={<TableSkeleton rows={3} />}>
-          <DecksSection scope={scope} languageName={language.name} />
-        </Suspense>
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-title-sm font-medium text-gray-900 dark:text-white/90">
+          {greeting(now)}, {session.name}
+        </h1>
+        <p className="text-theme-sm mt-1 text-gray-500 dark:text-gray-400">
+          {frenchDay(now)}
+        </p>
       </div>
-    </>
+      <Suspense
+        fallback={
+          <>
+            <CardSkeleton lines={4} />
+            <TableSkeleton rows={3} />
+          </>
+        }
+      >
+        <TodaySection scope={scope} />
+      </Suspense>
+    </div>
   );
 }

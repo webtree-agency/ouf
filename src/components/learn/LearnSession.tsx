@@ -100,9 +100,7 @@ export default function LearnSession({
         >
           <span
             className={
-              card?.isNew
-                ? "text-brand-700 dark:text-brand-300 font-medium"
-                : ""
+              card?.isNew ? "dark:text-brand-300 font-medium text-gray-900" : ""
             }
           >
             {neu} neu
@@ -152,7 +150,7 @@ export default function LearnSession({
                 type="button"
                 onClick={() => setRevealed(true)}
                 aria-keyshortcuts="Space"
-                className="bg-brand-600 hover:bg-brand-700 dark:bg-brand-300 dark:hover:bg-brand-200 flex h-14 w-full items-center justify-center rounded-xl text-base font-medium text-white dark:text-gray-900"
+                className="dark:bg-brand-300 dark:hover:bg-brand-200 flex h-14 w-full items-center justify-center rounded-xl bg-gray-800 text-base font-medium text-white hover:bg-gray-900 dark:text-gray-900"
               >
                 Aufdecken
               </button>
