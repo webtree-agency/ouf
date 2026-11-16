@@ -1,5 +1,6 @@
 "use client";
 import { useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 
 interface ModalProps {
   isOpen: boolean;
@@ -57,7 +58,8 @@ export const Modal: React.FC<ModalProps> = ({
     ? "w-full h-full text-left"
     : "motion-safe:animate-pop relative w-full rounded-2xl bg-white text-left dark:bg-gray-900";
 
-  return (
+  // Im Body, damit kein Vorfahr mit Transform oder Stapelkontext den Dialog einfängt.
+  return createPortal(
     <div ref={rootRef} className="modal fixed inset-0 z-99999 overflow-y-auto">
       {!isFullscreen && (
         <div
@@ -100,6 +102,7 @@ export const Modal: React.FC<ModalProps> = ({
           <div>{children}</div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 };

@@ -140,9 +140,11 @@
   --animate-card-out-right: card-out-right 160ms ease-in forwards;
   --animate-reveal: reveal 200ms ease-out;
   /* Dasselbe leise Hereinkommen überall: Seiten, Karten, Listen, Dialoge. */
-  --animate-rise: rise 260ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
-  --animate-pop: pop 160ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
-  --animate-fade: fade 160ms ease-out both;
+  /* `backwards`, nie `both`: Ein Transform, der nach dem Ende stehen bleibt,
+     macht das Element zum Bezug jedes `fixed` darin, ein Dialog sass im Kasten. */
+  --animate-rise: rise 260ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+  --animate-pop: pop 160ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
+  --animate-fade: fade 160ms ease-out backwards;
 
   @keyframes card-in {
     from {

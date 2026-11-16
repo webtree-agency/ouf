@@ -36,9 +36,16 @@ merkt sich keinen Entwurf.
    lassen?
 3. **Weitere Sprachen mit Genus?** Italienisch, Spanisch und Portugiesisch
    haben eines; vorbereitet ist auf Wunsch nur Französisch.
-4. **Das Logo** ist von Hand gezeichnet (Pfade in
-   `components/brand/logoPaths.ts`). Gefällt die Pinselfläche, oder soll eine
-   Grafikerin ran?
+4. **Karten schneller erfassen, mit Diktat und KI** (Jann, 16.11.2026, noch
+   zu überlegen). Idee in zwei Stufen:
+   - _Diktieren_ geht heute schon über die Tastatur des Geräts (Mikrofon am
+     iPhone, zweimal Fn am Mac), ohne Code und ohne fremden Dienst.
+   - _KI füllt die Karte vor_: Man sagt oder tippt nur das französische Wort,
+     ein Sprachmodell schlägt Übersetzung, Genus und einen Beispielsatz vor,
+     man bestätigt. Mit einem kleinen Modell (Claude Haiku) kostet das für
+     eine Person Rappen im Monat. Das bricht §8 („kein fremder Dienst“) und
+     braucht deshalb einen Entscheid. Lokal auf dem Mac mini wäre es ohne
+     fremden Dienst, aber langsamer und im Französisch schwächer.
 5. **`.apkg`** doch bauen, mit den zwei Paketen?
 
 ## Prüfliste
