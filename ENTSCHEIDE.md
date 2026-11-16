@@ -289,6 +289,11 @@ Jann wollte weg vom Cockpit: weniger Verwaltung, mehr App, wie die Vorlage mit
   Französisch“ und „Rückseite · Deutsch“, damit nichts durcheinandergerät.
 - **„Auch umgekehrt abfragen: Deutsch → Französisch“** statt „Auch rückwärts
   lernen“: Die alte Beschriftung sagte nicht, was passiert.
+- **DeepL, wenn ein Schlüssel da ist** (`DEEPL_API_KEY`, Jann: „überall so
+  günstig wie möglich“): Der Gratis-Plan übersetzt 500'000 Zeichen im Monat.
+  Das Genus kommt dann aus dem Artikel. „Andere Übersetzung“ bleibt bei
+  Claude, DeepL gäbe dieselbe noch einmal. Ohne Schlüssel übersetzt Claude
+  Haiku, etwa 0.00006 $ je Übersetzung.
 - **Bis zu drei Korrekturen** statt einer: LanguageTool liefert Varianten, die
   erste passt nicht immer („ta guele“). Abkürzungen („CAF“) fallen weg, die
   Kleinschreibung bleibt. Findet LanguageTool das Wort nicht, hilft

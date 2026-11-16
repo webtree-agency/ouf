@@ -1,5 +1,7 @@
 import { getDb, schema } from "../../db/index.ts";
+import { genderFromArticle } from "../cards/gender.ts";
 import type { LanguageProfile } from "../languages/catalog.ts";
+import { deeplConfigured, translateWithDeepl } from "./deepl.ts";
 import {
   suggestCard,
   suggestExample,
@@ -60,11 +62,22 @@ export async function exampleFor(
   return counted(userId, "example", suggestExample(card, language));
 }
 
-/** Die Rückseite zur Vorderseite, auf Klick; ein zweiter will eine andere. */
+/**
+ * Die Rückseite zur Vorderseite, auf Klick. Mit DeepL-Schlüssel übersetzt
+ * DeepL (gratis); eine *andere* Übersetzung kann nur Claude, DeepL gäbe
+ * dieselbe noch einmal.
+ */
 export async function translationFor(
   userId: string,
   card: { front: string; previous: string },
   language: LanguageProfile,
 ): Promise<Translation | null> {
+  if (deeplConfigured() && !card.previous) {
+    const back = await translateWithDeepl(card.front, language.code);
+    if (back) {
+      const gender = language.genders ? genderFromArticle(card.front) : null;
+      return { back, gender: gender ?? "" };
+    }
+  }
   return counted(userId, "translate", suggestTranslation(card, language));
 }

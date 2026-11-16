@@ -23,6 +23,8 @@ services:
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
       CLOUDFLARE_AI_TOKEN: ${CLOUDFLARE_AI_TOKEN:-}
       CLOUDFLARE_ACCOUNT_ID: ${CLOUDFLARE_ACCOUNT_ID:-}
+      # Wahlweise: Mit Schlüssel übersetzt DeepL (gratis), sonst Claude.
+      DEEPL_API_KEY: ${DEEPL_API_KEY:-}
     depends_on:
       postgres:
         condition: service_healthy
