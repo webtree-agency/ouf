@@ -19,30 +19,22 @@ export const DOT = { cx: 151, cy: 61, r: 6.2 };
 
 export const STROKE_WIDTH = 10;
 
-/** Grund des App-Icons: fast schwarz mit einem Hauch Blau, wie beim Webtree-Icon. */
-export const ICON_GROUND = "#0b1220";
-
-// Hell, Pastell, mittleres Blau, wieder hell: der Verlauf glänzt wie das Webtree-Zeichen.
+// Pastell, mittleres Blau, wieder hell: der Verlauf glänzt wie das Webtree-Zeichen
+// und bleibt auf Weiss wie auf Schwarz sichtbar.
 const SHEEN = [
-  ["0", "#ebf6ff"],
-  ["0.3", "#bbd3f2"],
+  ["0", "#bbd3f2"],
   ["0.55", "#4270aa"],
-  ["0.75", "#89b1e3"],
-  ["1", "#cae2ff"],
+  ["0.8", "#618fc8"],
+  ["1", "#89b1e3"],
 ];
 
 /**
- * Das App-Icon: «ouf.» als Striche mit blauem Verlauf auf dunklem Grund, ohne
- * Pinselfläche. `rounded` rundet selbst (Favicon); iOS und Android runden selbst.
+ * Das App-Icon: das «o.» aus dem Namen, ein Ring mit Punkt, ohne Grund und
+ * ohne Schrift (Jann, 16.11.2026). Raster 100 × 100.
  */
-export function appIconSvg(
-  options: { scale?: number; rounded?: boolean } = {},
-): string {
-  const scale = options.scale ?? 0.72;
+export function appIconSvg(): string {
   const stops = SHEEN.map(
     ([offset, color]) => `<stop offset="${offset}" stop-color="${color}"/>`,
   ).join("");
-  const strokes = LETTER_PATHS.map((d) => `<path d="${d}"/>`).join("");
-  const ground = `<rect width="100" height="100" rx="${options.rounded ? 22 : 0}" fill="${ICON_GROUND}"/>`;
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="sheen" gradientUnits="userSpaceOnUse" x1="56" y1="14" x2="160" y2="72">${stops}</linearGradient><radialGradient id="glow" cx="50" cy="44" r="46" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4270aa" stop-opacity="0.28"/><stop offset="1" stop-color="#4270aa" stop-opacity="0"/></radialGradient></defs>${ground}<rect width="100" height="100" rx="${options.rounded ? 22 : 0}" fill="url(#glow)"/><g transform="translate(50 50) scale(${scale}) translate(-106 -42.5)"><g fill="none" stroke="url(#sheen)" stroke-width="${STROKE_WIDTH}" stroke-linecap="round" stroke-linejoin="round">${strokes}</g><circle cx="${DOT.cx}" cy="${DOT.cy}" r="${DOT.r}" fill="url(#sheen)"/></g></svg>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="sheen" gradientUnits="userSpaceOnUse" x1="12" y1="14" x2="90" y2="88">${stops}</linearGradient></defs><circle cx="43" cy="47" r="27" fill="none" stroke="url(#sheen)" stroke-width="16"/><circle cx="83" cy="79" r="9" fill="url(#sheen)"/></svg>`;
 }

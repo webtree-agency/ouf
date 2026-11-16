@@ -44,27 +44,22 @@ function ico(images: { size: number; data: Buffer }[]): Buffer {
   return Buffer.concat([header, ...entries, ...images.map((i) => i.data)]);
 }
 
-// Im Browser-Tab rundet niemand: dort rundet das Icon selbst.
-const transparent = appIconSvg({ rounded: true });
-// iOS und Android runden selbst: also ein voller Grund bis in die Ecken.
-const onCanvas = appIconSvg();
-// Android schneidet maskierbare Icons im Kreis an: Zeichen kleiner.
-const maskable = appIconSvg({ scale: 0.58 });
+// Ohne Grund, überall dasselbe Zeichen. iOS legt Durchsichtiges auf Schwarz.
+const mark = appIconSvg();
 
-writeFileSync("src/app/icon.svg", transparent);
+writeFileSync("src/app/icon.svg", mark);
 writeFileSync(
   "src/app/favicon.ico",
   ico([
     // Nacheinander: alle Grössen teilen sich dieselbe Seite.
-    { size: 16, data: await png(transparent, 16) },
-    { size: 32, data: await png(transparent, 32) },
-    { size: 48, data: await png(transparent, 48) },
+    { size: 16, data: await png(mark, 16) },
+    { size: 32, data: await png(mark, 32) },
+    { size: 48, data: await png(mark, 48) },
   ]),
 );
-writeFileSync("src/app/apple-icon.png", await png(onCanvas, 180));
-writeFileSync("public/icons/icon-192.png", await png(onCanvas, 192));
-writeFileSync("public/icons/icon-512.png", await png(onCanvas, 512));
-writeFileSync("public/icons/icon-maskable-512.png", await png(maskable, 512));
+writeFileSync("src/app/apple-icon.png", await png(mark, 180));
+writeFileSync("public/icons/icon-192.png", await png(mark, 192));
+writeFileSync("public/icons/icon-512.png", await png(mark, 512));
 
 await browser.close();
 console.log("Icons geschrieben.");

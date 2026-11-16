@@ -206,13 +206,15 @@ Jann wollte weg vom Cockpit: weniger Verwaltung, mehr App, wie die Vorlage mit
   (Dockerfile, `docker-compose.dokploy.yml`). Die Migrationen spielt
   `scripts/migrate.mts` beim Start ein. Backup täglich auf R2 wie jede
   Datenbank bei uns.
-- **Quelle ist das öffentliche Repo über Git-Adresse**, nicht die GitHub-App:
-  Die App von Dokploy sieht nur `webtree-agency`. Ausgeliefert wird deshalb
-  von Hand (Dokploy-Knopf oder API), nicht bei jedem Push.
+- **Das Repo liegt bei `webtree-agency/ouf`**, Dokploy baut über die
+  GitHub-App bei jedem Push auf `main`.
 - **Die IP kommt aus `cf-connecting-ip`**, ouf. liegt hinter Cloudflare. Den
   ersten Eintrag in `x-forwarded-for` kann der Browser selbst setzen.
-- **App-Icon ohne Pinselfläche:** «ouf.» mit blauem Verlauf auf fast schwarzem
-  Grund, wie das Webtree-Icon. Das Logo in der Kopfzeile bleibt mit Fläche.
+- **App-Icon ohne Grund und ohne Schrift:** das «o.» aus dem Namen als Ring mit
+  Punkt, blauer Verlauf wie beim Webtree-Zeichen. Verworfen: «ouf.» auf
+  dunklem Grund (zu viel Text, Jann wollte keinen Grund) und das „u.“. Ohne
+  maskierbares Icon; Android legt das Zeichen selbst auf eine Fläche. Das Logo
+  in der Kopfzeile bleibt mit Pinselfläche.
 
 ## Vorschläge für alle Projekte
 

@@ -19,8 +19,9 @@ Schrift und keine andere Strichstärke; `font-semibold` und `font-bold` sind in
 **Logo:** «ouf.» als kräftige, runde Striche auf einer leicht gedrehten,
 abgerundeten Pinselfläche in `brand-300`. Die Pfade stehen in
 `components/brand/logoPaths.ts`, die Komponente in `BrandLogo.tsx`. Favicon,
-Apple-Icon und Manifest-Icons entstehen mit `pnpm icons`, aber ohne Fläche:
-«ouf.» mit blauem Verlauf auf `#0b1220` (`appIconSvg`). Das Logo ist in
+Apple-Icon und Manifest-Icons entstehen mit `pnpm icons`: das «o.» aus dem
+Namen als Ring mit Punkt, blauer Verlauf, ohne Grund und ohne Schrift
+(`appIconSvg`). Das Logo ist in
 beiden Modi gleich: die Fläche trägt die Schrift.
 
 ## Skalen
