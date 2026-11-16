@@ -16,11 +16,13 @@ wofür sie gelten. Leitsatz: weniger ist mehr.
 Schrift und keine andere Strichstärke; `font-semibold` und `font-bold` sind in
 `globals.css` gar nicht erst vorhanden.
 
-**Logo:** «ouf.» ohne Fläche. Das «o» ist der Ring des App-Icons und der Punkt
-sein Punkt, beide im blauen Verlauf; «uf» sind kräftige, runde Striche in
-`gray-900`, dunkel in Weiss. Pfade in `components/brand/logoPaths.ts`, die
-Komponente in `BrandLogo.tsx`. Favicon, Apple-Icon und Manifest-Icons entstehen
-mit `pnpm icons`: das «o.» allein, ohne Grund (`appIconSvg`).
+**Logo:** «ouf.» geometrisch und ohne Fläche. Alle Striche sind so stark wie
+der Ring des «o», jeder Bogen ist ein Kreis mit seinem Radius, die x-Höhe ist
+sein Durchmesser. Alles im blauen Verlauf, in beiden Modi gleich. Pfade in
+`components/brand/logoPaths.ts`, die Komponente in `BrandLogo.tsx`.
+
+**App-Icon:** nur das «o», gross und dick, im Verlauf, ohne Grund. Favicon,
+Apple-Icon und Manifest-Icons entstehen mit `pnpm icons` (`appIconSvg`).
 
 ## Skalen
 

@@ -210,12 +210,13 @@ Jann wollte weg vom Cockpit: weniger Verwaltung, mehr App, wie die Vorlage mit
   GitHub-App bei jedem Push auf `main`.
 - **Die IP kommt aus `cf-connecting-ip`**, ouf. liegt hinter Cloudflare. Den
   ersten Eintrag in `x-forwarded-for` kann der Browser selbst setzen.
-- **App-Icon ohne Grund und ohne Schrift:** das «o.» aus dem Namen als Ring mit
-  Punkt, blauer Verlauf wie beim Webtree-Zeichen. Verworfen: «ouf.» auf
-  dunklem Grund (zu viel Text, Jann wollte keinen Grund) und das „u.“. Ohne
-  maskierbares Icon; Android legt das Zeichen selbst auf eine Fläche. Das Logo
-  in der Kopfzeile verliert die Pinselfläche ebenfalls: Ring und Punkt im
-  Verlauf, «uf» in Tinte, damit Logo und Icon ein Zeichen sind.
+- **App-Icon: nur das «o»,** gross und dick, blauer Verlauf, ohne Grund.
+  Verworfen: «ouf.» auf dunklem Grund (zu viel Text, Jann wollte keinen
+  Grund) und «o.» mit Punkt. Ohne maskierbares Icon; Android legt das Zeichen
+  selbst auf eine Fläche.
+- **Logo geometrisch statt Pinsel:** alle Striche so stark wie der Ring, Bögen
+  als Kreise, alles im Verlauf. Verworfen: die Pinselfläche (zu verspielt) und
+  «uf» in Tinte neben dem Ring (zwei Stile in einem Wort).
 
 ## Vorschläge für alle Projekte
 
