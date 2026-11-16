@@ -11,7 +11,7 @@ import { activeHref } from "@/lib/navigation/active";
  * Die Hauptnavigation als schwebende Pille aus Glas, unten, auf jeder Breite.
  * Am Handy liegen beim Lernen dort die Bewertungsknöpfe; dann fehlt sie.
  */
-export default function TabBar() {
+export default function TabBar({ extras }: { extras: React.ReactNode }) {
   const pathname = usePathname();
   const current = activeHref(
     pathname,
@@ -47,6 +47,11 @@ export default function TabBar() {
               </li>
             );
           })}
+          <li
+            aria-hidden
+            className="mx-1 hidden h-6 w-px bg-gray-200 md:block dark:bg-white/10"
+          />
+          <li className="hidden items-center gap-1 md:flex">{extras}</li>
         </ul>
       </nav>
     </>

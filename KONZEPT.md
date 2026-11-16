@@ -5,7 +5,8 @@ Knöpfen. Eine Person, ein Konto, ihre Sprachen, ihre Decks.
 
 ## Seitenaufbau
 
-Eine Kopfzeile mit Logo, **Sprachauswahl**, Serie und Benutzermenü. Die
+Eine Kopfzeile mit Logo und Serie, am Handy auch **Sprachauswahl** und
+Benutzermenü; am Laptop liegen die beiden in der Leiste unten. Die
 Navigation schwebt als Pille aus Glas unten, auf jeder Breite; am Handy fehlt
 sie beim Lernen. Keine Seitenleiste. Alles unter der Shell zeigt nur die gewählte
 Sprache.

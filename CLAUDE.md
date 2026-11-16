@@ -151,7 +151,8 @@ Kontraste in `DESIGN.md`.
 
 ### Schriftgrössen — abschliessende Liste
 
-Schrift: **Geist Sans**, Regular (400) und Medium (500). Keine zweite.
+Schrift: **Outfit**, wie das Logo: Regular (400), Medium (500), SemiBold (600)
+nur für Überschriften und Eyebrows. Keine zweite.
 
 | Klasse           | Grösse | Wofür                      |
 | ---------------- | ------ | -------------------------- |

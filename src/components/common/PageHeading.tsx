@@ -11,7 +11,7 @@ export default function PageHeading({
   return (
     <div className="mb-6 flex flex-wrap items-start justify-between gap-4 sm:flex-nowrap">
       <div className="min-w-0">
-        <h1 className="text-title-sm font-medium text-gray-800 dark:text-white/90">
+        <h1 className="text-title-sm font-semibold tracking-tight text-gray-900 dark:text-white/90">
           {title}
         </h1>
         {description && (

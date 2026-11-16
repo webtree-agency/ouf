@@ -11,23 +11,21 @@ export default function TodayCard({ decks }: { decks: DeckRow[] }) {
 
   return (
     <section className="bg-brand-300 dark:bg-brand-300/10 rounded-2xl p-5 text-gray-900 md:p-6 dark:text-white/90">
-      <h2 className="text-theme-xs font-medium tracking-wide uppercase">
-        Heute
-      </h2>
+      <h2 className="eyebrow bg-white/70 dark:bg-white/10">Heute</h2>
       {decks.length === 0 ? (
         <>
-          <p className="mt-2 mb-4 text-base">
+          <p className="mt-3 mb-4 text-base">
             Leg ein Deck an, dann kannst du Karten erfassen.
           </p>
           <NewDeckButton />
         </>
       ) : total === 0 ? (
-        <p className="text-theme-xl mt-2 font-medium">
+        <p className="text-theme-xl mt-3 font-medium tracking-tight">
           Für heute ist alles gelernt.
         </p>
       ) : (
         <>
-          <p className="text-title-md mt-2 font-medium">
+          <p className="text-title-md mt-3 font-semibold tracking-tight">
             {total === 1 ? "1 Karte" : `${total} Karten`}
           </p>
           <p className="text-theme-sm mt-1">

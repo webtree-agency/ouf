@@ -14,7 +14,7 @@ export default async function OverviewPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-title-sm font-medium text-gray-900 dark:text-white/90">
+        <h1 className="text-title-sm font-semibold tracking-tight text-gray-900 dark:text-white/90">
           {greeting(now)}, {session.name}
         </h1>
         <p className="text-theme-sm mt-1 text-gray-500 dark:text-gray-400">

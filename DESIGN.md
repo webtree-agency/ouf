@@ -12,9 +12,15 @@ wofür sie gelten. Leitsatz: weniger ist mehr.
 | Hintergrund | `#F8F8F5` | `canvas`    |
 | Flächen     | `#FFFFFF` | `white`     |
 
-**Schrift:** Geist Sans, Regular (400) und Medium (500). Es gibt keine andere
-Schrift und keine andere Strichstärke; `font-semibold` und `font-bold` sind in
-`globals.css` gar nicht erst vorhanden.
+**Schrift:** Outfit, dieselbe wie das Logo. Regular (400) für Text, Medium (500)
+für Bedienelemente, SemiBold (600) nur für Überschriften und Eyebrows.
+Überschriften eng gesetzt (`tracking-tight`), wie auf der Webtree-Website.
+
+**Eyebrow** (`eyebrow` in `globals.css`): das Etikett über einem Abschnitt wie
+die `mk-tag` der Webtree-Website, eckig, gross geschrieben, gesperrt,
+`text-theme-xs` halbfett. Die Fläche setzt der Ort: auf Canvas `bg-brand-100`
+(dunkel `brand-300/15`), auf der Pastellfläche `bg-white/70` (dunkel
+`white/10`).
 
 **Logo:** «ouf.» in Outfit SemiBold, Laufweite -3 %, als Pfade
 (`components/brand/logoPaths.ts`, `BrandLogo.tsx`); die Seite lädt keine zweite
@@ -68,7 +74,8 @@ der Oberfläche (Jann, 16.11.2026: das mittlere Blau wirkt wie das Cockpit),
   `dark:border-gray-800 dark:bg-gray-900`.
 - Kopfzeile auf `canvas`, ohne Rand, dunkel `gray-950`. Die Navigation ist
   eine schwebende Pille unten, Glas (`bg-white/70 backdrop-blur-xl`, dunkel
-  `gray-900/60`), am Handy Symbol über Text, ab `md` daneben.
+  `gray-900/60`), am Handy Symbol über Text, ab `md` daneben, dazu rechts Sprache und Konto.
+  Oben stehen am Laptop nur Logo und Serie.
 - **„Heute" ist die einzige pastellblaue Fläche** (`bg-brand-300`, dunkel
   `brand-300/10`), mit dem dunklen Knopf darin. Ein Deck ist eine weisse Zeile
   mit Symbol in `brand-100`, die ganz klickbar ist.

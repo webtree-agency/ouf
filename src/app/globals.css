@@ -4,12 +4,13 @@
 
 @theme {
   --font-*: initial;
-  /* Geist Sans, Regular und Medium (`layout.tsx`). Keine zweite Schrift. */
-  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  /* Outfit wie das Logo (`layout.tsx`): 400, 500, 600 nur für Überschriften und Eyebrows. */
+  --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
 
   --font-weight-*: initial;
   --font-weight-normal: 400;
   --font-weight-medium: 500;
+  --font-weight-semibold: 600;
 
   --breakpoint-*: initial;
   --breakpoint-2xsm: 375px;
@@ -221,6 +222,12 @@
 }
 @utility menu-item-icon-inactive {
   @apply text-gray-500 group-hover:text-gray-700 dark:text-gray-400 dark:group-hover:text-gray-300;
+}
+
+/* Das Etikett über einem Abschnitt, wie die Eyebrows der Webtree-Website:
+   eckig, gross geschrieben, gesperrt. Die Fläche setzt, wer es braucht. */
+@utility eyebrow {
+  @apply text-theme-xs inline-block px-2.5 py-0.5 font-semibold tracking-wider text-gray-900 uppercase dark:text-white/90;
 }
 
 /* Die Linie liegt immer da und ist nur durchsichtig, sonst springt der Text. */

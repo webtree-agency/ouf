@@ -15,10 +15,13 @@ export default function UserMenu({
   name,
   email,
   signOut,
+  inBar = false,
 }: {
   name: string;
   email: string;
   signOut: () => Promise<void>;
+  /** In der Leiste unten klappt das Menü nach oben auf. */
+  inBar?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const [leaving, startLeaving] = useTransition();
@@ -55,7 +58,9 @@ export default function UserMenu({
       </button>
 
       {open && (
-        <div className="shadow-theme-lg absolute right-0 z-99 mt-2 w-64 rounded-2xl border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-gray-900">
+        <div
+          className={`shadow-theme-lg absolute right-0 z-99 w-64 rounded-2xl border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-gray-900 ${inBar ? "bottom-full mb-3" : "mt-2"}`}
+        >
           <p className="text-theme-sm truncate px-3 font-medium text-gray-800 dark:text-white/90">
             {name}
           </p>

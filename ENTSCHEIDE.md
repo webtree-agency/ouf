@@ -237,6 +237,15 @@ Jann wollte weg vom Cockpit: weniger Verwaltung, mehr App, wie die Vorlage mit
   Kopfzeile sind weg. Verworfen: oben am Laptop, unten am Handy; zwei Orte für
   dieselben fünf Ziele.
 
+## Webtree-Stil (16.11.2026)
+
+- **Outfit statt Geist**, für Logo und Oberfläche dieselbe Schrift. Verworfen:
+  Sora wie die Webtree-Website; neben dem Logo in Outfit wären es zwei
+  geometrische Schriften mit anderer Breite.
+- **Eyebrows wie `mk-tag` der Webtree-Website**, in Pastellblau statt Mint.
+- **Am Laptop Sprache und Konto in der Leiste unten**, oben nur Logo und Serie.
+  Am Handy bleiben sie oben: Die Leiste ist mit fünf Zielen voll.
+
 ## Vorschläge für alle Projekte
 
 - **`apple-mobile-web-app-capable` von Hand setzen**, wo `appleWebApp` steht.

@@ -11,7 +11,7 @@ export default function DeckList({ decks }: { decks: DeckRow[] }) {
   return (
     <section>
       <div className="mb-3 flex items-center justify-between">
-        <h2 className="text-base font-medium text-gray-900 dark:text-white/90">
+        <h2 className="eyebrow bg-brand-100 dark:bg-brand-300/15">
           Deine Decks
         </h2>
         <NewDeckButton variant="icon" />

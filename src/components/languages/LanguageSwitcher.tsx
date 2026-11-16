@@ -15,9 +15,12 @@ export type LanguageChoice = { id: string; name: string; code: string };
 export default function LanguageSwitcher({
   languages,
   activeId,
+  inBar = false,
 }: {
   languages: LanguageChoice[];
   activeId: string | null;
+  /** In der Leiste unten: nur das Kürzel, das Menü klappt nach oben auf. */
+  inBar?: boolean;
 }) {
   const pathname = usePathname();
   const [toggle, setToggle] = useState<HTMLButtonElement | null>(null);
@@ -46,13 +49,10 @@ export default function LanguageSwitcher({
         aria-label={`Sprache: ${active?.name ?? "keine"}`}
         className="text-theme-sm flex h-11 items-center gap-1.5 rounded-full px-3 font-medium text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-white/5"
       >
-        <GlobeIcon className="hidden size-5 text-gray-500 sm:block dark:text-gray-400" />
-        {/* Am Handy reicht das Kürzel; der Platz gehört der Serie. */}
-        <span className={`uppercase sm:hidden ${pending ? "opacity-60" : ""}`}>
+        <GlobeIcon className="size-5 text-gray-500 dark:text-gray-400" />
+        {/* Das Kürzel reicht; der volle Name steht im Menü. */}
+        <span className={`uppercase ${pending ? "opacity-60" : ""}`}>
           {active?.code ?? "?"}
-        </span>
-        <span className={`hidden sm:inline ${pending ? "opacity-60" : ""}`}>
-          {active?.name ?? "Sprache"}
         </span>
         <ChevronDownIcon className={`size-5 ${open ? "rotate-180" : ""}`} />
       </button>
@@ -61,7 +61,7 @@ export default function LanguageSwitcher({
         isOpen={open}
         onClose={() => setOpen(false)}
         toggle={toggle}
-        className="right-0 left-auto w-60 p-2"
+        className={`right-0 left-auto w-60 p-2 ${inBar ? "top-auto bottom-full mt-0 mb-3" : ""}`}
       >
         <ul role="menu">
           {languages.map((language) => (

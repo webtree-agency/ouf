@@ -1,13 +1,14 @@
 import type { Metadata, Viewport } from "next";
-import { Geist } from "next/font/google";
+import { Outfit } from "next/font/google";
 
 import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
 
-const geist = Geist({
+// Dieselbe Schrift wie das Logo (Jann, 16.11.2026); 600 nur für Überschriften und Eyebrows.
+const outfit = Outfit({
   subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-geist",
+  weight: ["400", "500", "600"],
+  variable: "--font-outfit",
 });
 
 export const metadata: Metadata = {
@@ -38,7 +39,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="de" className={geist.variable} suppressHydrationWarning>
+    <html lang="de" className={outfit.variable} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
