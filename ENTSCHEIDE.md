@@ -252,6 +252,18 @@ Jann wollte weg vom Cockpit: weniger Verwaltung, mehr App, wie die Vorlage mit
   Seite, Karten, Listen versetzt, Dialoge und Menüs. Nur CSS. Verworfen: eine
   Animation je Bereich; ein Muster ist ruhiger als fünf.
 
+## Diktat und KI beim Erfassen (16.11.2026)
+
+- **Fremde Dienste sind fürs Erfassen erlaubt** (Jann): Das Diktat des iPhones
+  ist zu schlecht. Ausnahme von §8 nur hier; Lernen, Anmeldung und Daten
+  bleiben ohne fremden Dienst.
+- **Plan:** Mikrofon in der Schnellerfassung, Aufnahme im Browser, Abschrift
+  über Whisper bei Cloudflare Workers AI (Webtree ist dort schon, freies
+  Tageskontingent), dann füllt Claude über die API Vorder- und Rückseite,
+  Genus und Beispielsatz vor. Gespeichert wird erst mit Enter. Verworfen: die
+  Spracherkennung des Browsers, die in Chrome ohnehin an Google geht und
+  Französisch und Deutsch im selben Satz schlecht trennt.
+
 ## Vorschläge für alle Projekte
 
 - **`apple-mobile-web-app-capable` von Hand setzen**, wo `appleWebApp` steht.
