@@ -19,27 +19,30 @@ export const DOT = { cx: 151, cy: 61, r: 6.2 };
 
 export const STROKE_WIDTH = 10;
 
-/** Die Fläche fürs quadratische Zeichen (Favicon, App-Icon), Raster 100 × 100. */
-export const SQUARE_BRUSH_PATH =
-  "M15 21C35 11 70 9 86 15C95 19 96 37 95 54C94 72 92 84 80 88C60 94 33 94 17 87C7 82 5 66 5 50C5 36 7 25 15 21Z";
+/** Grund des App-Icons: fast schwarz mit einem Hauch Blau, wie beim Webtree-Icon. */
+export const ICON_GROUND = "#0b1220";
 
-export const INK = "#182333";
-export const PASTEL = "#bbd3f2";
-export const CANVAS = "#f8f8f5";
+// Hell, Pastell, mittleres Blau, wieder hell: der Verlauf glänzt wie das Webtree-Zeichen.
+const SHEEN = [
+  ["0", "#ebf6ff"],
+  ["0.3", "#bbd3f2"],
+  ["0.55", "#4270aa"],
+  ["0.75", "#89b1e3"],
+  ["1", "#cae2ff"],
+];
 
-function letters(transform: string): string {
-  const strokes = LETTER_PATHS.map((d) => `<path d="${d}"/>`).join("");
-  return `<g transform="${transform}"><g fill="none" stroke="${INK}" stroke-width="${STROKE_WIDTH}" stroke-linecap="round" stroke-linejoin="round">${strokes}</g><circle cx="${DOT.cx}" cy="${DOT.cy}" r="${DOT.r}" fill="${INK}"/></g>`;
-}
-
-/** Das Zeichen als SVG-Text, für die Icons (`scripts/icons.mts`). */
-export function squareMarkSvg(
-  options: { background?: string; scale?: number } = {},
+/**
+ * Das App-Icon: «ouf.» als Striche mit blauem Verlauf auf dunklem Grund, ohne
+ * Pinselfläche. `rounded` rundet selbst (Favicon); iOS und Android runden selbst.
+ */
+export function appIconSvg(
+  options: { scale?: number; rounded?: boolean } = {},
 ): string {
-  const scale = options.scale ?? 1;
-  const ground = options.background
-    ? `<rect width="100" height="100" fill="${options.background}"/>`
-    : "";
-  const brush = `<path d="${SQUARE_BRUSH_PATH}" fill="${PASTEL}" transform="rotate(-6 50 50)"/>`;
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">${ground}<g transform="translate(50 50) scale(${scale}) translate(-50 -50)">${brush}${letters("translate(50 52) scale(0.8) translate(-107.5 -43)")}</g></svg>`;
+  const scale = options.scale ?? 0.72;
+  const stops = SHEEN.map(
+    ([offset, color]) => `<stop offset="${offset}" stop-color="${color}"/>`,
+  ).join("");
+  const strokes = LETTER_PATHS.map((d) => `<path d="${d}"/>`).join("");
+  const ground = `<rect width="100" height="100" rx="${options.rounded ? 22 : 0}" fill="${ICON_GROUND}"/>`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="sheen" gradientUnits="userSpaceOnUse" x1="56" y1="14" x2="160" y2="72">${stops}</linearGradient><radialGradient id="glow" cx="50" cy="44" r="46" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4270aa" stop-opacity="0.28"/><stop offset="1" stop-color="#4270aa" stop-opacity="0"/></radialGradient></defs>${ground}<rect width="100" height="100" rx="${options.rounded ? 22 : 0}" fill="url(#glow)"/><g transform="translate(50 50) scale(${scale}) translate(-106 -42.5)"><g fill="none" stroke="url(#sheen)" stroke-width="${STROKE_WIDTH}" stroke-linecap="round" stroke-linejoin="round">${strokes}</g><circle cx="${DOT.cx}" cy="${DOT.cy}" r="${DOT.r}" fill="url(#sheen)"/></g></svg>`;
 }

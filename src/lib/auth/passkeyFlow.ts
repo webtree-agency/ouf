@@ -34,6 +34,7 @@ import {
   verifyLogin,
   verifyRegistration,
 } from "./passkey.ts";
+import { mayRegister } from "./signupAllowlist.ts";
 
 export type LoginFailure =
   | "rate-limited"
@@ -41,7 +42,8 @@ export type LoginFailure =
   | "unknown-passkey"
   | "invalid-signature"
   | "locked"
-  | "email-taken";
+  | "email-taken"
+  | "not-invited";
 
 export type LoginResult =
   | { ok: true; token: string; expiresAt: Date }
@@ -57,8 +59,9 @@ export async function startSignup(input: {
   name: string;
 }): Promise<
   | { ok: true; options: PublicKeyCredentialCreationOptionsJSON }
-  | { ok: false; reason: "email-taken" }
+  | { ok: false; reason: "email-taken" | "not-invited" }
 > {
+  if (!mayRegister(input.email)) return { ok: false, reason: "not-invited" };
   if (await findAccountByEmail(input.email)) {
     return { ok: false, reason: "email-taken" };
   }

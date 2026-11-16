@@ -46,6 +46,7 @@ const MESSAGES: Record<LoginFailure | EmergencyFailure, string> = {
   "invalid-signature": "Anmeldung nicht möglich.",
   invalid: "Anmeldung nicht möglich.",
   "email-taken": "Für diese Adresse gibt es schon ein Konto.",
+  "not-invited": "Für diese Adresse ist kein Konto vorgesehen.",
 };
 
 type Options<T> =
@@ -98,11 +99,8 @@ export async function signupOptions(input: {
 
   const started = await startSignup(parsed.data);
   if (!started.ok) {
-    return {
-      ok: false,
-      message: MESSAGES["email-taken"],
-      fields: { email: MESSAGES["email-taken"] },
-    };
+    const message = MESSAGES[started.reason];
+    return { ok: false, message, fields: { email: message } };
   }
   return { ok: true, options: started.options };
 }

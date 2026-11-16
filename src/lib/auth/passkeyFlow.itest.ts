@@ -19,6 +19,9 @@ import { createFakeAuthenticator, type FakeAuthenticator } from "./testing.ts";
 
 const CONTEXT = { ip: "203.0.113.7", userAgent: "node:test" };
 
+// Wer registrieren darf, steht in der Umgebung; hier nur die Testadressen.
+process.env.SIGNUP_EMAILS = "jann@ouf.local,noah@ouf.local";
+
 before(setupTestDb);
 beforeEach(truncateAll);
 after(closeDb);
@@ -69,6 +72,15 @@ describe("Registrieren", () => {
     });
     assert.ok(started.ok);
     assert.equal(await findAccountByEmail("jann@ouf.local"), null);
+  });
+
+  test("weist eine Adresse ausserhalb der Liste ab", async () => {
+    const started = await startSignup({
+      email: "fremd@ouf.local",
+      name: "Fremd",
+    });
+    assert.deepEqual(started, { ok: false, reason: "not-invited" });
+    assert.equal(await findAccountByEmail("fremd@ouf.local"), null);
   });
 
   test("weist eine vergebene Adresse ab", async () => {

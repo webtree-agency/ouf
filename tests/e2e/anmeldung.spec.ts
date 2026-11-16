@@ -17,9 +17,7 @@ test("registrieren, abmelden, mit Passkey wieder anmelden", async ({
 }) => {
   await virtualAuthenticator(page);
 
-  await page.goto("/");
-  await page.waitForURL(/\/anmelden/);
-  await page.getByRole("link", { name: "Konto anlegen" }).click();
+  await page.goto("/registrieren");
 
   await page.getByLabel("Name").fill("Jann");
   await page.getByLabel("E-Mail-Adresse").fill("jann@ouf.local");
@@ -58,4 +56,17 @@ test("eine vergebene Adresse steht am Feld", async ({ page }) => {
     page.getByText("Für diese Adresse gibt es schon ein Konto."),
   ).toBeVisible();
   await expect(page.getByLabel("E-Mail-Adresse")).toBeFocused();
+});
+
+test("eine Adresse ausserhalb der Liste bekommt kein Konto", async ({
+  page,
+}) => {
+  await virtualAuthenticator(page);
+  await page.goto("/registrieren");
+  await page.getByLabel("Name").fill("Fremd");
+  await page.getByLabel("E-Mail-Adresse").fill("fremd@ouf.local");
+  await page.getByRole("button", { name: "Passkey anlegen" }).click();
+  await expect(
+    page.getByText("Für diese Adresse ist kein Konto vorgesehen."),
+  ).toBeVisible();
 });

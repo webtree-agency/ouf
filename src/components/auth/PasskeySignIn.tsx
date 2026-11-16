@@ -112,10 +112,7 @@ export default function PasskeySignIn({ redirectTo }: { redirectTo: string }) {
         </div>
       )}
 
-      <div className="text-theme-sm mt-6 flex flex-wrap justify-between gap-3">
-        <Link href="/registrieren" className="link-brand font-medium">
-          Konto anlegen
-        </Link>
+      <div className="text-theme-sm mt-6">
         <Link href="/anmelden/notfall" className="link-brand font-medium">
           Ohne Passkey anmelden
         </Link>

@@ -20,8 +20,8 @@ Manifest). Jede Seite bei 375, 768 und 1440 px, hell und dunkel, angesehen.
 - **Am echten iPhone nicht geprüft:** Installation und Passkey in der
   installierten App. Geprüft sind Manifest, Icons und Kopfzeilen; Passkeys
   im E2E nur in Chromium (den virtuellen Authenticator gibt es nur dort).
-- **Kein Ausliefern.** Es gibt weder Dockerfile noch Server; das war nicht
-  verlangt.
+- **Ausgeliefert auf `ouf.webtree.ch`** (Dokploy, Compose mit Postgres,
+  Backup auf R2). Registrieren kann nur, wer in `SIGNUP_EMAILS` steht.
 
 **Bewusste Abweichungen vom Cockpit** stehen in `ENTSCHEIDE.md`: keine Rollen,
 kein Aktivitätsprotokoll, Sitzung 90 Tage, Konto löschen löscht alles, keine
@@ -30,18 +30,16 @@ merkt sich keinen Entwurf.
 
 ## Offene Fragen an Jann
 
-1. **Wer darf sich registrieren?** Heute jeder, der die Adresse kennt. Soll
-   ouf. nur auf Einladung gehen, oder ist es für alle gedacht?
-2. **Sitzung 90 Tage gleitend** (wie die Kunden im Cockpit) statt 12 Stunden.
+1. **Sitzung 90 Tage gleitend** (wie die Kunden im Cockpit) statt 12 Stunden.
    Passt das?
-3. **Dunkelmodus folgt dem System**, im Cockpit ist Hell die Vorgabe. So
+2. **Dunkelmodus folgt dem System**, im Cockpit ist Hell die Vorgabe. So
    lassen?
-4. **Weitere Sprachen mit Genus?** Italienisch, Spanisch und Portugiesisch
+3. **Weitere Sprachen mit Genus?** Italienisch, Spanisch und Portugiesisch
    haben eines; vorbereitet ist auf Wunsch nur Französisch.
-5. **Das Logo** ist von Hand gezeichnet (Pfade in
+4. **Das Logo** ist von Hand gezeichnet (Pfade in
    `components/brand/logoPaths.ts`). Gefällt die Pinselfläche, oder soll eine
    Grafikerin ran?
-6. **`.apkg`** doch bauen, mit den zwei Paketen?
+5. **`.apkg`** doch bauen, mit den zwei Paketen?
 
 ## Prüfliste
 

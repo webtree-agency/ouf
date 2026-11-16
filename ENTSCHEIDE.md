@@ -196,6 +196,24 @@ Jann wollte weg vom Cockpit: weniger Verwaltung, mehr App, wie die Vorlage mit
 - **Zwei Icons dazu** (`flame.svg`, `chevron-right.svg`) im Strich des
   Cockpit-Satzes; der Satz hatte keine Flamme und nur den Pfeil nach links.
 
+## Ausliefern (16.11.2026)
+
+- **Registrieren nur mit Adresse aus `SIGNUP_EMAILS`**, leer ist zu. Der Link
+  „Konto anlegen“ ist weg; wer eingeladen ist, bekommt `/registrieren`
+  geschickt. Verworfen: ein Einladungslink mit Token; das braucht eine Tabelle
+  und eine Seite, und für eine Handvoll Konten reicht die Liste in Dokploy.
+- **`ouf.webtree.ch`, Compose mit Postgres in Dokploy**, gebaut wie das Cockpit
+  (Dockerfile, `docker-compose.dokploy.yml`). Die Migrationen spielt
+  `scripts/migrate.mts` beim Start ein. Backup täglich auf R2 wie jede
+  Datenbank bei uns.
+- **Quelle ist das öffentliche Repo über Git-Adresse**, nicht die GitHub-App:
+  Die App von Dokploy sieht nur `webtree-agency`. Ausgeliefert wird deshalb
+  von Hand (Dokploy-Knopf oder API), nicht bei jedem Push.
+- **Die IP kommt aus `cf-connecting-ip`**, ouf. liegt hinter Cloudflare. Den
+  ersten Eintrag in `x-forwarded-for` kann der Browser selbst setzen.
+- **App-Icon ohne Pinselfläche:** «ouf.» mit blauem Verlauf auf fast schwarzem
+  Grund, wie das Webtree-Icon. Das Logo in der Kopfzeile bleibt mit Fläche.
+
 ## Vorschläge für alle Projekte
 
 - **`apple-mobile-web-app-capable` von Hand setzen**, wo `appleWebApp` steht.

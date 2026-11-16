@@ -12,6 +12,7 @@ export const E2E_ENV = {
   IP_HASH_SALT: "e2e-salz",
   TOTP_ENCRYPTION_KEY: "e2e-schluessel-mit-mehr-als-32-zeichen",
   DEV_LOGIN_EMAIL: "",
+  SIGNUP_EMAILS: "jann@ouf.local",
 };
 
 export function applyE2eEnv(): void {

@@ -1,0 +1,43 @@
+# Was in Dokploy läuft. Die lokale docker-compose.yml startet nur die zwei
+# Datenbanken für Entwicklung und Tests.
+#
+# Alle Werte kommen aus der Dokploy-Oberfläche. Was hier nicht steht, kommt
+# nicht im Container an, auch wenn es dort gesetzt ist. Die Traefik-Regel für
+# ouf.webtree.ch → app:3000 setzt Dokploy selbst.
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      # Aus den Werten des Postgres-Dienstes zusammengesetzt, damit das Passwort
+      # an einer Stelle steht. Ohne Sonderzeichen: es steht in einer Adresse.
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      APP_URL: ${APP_URL}
+      IP_HASH_SALT: ${IP_HASH_SALT}
+      TOTP_ENCRYPTION_KEY: ${TOTP_ENCRYPTION_KEY}
+      SIGNUP_EMAILS: ${SIGNUP_EMAILS:-}
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  # Kein veröffentlichter Port (§8); erreichbar nur im Netz dieses Stacks.
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - ouf-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  ouf-postgres-data:

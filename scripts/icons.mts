@@ -10,7 +10,7 @@ import { writeFileSync } from "node:fs";
 
 import { chromium } from "@playwright/test";
 
-import { CANVAS, squareMarkSvg } from "../src/components/brand/logoPaths.ts";
+import { appIconSvg } from "../src/components/brand/logoPaths.ts";
 
 const browser = await chromium.launch();
 const page = await browser.newPage();
@@ -44,11 +44,12 @@ function ico(images: { size: number; data: Buffer }[]): Buffer {
   return Buffer.concat([header, ...entries, ...images.map((i) => i.data)]);
 }
 
-const transparent = squareMarkSvg();
-// iOS füllt Transparenz schwarz und rundet selbst: also ein voller Grund.
-const onCanvas = squareMarkSvg({ background: CANVAS, scale: 0.86 });
-// Android schneidet maskierbare Icons im Kreis an: Zeichen auf 70 %.
-const maskable = squareMarkSvg({ background: CANVAS, scale: 0.7 });
+// Im Browser-Tab rundet niemand: dort rundet das Icon selbst.
+const transparent = appIconSvg({ rounded: true });
+// iOS und Android runden selbst: also ein voller Grund bis in die Ecken.
+const onCanvas = appIconSvg();
+// Android schneidet maskierbare Icons im Kreis an: Zeichen kleiner.
+const maskable = appIconSvg({ scale: 0.58 });
 
 writeFileSync("src/app/icon.svg", transparent);
 writeFileSync(
