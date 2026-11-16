@@ -85,8 +85,8 @@ Reine Funktionen in `lib/learning/`, ts-fsrs nur in `scheduler.ts`.
 - **Diktat und Vorschläge**: „Diktieren“, Wort sagen (gern mit Übersetzung),
   „Fertig“. Die Abschrift steht sofort grau in der Vorderseite, dann füllt
   Claude Haiku Vorder- und Rückseite und Genus. „Vorschlagen“ tut dasselbe aus
-  Getipptem, „Neu vorschlagen“ will etwas anderes. Den Beispielsatz gibt es nur
-  über ✦ am Feld. Unter der Vorderseite steht „Meintest du …?“, wenn
+  Getipptem, „Neu vorschlagen“ will etwas anderes. Übersetzung und
+  Beispielsatz gibt es nur über ✦ am Feld. Unter der Vorderseite steht „Meintest du …?“, wenn
   LanguageTool einen Fehler findet. Enter speichert wie beim Tippen. Was es
   kostet, steht im Konto.
 - **Listen** wie im Cockpit: Zustand in der Adresse, `scroll: false`, 10 · 30 ·

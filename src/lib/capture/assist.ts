@@ -60,11 +60,11 @@ export async function exampleFor(
   return counted(userId, "example", suggestExample(card, language));
 }
 
-/** Während des Tippens: die Rückseite als graue Vorgabe. */
+/** Die Rückseite zur Vorderseite, auf Klick; ein zweiter will eine andere. */
 export async function translationFor(
   userId: string,
-  front: string,
+  card: { front: string; previous: string },
   language: LanguageProfile,
 ): Promise<Translation | null> {
-  return counted(userId, "translate", suggestTranslation(front, language));
+  return counted(userId, "translate", suggestTranslation(card, language));
 }

@@ -113,16 +113,20 @@ export function translationInstructions(language: LanguageProfile): string {
       ? `gender: "m" oder "f", wenn es ein Nomen auf ${language.name} ist, sonst "".`
       : 'gender: immer "".',
     `Ist es kein Ausdruck auf ${language.name}, lass back leer.`,
+    "Steht eine bisherige Übersetzung da, schlag eine andere vor.",
   ].join("\n");
 }
 
 export async function suggestTranslation(
-  front: string,
+  card: { front: string; previous: string },
   language: LanguageProfile,
 ): Promise<Answer<Translation | null>> {
+  const input = card.previous
+    ? `${card.front}\nBisherige Übersetzung: ${card.previous}`
+    : card.front;
   const answer = await ask(
     translationInstructions(language),
-    front,
+    input,
     translation,
   );
   const usable = !answer.refused && answer.value.back.trim();

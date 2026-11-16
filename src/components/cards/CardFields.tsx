@@ -54,19 +54,7 @@ export default function CardFields({
 }) {
   const keyOf = (field: AssistField) => assistKey(assist, field);
   const busy = (field: AssistField) => assistState(assist, field);
-  const suggestion = values.back ? null : (assist.backSuggestion ?? null);
   const set = (patch: Partial<CardValues>) => onChange({ ...values, ...patch });
-
-  function acceptBack() {
-    if (!suggestion) return;
-    set({
-      back: suggestion.back,
-      gender:
-        genders && !values.genderTouched
-          ? suggestion.gender || values.gender
-          : values.gender,
-    });
-  }
 
   function setFront(front: string) {
     const fromArticle = genderFromArticle(front);
@@ -106,11 +94,10 @@ export default function CardFields({
           key={keyOf("back")}
           busy={busy("back")}
           side={languageName && <Side>Deutsch</Side>}
+          action={assist.backAction}
           value={values.back}
           onChange={(back) => set({ back })}
           error={fields.back}
-          suggestion={suggestion?.back ?? null}
-          onAccept={acceptBack}
         />
       </div>
 
@@ -166,7 +153,7 @@ export default function CardFields({
 
       <Checkbox
         id="card-reverse"
-        label="Auch rückwärts lernen"
+        label={`Auch umgekehrt abfragen: Deutsch → ${languageName ?? "Fremdsprache"}`}
         checked={values.reverse}
         onChange={(reverse) => set({ reverse })}
       />

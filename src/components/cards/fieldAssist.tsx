@@ -2,8 +2,6 @@
 
 import type { ReactNode } from "react";
 
-import type { Gender } from "@/lib/languages/catalog";
-
 export type AssistField = "front" | "back" | "example";
 
 /** Was das Diktat und die Vorschläge an den Feldern zeigen (`useCardAssist`). */
@@ -16,8 +14,7 @@ export type FieldAssist = {
   revealed: Partial<Record<AssistField, number>>;
   frontHint?: ReactNode;
   exampleAction?: ReactNode;
-  /** Die Übersetzung, grau in der leeren Rückseite; Tab übernimmt sie. */
-  backSuggestion?: { back: string; gender: Gender | "" } | null;
+  backAction?: ReactNode;
 };
 
 export const NO_ASSIST: FieldAssist = {

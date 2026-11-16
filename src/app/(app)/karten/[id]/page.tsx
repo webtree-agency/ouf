@@ -46,6 +46,7 @@ export default async function CardPage({
           cardId={card.id}
           back={back}
           genders={language.genders}
+          languageName={language.name}
           decks={decks.map((deck) => ({
             value: deck.id,
             label: deckLabel(deck),

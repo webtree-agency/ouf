@@ -16,12 +16,14 @@ export default function CardEditForm({
   initial,
   decks,
   genders,
+  languageName,
   back,
 }: {
   cardId: string;
   initial: CardValues;
   decks: { value: string; label: string }[];
   genders: boolean;
+  languageName: string;
   back: string;
 }) {
   const form = useRef<HTMLFormElement>(null);
@@ -68,6 +70,7 @@ export default function CardEditForm({
         fields={fields}
         genders={genders}
         duplicates={duplicates}
+        languageName={languageName}
       />
       <div className="flex flex-wrap gap-3">
         <Button type="submit" disabled={pending}>

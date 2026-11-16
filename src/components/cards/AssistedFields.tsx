@@ -9,7 +9,6 @@ import CardFields, { type CardValues } from "./CardFields";
 import Dictate from "./Dictate";
 import { useCardAssist } from "./useCardAssist";
 import { useSpelling } from "./useSpelling";
-import { useTranslation } from "./useTranslation";
 
 /** Die Felder der Schnellerfassung, mit allem, was beim Erfassen hilft. */
 export default function AssistedFields({
@@ -41,10 +40,6 @@ export default function AssistedFields({
       ),
   });
   const corrections = useSpelling(values.front, assist.busy);
-  const translation = useTranslation(
-    values.front,
-    Boolean(dictation) && !values.back && !assist.busy,
-  );
 
   function applyCorrection(front: string) {
     setValues((current) => ({
@@ -80,7 +75,14 @@ export default function AssistedFields({
         languageName={language}
         assist={{
           ...assist.fields,
-          backSuggestion: translation,
+          backAction: dictation && (
+            <AssistButton
+              onClick={() => assist.translate(values)}
+              disabled={assist.busy}
+            >
+              {values.back ? "Andere Übersetzung" : "Übersetzen"}
+            </AssistButton>
+          ),
           frontHint: corrections.length > 0 && (
             <p className="text-theme-xs motion-safe:animate-reveal mt-1.5 flex flex-wrap items-center gap-x-1 gap-y-1 text-gray-600 dark:text-gray-300">
               Meintest du
@@ -100,18 +102,38 @@ export default function AssistedFields({
             </p>
           ),
           exampleAction: dictation && (
-            <button
-              type="button"
+            <AssistButton
               onClick={() => assist.example(values)}
               disabled={assist.busy}
-              className="text-theme-xs -mt-3 mb-0 flex min-h-11 items-center gap-1.5 font-medium text-gray-600 hover:text-gray-900 disabled:opacity-40 dark:text-gray-300 dark:hover:text-white"
             >
-              <SparkIcon />
               {values.example ? "Anderer Satz" : "Satz vorschlagen"}
-            </button>
+            </AssistButton>
           ),
         }}
       />
     </div>
+  );
+}
+
+/** Klein rechts über dem Feld: Vorschlag nur auf Wunsch. */
+function AssistButton({
+  onClick,
+  disabled,
+  children,
+}: {
+  onClick: () => void;
+  disabled: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      className="text-theme-xs -mt-3 flex min-h-11 items-center gap-1.5 font-medium text-gray-600 hover:text-gray-900 disabled:opacity-40 dark:text-gray-300 dark:hover:text-white"
+    >
+      <SparkIcon />
+      {children}
+    </button>
   );
 }

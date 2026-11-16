@@ -282,11 +282,13 @@ Jann wollte weg vom Cockpit: weniger Verwaltung, mehr App, wie die Vorlage mit
   (`lib/capture/pricing.ts`). Verworfen: die Abrechnung von Anthropic abfragen;
   das braucht einen Admin-Schlüssel, und die Zahl gälte für die ganze
   Organisation, nicht für ouf.
-- **Übersetzung beim Tippen** (Jann): Ist die Rückseite leer, schlägt Claude
-  Haiku sie zur Vorderseite vor, grau im Feld; Tab oder „Übernehmen“ setzt sie
-  ein. Erst nach 900 ms Pause, je Ausdruck nur einmal gefragt. Über den Feldern
-  steht „Vorderseite · Französisch“ und „Rückseite · Deutsch“, damit nichts
-  durcheinandergerät.
+- **Übersetzen auf Klick** (Jann): ✦ „Übersetzen“ über der Rückseite, ein
+  zweiter Klick will eine andere. Verworfen: die Übersetzung von selbst beim
+  Tippen, grau im Feld; billig genug (0.00006 $), aber Jann will selbst
+  entscheiden, was vorgeschlagen wird. Über den Feldern steht „Vorderseite ·
+  Französisch“ und „Rückseite · Deutsch“, damit nichts durcheinandergerät.
+- **„Auch umgekehrt abfragen: Deutsch → Französisch“** statt „Auch rückwärts
+  lernen“: Die alte Beschriftung sagte nicht, was passiert.
 - **Bis zu drei Korrekturen** statt einer: LanguageTool liefert Varianten, die
   erste passt nicht immer („ta guele“). Abkürzungen („CAF“) fallen weg, die
   Kleinschreibung bleibt. Findet LanguageTool das Wort nicht, hilft

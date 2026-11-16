@@ -37,7 +37,7 @@ merkt sich keinen Entwurf.
 3. **Weitere Sprachen mit Genus?** Italienisch, Spanisch und Portugiesisch
    haben eines; vorbereitet ist auf Wunsch nur Französisch.
 4. **Erfassen, das Spass macht** (Jann, 16.11.2026). Gebaut: Diktat,
-   Vorschlagen, Satz auf Wunsch, Rechtschreibung, Übersetzung beim Tippen,
+   Vorschlagen, Satz auf Wunsch, Rechtschreibung, Übersetzen auf Klick,
    Kosten im Konto, Emoji je Deck. Offen: Vorschau der Karte, Tags als Chips
    mit Emoji und Farbe, Bewegung beim Speichern. Dazu die Ausgabegrenze in der Anthropic Console.
 5. **`.apkg`** doch bauen, mit den zwei Paketen?

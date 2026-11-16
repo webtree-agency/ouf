@@ -8,8 +8,13 @@ import {
   type ActionResult,
 } from "@/lib/actionResult";
 import { runAction, runActionWith } from "@/lib/actions/run";
-import { cardFromText, exampleFor, transcribeFor } from "@/lib/capture/assist";
-import type { CardSuggestion } from "@/lib/capture/suggest";
+import {
+  cardFromText,
+  exampleFor,
+  transcribeFor,
+  translationFor,
+} from "@/lib/capture/assist";
+import type { CardSuggestion, Translation } from "@/lib/capture/suggest";
 import { createCard, deleteCard, updateCard } from "@/lib/cards/cards";
 import { cardInput, type CardDraft } from "@/lib/cards/input";
 import { DomainError } from "@/lib/domainError";
@@ -111,5 +116,21 @@ export async function suggestExampleAction(
   if (!parsed.success) return refused("Zuerst die Vorderseite.");
   return runActionWith<string>({}, async (actor) =>
     exampleFor(actor.id, parsed.data, await language(actor.id)),
+  );
+}
+
+const translationInput = z.object({
+  front: z.string().trim().min(1).max(500),
+  previous: z.string().trim().max(500),
+});
+
+/** Die Rückseite vorschlagen, nur auf Klick; ein zweiter will eine andere. */
+export async function suggestTranslationAction(
+  input: z.input<typeof translationInput>,
+) {
+  const parsed = translationInput.safeParse(input);
+  if (!parsed.success) return refused("Zuerst die Vorderseite.");
+  return runActionWith<Translation | null>({}, async (actor) =>
+    translationFor(actor.id, parsed.data, await language(actor.id)),
   );
 }

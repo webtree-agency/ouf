@@ -5,6 +5,7 @@ import { useState } from "react";
 import {
   suggestCardAction,
   suggestExampleAction,
+  suggestTranslationAction,
   transcribeAction,
 } from "@/app/(app)/karten/actions";
 import type { CardSuggestion } from "@/lib/capture/suggest";
@@ -107,8 +108,32 @@ export function useCardAssist({
     reveal(["example"]);
   }
 
+  async function translate(values: CardValues) {
+    setError(null);
+    if (!values.front.trim()) return setError("Zuerst die Vorderseite.");
+    mark(["back"], true);
+    const result = await suggestTranslationAction({
+      front: values.front,
+      previous: values.back,
+    });
+    mark(["back"], false);
+    if (!result.ok) return setError(result.message);
+    const found = result.data;
+    if (!found) return setError("Dazu fand sich keine Übersetzung.");
+    update((current) => ({
+      ...current,
+      back: found.back,
+      gender:
+        genders && !current.genderTouched && found.gender
+          ? found.gender
+          : current.gender,
+    }));
+    reveal(["back"]);
+  }
+
   return {
     busy,
+    translate,
     error,
     setError,
     dictated,
@@ -117,7 +142,7 @@ export function useCardAssist({
     hasSuggestion: last !== null,
     fields: { loading, ghost, revealed } satisfies Omit<
       FieldAssist,
-      "frontHint" | "exampleAction"
+      "frontHint" | "exampleAction" | "backAction"
     >,
   };
 }
