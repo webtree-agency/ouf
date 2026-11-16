@@ -32,7 +32,7 @@ export default function CardList({
             : "Noch keine Karte in dieser Sprache."}
         </p>
       ) : (
-        <ul className="-my-3 divide-y divide-gray-100 dark:divide-gray-800">
+        <ul className="stagger -my-3 divide-y divide-gray-100 dark:divide-gray-800">
           {rows.map((card) => (
             <li
               key={card.id}

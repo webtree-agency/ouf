@@ -55,13 +55,13 @@ export const Modal: React.FC<ModalProps> = ({
   // das ganze Formular deren Ausrichtung.
   const contentClasses = isFullscreen
     ? "w-full h-full text-left"
-    : "relative w-full rounded-2xl bg-white text-left dark:bg-gray-900";
+    : "motion-safe:animate-pop relative w-full rounded-2xl bg-white text-left dark:bg-gray-900";
 
   return (
     <div ref={rootRef} className="modal fixed inset-0 z-99999 overflow-y-auto">
       {!isFullscreen && (
         <div
-          className="fixed inset-0 h-full w-full bg-gray-950/40 backdrop-blur-sm"
+          className="motion-safe:animate-fade fixed inset-0 h-full w-full bg-gray-950/40 backdrop-blur-sm"
           onClick={onClose}
         ></div>
       )}

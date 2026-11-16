@@ -108,9 +108,20 @@ zweite Farbe. Kein Tooltip, keine Legende: Die Zahlen stehen daneben.
 
 ## Bewegung
 
-Nur beim Lernen, kurz und leise, alles in `globals.css` (`--animate-*`) und im
+Kurz und leise, alles in `globals.css` (`--animate-*`, `stagger`) und im
 Markup immer mit `motion-safe:`: Wer „Bewegung reduzieren" eingeschaltet hat,
 sieht keine.
+
+- Eine Seite steigt beim Öffnen 8 px auf (`rise`, 260 ms, `(app)/template.tsx`),
+  beim Filtern über die Adresse nicht.
+- Jede Karte (`CARD`) steigt auf, sobald ihr Inhalt geladen ist; so löst sie das
+  Skelett weich ab.
+- Listen und Kacheln mit `stagger`: ein Eintrag nach dem anderen, je 40 ms,
+  höchstens 320 ms.
+- Dialoge und Menüs poppen auf (`pop`, 160 ms), der Grund hinter dem Dialog
+  blendet ein (`fade`).
+
+Beim Lernen:
 
 - Eine Karte kommt von unten (220 ms), die Antwort blendet beim Aufdecken ein
   (200 ms).

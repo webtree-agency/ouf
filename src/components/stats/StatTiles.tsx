@@ -8,7 +8,7 @@ function percent(value: number | null): string {
 
 export default function StatTiles({ tiles }: { tiles: Tiles }) {
   return (
-    <div className="grid grid-cols-2 gap-4 md:gap-6 xl:grid-cols-4">
+    <div className="stagger grid grid-cols-2 gap-4 md:gap-6 xl:grid-cols-4">
       <MetricCard
         value={formatCount(tiles.dueToday)}
         label="Heute fällig"

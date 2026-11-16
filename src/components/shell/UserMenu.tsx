@@ -59,7 +59,7 @@ export default function UserMenu({
 
       {open && (
         <div
-          className={`shadow-theme-lg absolute right-0 z-99 w-64 rounded-2xl border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-gray-900 ${inBar ? "bottom-full mb-3" : "mt-2"}`}
+          className={`motion-safe:animate-pop shadow-theme-lg absolute right-0 z-99 w-64 rounded-2xl border border-gray-200 bg-white p-3 dark:border-gray-800 dark:bg-gray-900 ${inBar ? "bottom-full mb-3" : "mt-2"}`}
         >
           <p className="text-theme-sm truncate px-3 font-medium text-gray-800 dark:text-white/90">
             {name}

@@ -33,7 +33,7 @@ interface DropdownProps {
 }
 
 const PANEL =
-  "shadow-theme-lg dark:bg-gray-900 rounded-xl border border-gray-200 bg-white dark:border-gray-800";
+  "motion-safe:animate-pop shadow-theme-lg dark:bg-gray-900 rounded-xl border border-gray-200 bg-white dark:border-gray-800";
 
 export const Dropdown: React.FC<DropdownProps> = ({
   isOpen,

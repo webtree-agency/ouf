@@ -246,6 +246,12 @@ Jann wollte weg vom Cockpit: weniger Verwaltung, mehr App, wie die Vorlage mit
 - **Am Laptop Sprache und Konto in der Leiste unten**, oben nur Logo und Serie.
   Am Handy bleiben sie oben: Die Leiste ist mit fünf Zielen voll.
 
+## Bewegung überall (16.11.2026)
+
+- **Dasselbe leise Hereinkommen wie beim Lernen auf jeder Seite** (Jann):
+  Seite, Karten, Listen versetzt, Dialoge und Menüs. Nur CSS. Verworfen: eine
+  Animation je Bereich; ein Muster ist ruhiger als fünf.
+
 ## Vorschläge für alle Projekte
 
 - **`apple-mobile-web-app-capable` von Hand setzen**, wo `appleWebApp` steht.

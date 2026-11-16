@@ -16,7 +16,7 @@ export default function DeckList({ decks }: { decks: DeckRow[] }) {
         </h2>
         <NewDeckButton variant="icon" />
       </div>
-      <ul className="space-y-2">
+      <ul className="stagger space-y-2">
         {decks.map((deck) => (
           <li key={deck.id}>
             <DeckLink deck={deck} />

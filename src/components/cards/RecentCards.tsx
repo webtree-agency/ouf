@@ -10,7 +10,7 @@ export default function RecentCards({
   if (cards.length === 0) return null;
   return (
     <ComponentCard title="Zuletzt erfasst">
-      <ul className="divide-y divide-gray-100 dark:divide-gray-800">
+      <ul className="stagger divide-y divide-gray-100 dark:divide-gray-800">
         {cards.map((card) => (
           <li
             key={card.id}
