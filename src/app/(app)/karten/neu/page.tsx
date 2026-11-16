@@ -5,6 +5,7 @@ import RecentCards from "@/components/cards/RecentCards";
 import ComponentCard from "@/components/common/ComponentCard";
 import PageHeading from "@/components/common/PageHeading";
 import NewDeckButton from "@/components/decks/NewDeckButton";
+import { dictationConfigured } from "@/lib/capture/transcribe";
 import { requireLanguage } from "@/lib/languages/pageLanguage";
 import { recentCards } from "@/lib/queries/cards";
 import { listDecks } from "@/lib/queries/decks";
@@ -50,6 +51,7 @@ export default async function NewCardPage({
               }))}
               deckId={deck.id}
               genders={language.genders}
+              dictation={dictationConfigured() ? language.name : null}
             />
           </ComponentCard>
         </div>

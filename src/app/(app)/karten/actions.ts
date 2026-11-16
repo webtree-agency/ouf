@@ -3,9 +3,13 @@
 import { z } from "zod";
 
 import { failed, type ActionResult } from "@/lib/actionResult";
-import { runAction } from "@/lib/actions/run";
+import { runAction, runActionWith } from "@/lib/actions/run";
+import { suggestCard, type Suggestion } from "@/lib/capture/suggest";
+import { transcribe } from "@/lib/capture/transcribe";
 import { createCard, deleteCard, updateCard } from "@/lib/cards/cards";
 import { cardInput, type CardDraft } from "@/lib/cards/input";
+import { DomainError } from "@/lib/domainError";
+import { activeLanguage } from "@/lib/queries/languages";
 import { fieldMessages } from "@/lib/validation/fields";
 
 function parse(draft: CardDraft) {
@@ -53,5 +57,17 @@ export async function deleteCardAction(
   return runAction({ revalidate: ["/"] }, async (actor) => {
     await deleteCard(actor.id, z.uuid().parse(cardId));
     return backTo(String(back));
+  });
+}
+
+/** Diktat: Aufnahme → Abschrift → Vorschlag. Gespeichert wird erst mit Enter. */
+export async function suggestCardAction(form: FormData) {
+  return runActionWith<Suggestion>({}, async (actor) => {
+    const audio = form.get("audio");
+    if (!(audio instanceof Blob))
+      throw new DomainError("Es kam keine Aufnahme an.");
+    const { active } = await activeLanguage(actor.id);
+    if (!active) throw new DomainError("Es gibt noch keine Sprache.");
+    return suggestCard(await transcribe(audio), active);
   });
 }

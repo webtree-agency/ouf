@@ -10,6 +10,7 @@ import SelectField from "@/components/form/SelectField";
 import Button from "@/components/ui/button/Button";
 import { useFormDraft } from "@/hooks/useFormDraft";
 import CardFields, { draftOf, type CardValues } from "./CardFields";
+import Dictate from "./Dictate";
 import { useDuplicates } from "./useDuplicates";
 
 type Sticky = Pick<CardValues, "tags" | "reverse">;
@@ -23,10 +24,13 @@ export default function QuickAdd({
   decks,
   deckId,
   genders,
+  dictation,
 }: {
   decks: { value: string; label: string }[];
   deckId: string;
   genders: boolean;
+  /** Der Name der Sprache, wenn das Diktat eingerichtet ist, sonst `null`. */
+  dictation: string | null;
 }) {
   const router = useRouter();
   const [round, setRound] = useState(0);
@@ -48,6 +52,7 @@ export default function QuickAdd({
         key={`${deckId}-${round}`}
         deckId={deckId}
         genders={genders}
+        dictation={dictation}
         sticky={sticky}
         onSaved={(values) => {
           setSticky({ tags: values.tags, reverse: values.reverse });
@@ -68,11 +73,13 @@ export default function QuickAdd({
 function QuickAddForm({
   deckId,
   genders,
+  dictation,
   sticky,
   onSaved,
 }: {
   deckId: string;
   genders: boolean;
+  dictation: string | null;
   sticky: Sticky;
   onSaved: (values: CardValues) => void;
 }) {
@@ -117,6 +124,21 @@ function QuickAddForm({
         <DraftNotice savedAt={draft.restoredAt} onDiscard={draft.discard} />
       )}
       {error && <AuthNotice tone="error">{error}</AuthNotice>}
+      {dictation && (
+        <Dictate
+          language={dictation}
+          onSuggestion={(suggestion) => {
+            draft.setValues({
+              ...draft.values,
+              ...suggestion,
+              gender: genders ? suggestion.gender : "",
+              genderTouched: true,
+            });
+            // Enter in der Vorderseite speichert, wie beim Tippen.
+            form.current?.querySelector<HTMLElement>("#card-front")?.focus();
+          }}
+        />
+      )}
       <CardFields
         values={draft.values}
         onChange={(next) => {

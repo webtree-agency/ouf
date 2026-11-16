@@ -36,9 +36,8 @@ merkt sich keinen Entwurf.
    lassen?
 3. **Weitere Sprachen mit Genus?** Italienisch, Spanisch und Portugiesisch
    haben eines; vorbereitet ist auf Wunsch nur Französisch.
-4. **Karten per Diktat und KI erfassen**: entschieden, Plan in
-   `ENTSCHEIDE.md`. Fehlt noch: ein API-Schlüssel für Claude und einer für
-   Cloudflare Workers AI, beide als Wert in Dokploy.
+4. **Diktat beim Erfassen**: gebaut (16.11.2026). Offen ist nur die
+   Ausgabegrenze in der Anthropic Console (2 bis 3 $ im Monat).
 5. **`.apkg`** doch bauen, mit den zwei Paketen?
 
 ## Prüfliste

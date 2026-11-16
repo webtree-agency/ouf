@@ -263,6 +263,11 @@ Jann wollte weg vom Cockpit: weniger Verwaltung, mehr App, wie die Vorlage mit
   Genus und Beispielsatz vor. Gespeichert wird erst mit Enter. Verworfen: die
   Spracherkennung des Browsers, die in Chrome ohnehin an Google geht und
   Französisch und Deutsch im selben Satz schlecht trennt.
+- **Claude Haiku 5.5 mit Aufwand „low“** (Jann): Ein Wort und ein Satz
+  brauchen kein grösseres Modell, gut zwei Sekunden je Vorschlag. Die
+  Ausgabegrenze von 2 bis 3 $ im Monat setzt Jann in der Console.
+- **`Permissions-Policy: microphone=(self)`** statt `microphone=()`: Sonst
+  verweigert der Browser das Mikrofon still, auch nach der Freigabe.
 
 ## Vorschläge für alle Projekte
 

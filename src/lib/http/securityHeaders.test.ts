@@ -18,3 +18,10 @@ test("lässt sich nirgends einbetten und gibt keinen Referer weiter", () => {
   );
   assert.equal(SECURITY_HEADERS["Referrer-Policy"], "no-referrer");
 });
+
+test("das Mikrofon gibt es nur der eigenen Seite, Kamera und Ort niemandem", () => {
+  assert.equal(
+    SECURITY_HEADERS["Permissions-Policy"],
+    "camera=(), microphone=(self), geolocation=()",
+  );
+});
