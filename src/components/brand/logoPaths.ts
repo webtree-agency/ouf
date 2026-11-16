@@ -1,27 +1,26 @@
 /**
- * Die Wortmarke als Pfade, nicht als Text: so sieht sie in jedem Browser, im
- * Favicon und im PNG gleich aus, ohne dass eine Schrift geladen sein muss.
- * Raster 200 × 100; die Buchstaben sind kräftige, runde Striche.
+ * Die Wortmarke als Pfade, nicht als Text: so sieht sie in jedem Browser
+ * gleich aus, ohne dass eine Schrift geladen sein muss. Das «o» ist der Ring
+ * des App-Icons, «uf» sind kräftige, runde Striche.
  */
-export const BRUSH_PATH =
-  "M31 29C62 21 131 19 171 23C184 24 189 36 187 50C185 66 181 76 166 78C121 81 70 83 34 79C20 77 13 65 14 50C15 38 20 31 31 29Z";
+export const LOGO_VIEWBOX = "45 12 130 63";
+
+export const RING = { cx: 70, cy: 50, r: 15.5, width: 11 };
 
 export const LETTER_PATHS = [
-  // o
-  "M61 50C61 41 65 34 71 34C77 34 81 41 81 50C81 59 77 66 71 66C65 66 61 59 61 50Z",
   // u
-  "M92 34V54C92 61 95 66 102 66C109 66 112 61 112 54M112 34V66",
+  "M104 34V54C104 61 107 66 114 66C121 66 124 61 124 54M124 34V66",
   // f
-  "M127 66V30C127 23 130 19 137 19C139 19 141 19.5 142.5 20.5M119 36H139",
+  "M139 66V30C139 23 142 19 149 19C151 19 153 19.5 154.5 20.5M131 36H151",
 ];
 
-export const DOT = { cx: 151, cy: 61, r: 6.2 };
+export const DOT = { cx: 165, cy: 61, r: 6.5 };
 
 export const STROKE_WIDTH = 10;
 
 // Pastell, mittleres Blau, wieder hell: der Verlauf glänzt wie das Webtree-Zeichen
 // und bleibt auf Weiss wie auf Schwarz sichtbar.
-const SHEEN = [
+export const SHEEN = [
   ["0", "#bbd3f2"],
   ["0.55", "#4270aa"],
   ["0.8", "#618fc8"],

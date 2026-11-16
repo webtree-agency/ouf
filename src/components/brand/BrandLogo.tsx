@@ -1,6 +1,17 @@
-import { BRUSH_PATH, DOT, LETTER_PATHS, STROKE_WIDTH } from "./logoPaths";
+import {
+  DOT,
+  LETTER_PATHS,
+  LOGO_VIEWBOX,
+  RING,
+  SHEEN,
+  STROKE_WIDTH,
+} from "./logoPaths";
 
-/** «ouf.» auf der Pinselfläche. In beiden Modi gleich: die Fläche trägt die Schrift. */
+/**
+ * «ouf.»: Ring und Punkt im Verlauf des App-Icons, «uf» in Tinte, dunkel in
+ * Weiss. Die Kennung des Verlaufs ist fest; zwei Logos auf einer Seite teilen
+ * dieselbe Definition.
+ */
 export default function BrandLogo({
   className = "h-8",
 }: {
@@ -8,30 +19,51 @@ export default function BrandLogo({
 }) {
   return (
     <svg
-      viewBox="0 0 200 100"
+      viewBox={LOGO_VIEWBOX}
       role="img"
       aria-label="ouf."
       className={`w-auto ${className}`}
     >
-      <path
-        d={BRUSH_PATH}
-        transform="rotate(-3 100 50)"
-        className="fill-brand-300"
-      />
-      <g transform="translate(-7 4)" className="text-gray-800">
-        <g
-          fill="none"
-          stroke="currentColor"
-          strokeWidth={STROKE_WIDTH}
-          strokeLinecap="round"
-          strokeLinejoin="round"
+      <defs>
+        <linearGradient
+          id="ouf-sheen"
+          gradientUnits="userSpaceOnUse"
+          x1="51"
+          y1="30"
+          x2="98"
+          y2="75"
         >
-          {LETTER_PATHS.map((d) => (
-            <path key={d} d={d} />
+          {SHEEN.map(([offset, color]) => (
+            <stop key={offset} offset={offset} stopColor={color} />
           ))}
-        </g>
-        <circle cx={DOT.cx} cy={DOT.cy} r={DOT.r} fill="currentColor" />
+        </linearGradient>
+        {/* Wie im Icon: der Punkt liegt im hinteren Teil des Verlaufs. */}
+        <linearGradient id="ouf-dot" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#4270aa" />
+          <stop offset="1" stopColor="#89b1e3" />
+        </linearGradient>
+      </defs>
+      <circle
+        cx={RING.cx}
+        cy={RING.cy}
+        r={RING.r}
+        fill="none"
+        stroke="url(#ouf-sheen)"
+        strokeWidth={RING.width}
+      />
+      <g
+        fill="none"
+        stroke="currentColor"
+        strokeWidth={STROKE_WIDTH}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="text-gray-900 dark:text-white"
+      >
+        {LETTER_PATHS.map((d) => (
+          <path key={d} d={d} />
+        ))}
       </g>
+      <circle cx={DOT.cx} cy={DOT.cy} r={DOT.r} fill="url(#ouf-dot)" />
     </svg>
   );
 }

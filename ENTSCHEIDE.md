@@ -214,7 +214,8 @@ Jann wollte weg vom Cockpit: weniger Verwaltung, mehr App, wie die Vorlage mit
   Punkt, blauer Verlauf wie beim Webtree-Zeichen. Verworfen: «ouf.» auf
   dunklem Grund (zu viel Text, Jann wollte keinen Grund) und das „u.“. Ohne
   maskierbares Icon; Android legt das Zeichen selbst auf eine Fläche. Das Logo
-  in der Kopfzeile bleibt mit Pinselfläche.
+  in der Kopfzeile verliert die Pinselfläche ebenfalls: Ring und Punkt im
+  Verlauf, «uf» in Tinte, damit Logo und Icon ein Zeichen sind.
 
 ## Vorschläge für alle Projekte
 
