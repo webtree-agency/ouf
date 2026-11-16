@@ -218,3 +218,13 @@
 @utility pb-safe {
   padding-bottom: max(1rem, env(safe-area-inset-bottom));
 }
+
+/* Unter 16 px zoomt iOS Safari beim Antippen ins Feld (wie im Cockpit). Ohne
+   Ebene, damit es `text-theme-sm` am Feld schlägt; am Desktop bleibt es bei 14 px. */
+@media (pointer: coarse) {
+  input,
+  textarea,
+  select {
+    font-size: var(--text-base);
+  }
+}
