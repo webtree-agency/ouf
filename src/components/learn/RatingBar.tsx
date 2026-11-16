@@ -8,7 +8,7 @@ export const RATING_LABELS: Record<Rating, string> = {
 };
 
 const BUTTON =
-  "flex h-14 flex-col items-center justify-center rounded-xl text-sm font-medium transition disabled:cursor-not-allowed";
+  "flex h-14 flex-col items-center justify-center rounded-xl text-sm font-medium transition active:scale-97 disabled:cursor-not-allowed";
 const OUTLINE =
   "bg-white text-gray-800 ring-1 ring-gray-300 ring-inset hover:bg-gray-50 dark:bg-gray-900 dark:text-white/90 dark:ring-gray-700 dark:hover:bg-white/5";
 const PRIMARY =
@@ -25,7 +25,7 @@ export default function RatingBar({
   disabled: boolean;
 }) {
   return (
-    <div className="grid grid-cols-4 gap-2">
+    <div className="motion-safe:animate-reveal grid grid-cols-4 gap-2">
       {([1, 2, 3, 4] as const).map((rating) => (
         <button
           key={rating}

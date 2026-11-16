@@ -101,5 +101,15 @@ zweite Farbe. Kein Tooltip, keine Legende: Die Zahlen stehen daneben.
 
 ## Bewegung
 
-Nur wo sie etwas erklärt; die Karte deckt ohne Animation auf. Kein Konfetti,
-keine Abzeichen. Die einzige Flamme ist die Serie in der Kopfzeile.
+Nur beim Lernen, kurz und leise, alles in `globals.css` (`--animate-*`) und im
+Markup immer mit `motion-safe:`: Wer „Bewegung reduzieren" eingeschaltet hat,
+sieht keine.
+
+- Eine Karte kommt von unten (220 ms), die Antwort blendet beim Aufdecken ein
+  (200 ms).
+- Nach dem Bewerten gleitet die Karte hinaus (160 ms): bei „Nochmal" nach
+  links, sonst nach rechts. Das läuft, während der Server antwortet, und kostet
+  keine Wartezeit.
+- Bewertungsknöpfe und „Aufdecken" geben beim Drücken nach (`active:scale-97`).
+- Kein Konfetti, keine Abzeichen. Die einzige Flamme ist die Serie in der
+  Kopfzeile.

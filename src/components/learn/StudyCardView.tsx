@@ -50,7 +50,7 @@ export default function StudyCardView({
       )}
 
       {revealed && (
-        <div className="mt-8 border-t border-gray-100 pt-8 dark:border-gray-800">
+        <div className="motion-safe:animate-reveal mt-8 border-t border-gray-100 pt-8 dark:border-gray-800">
           <div className="flex items-center justify-center gap-2">
             <p className="text-title-sm break-words text-gray-800 dark:text-white/90">
               {answer}

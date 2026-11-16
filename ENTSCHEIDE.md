@@ -218,6 +218,17 @@ Jann wollte weg vom Cockpit: weniger Verwaltung, mehr App, wie die Vorlage mit
   als Kreise, alles im Verlauf. Verworfen: die Pinselfläche (zu verspielt) und
   «uf» in Tinte neben dem Ring (zwei Stile in einem Wort).
 
+## Animationen beim Lernen (16.11.2026)
+
+- **Nur CSS, kein Paket**, mit `motion-safe:`. Verworfen: Framer Motion (ein
+  Paket für vier Bewegungen) und die View Transitions von React (in Next 16
+  noch experimentell).
+- **Die Karte geht hinaus, während die Aktion läuft.** Verworfen: erst
+  animieren, dann bewerten; das hätte jede Bewertung um 160 ms verzögert.
+- **Die Richtung sagt etwas:** „Nochmal" nach links, alles andere nach rechts.
+  Verworfen: eine Drehung der Karte beim Aufdecken; sie verzögert das Lesen der
+  Antwort.
+
 ## Vorschläge für alle Projekte
 
 - **`apple-mobile-web-app-capable` von Hand setzen**, wo `appleWebApp` steht.

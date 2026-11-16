@@ -1,17 +1,22 @@
 "use client"; // Aufdecken, Bewerten, Tastatur und Vorlesen laufen im Browser.
 
-import Link from "next/link";
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 
 import { rate, undo } from "@/app/(app)/lernen/actions";
 import AuthNotice from "@/components/common/AuthNotice";
-import Button from "@/components/ui/button/Button";
 import { RegenerateIcon } from "@/icons";
 import type { Rating } from "@/lib/learning/scheduler";
 import type { StudyState } from "@/lib/learning/session";
+import LearnDone from "./LearnDone";
 import RatingBar from "./RatingBar";
 import StudyCardView from "./StudyCardView";
 import { useSpeech } from "./useSpeech";
+
+const MOTION = {
+  in: "motion-safe:animate-card-in",
+  left: "motion-safe:animate-card-out-left",
+  right: "motion-safe:animate-card-out-right",
+};
 
 export default function LearnSession({
   initial,
@@ -23,6 +28,8 @@ export default function LearnSession({
   const [state, setState] = useState(initial);
   const [revealed, setRevealed] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Die Karte gleitet hinaus, während der Server antwortet: „Nochmal" nach links.
+  const [leaving, setLeaving] = useState<"left" | "right" | null>(null);
   const [pending, startTransition] = useTransition();
   const shownAt = useRef(0);
   const { available, speak } = useSpeech(state.speech);
@@ -36,11 +43,13 @@ export default function LearnSession({
     setState(next);
     setRevealed(false);
     setError(null);
+    setLeaving(null);
   }, []);
 
   const doRate = useCallback(
     (rating: Rating) => {
       if (!card || !revealed || pending) return;
+      setLeaving(rating === 1 ? "left" : "right");
       startTransition(async () => {
         const result = await rate({
           scheduleId: card.scheduleId,
@@ -50,7 +59,10 @@ export default function LearnSession({
           deckId,
         });
         if (result.ok) show(result.data);
-        else setError(result.message);
+        else {
+          setLeaving(null);
+          setError(result.message);
+        }
       });
     },
     [card, revealed, pending, deckId, show],
@@ -128,7 +140,10 @@ export default function LearnSession({
 
       {card ? (
         <>
-          <div className="mt-4 w-full lg:w-2/3">
+          <div
+            key={`${card.scheduleId}-${card.reps}`}
+            className={`mt-4 w-full lg:w-2/3 ${MOTION[leaving ?? "in"]}`}
+          >
             <StudyCardView
               card={card}
               revealed={revealed}
@@ -150,7 +165,7 @@ export default function LearnSession({
                 type="button"
                 onClick={() => setRevealed(true)}
                 aria-keyshortcuts="Space"
-                className="dark:bg-brand-300 dark:hover:bg-brand-200 flex h-14 w-full items-center justify-center rounded-xl bg-gray-800 text-base font-medium text-white hover:bg-gray-900 dark:text-gray-900"
+                className="dark:bg-brand-300 dark:hover:bg-brand-200 flex h-14 w-full items-center justify-center rounded-xl bg-gray-800 text-base font-medium text-white transition hover:bg-gray-900 active:scale-97 dark:text-gray-900"
               >
                 Aufdecken
               </button>
@@ -163,36 +178,8 @@ export default function LearnSession({
           </div>
         </>
       ) : (
-        <Done hasWaiting={lernen > 0} />
+        <LearnDone hasWaiting={lernen > 0} />
       )}
-    </div>
-  );
-}
-
-function Done({ hasWaiting }: { hasWaiting: boolean }) {
-  return (
-    <div className="mt-16 flex flex-col items-center gap-4 text-center">
-      <p className="text-theme-xl text-gray-800 dark:text-white/90">
-        {hasWaiting
-          ? "Gleich kommt wieder etwas."
-          : "Für heute ist alles gelernt."}
-      </p>
-      <p className="text-theme-sm text-gray-500 dark:text-gray-400">
-        {hasWaiting
-          ? "Eine Karte im Lernschritt ist in mehr als 20 Minuten wieder dran."
-          : "Morgen geht es weiter."}
-      </p>
-      <div className="flex flex-wrap justify-center gap-3">
-        <Button href="/" variant="outline">
-          Zur Übersicht
-        </Button>
-        <Button href="/karten/neu" variant="outline">
-          Karte erfassen
-        </Button>
-      </div>
-      <Link href="/statistik" className="text-theme-sm link-brand">
-        Statistik
-      </Link>
     </div>
   );
 }
