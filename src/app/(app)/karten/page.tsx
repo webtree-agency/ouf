@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 
-import { deckLabel } from "@/lib/decks/label";
-
 import CardFilters from "@/components/cards/CardFilters";
 import CardList from "@/components/cards/CardList";
 import PageHeading from "@/components/common/PageHeading";
 import Button from "@/components/ui/button/Button";
 import { PlusIcon } from "@/icons";
+import { deckLabel } from "@/lib/decks/label";
 import { requireLanguage } from "@/lib/languages/pageLanguage";
-import { listCards, listTags } from "@/lib/queries/cards";
+import { listCards } from "@/lib/queries/cards";
 import { listDecks } from "@/lib/queries/decks";
 import { perPageFrom } from "@/lib/queries/paginate";
+import { listTags } from "@/lib/queries/tags";
 
 export const metadata: Metadata = { title: "Karten" };
 
@@ -39,7 +39,9 @@ export default async function CardsPage({
   const deckId = decks.some((deck) => deck.id === params.deck)
     ? params.deck
     : undefined;
-  const tag = params.tag && tags.includes(params.tag) ? params.tag : undefined;
+  const tag = tags.some((entry) => entry.name === params.tag)
+    ? params.tag
+    : undefined;
   const gender =
     language.genders && (params.genus === "m" || params.genus === "f")
       ? params.genus
@@ -74,12 +76,16 @@ export default async function CardsPage({
             value: deck.id,
             label: deckLabel(deck),
           }))}
-          tags={tags}
+          tags={tags.map((entry) => ({
+            value: entry.name,
+            label: entry.emoji ? `${entry.emoji} ${entry.name}` : entry.name,
+          }))}
           genders={language.genders}
         />
         <CardList
           {...result}
           listHref={listHref}
+          tagLooks={tags}
           filtered={Boolean(query || deckId || tag || gender)}
         />
       </div>

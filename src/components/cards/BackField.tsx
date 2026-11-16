@@ -23,8 +23,8 @@ export default function BackField({
 }) {
   return (
     <div>
-      <div className="flex items-end justify-between gap-3">
-        <Label htmlFor="card-back">
+      <div className="mb-1.5 flex items-center justify-between gap-3">
+        <Label htmlFor="card-back" className="mb-0">
           Rückseite
           {side}
         </Label>

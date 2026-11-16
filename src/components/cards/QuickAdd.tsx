@@ -9,6 +9,7 @@ import DraftNotice from "@/components/common/DraftNotice";
 import SelectField from "@/components/form/SelectField";
 import Button from "@/components/ui/button/Button";
 import { useFormDraft } from "@/hooks/useFormDraft";
+import type { TagLook } from "@/lib/tags/colors";
 import AssistedFields from "./AssistedFields";
 import { draftOf, type CardValues } from "./CardFields";
 import { useDuplicates } from "./useDuplicates";
@@ -26,6 +27,7 @@ export default function QuickAdd({
   genders,
   language,
   dictation,
+  tagOptions,
 }: {
   decks: { value: string; label: string }[];
   deckId: string;
@@ -33,6 +35,7 @@ export default function QuickAdd({
   /** Der Name der Sprache, wenn das Diktat eingerichtet ist, sonst `null`. */
   language: string;
   dictation: string | null;
+  tagOptions: TagLook[];
 }) {
   const router = useRouter();
   const [round, setRound] = useState(0);
@@ -56,6 +59,7 @@ export default function QuickAdd({
         genders={genders}
         language={language}
         dictation={dictation}
+        tagOptions={tagOptions}
         sticky={sticky}
         onSaved={(values) => {
           setSticky({ tags: values.tags, reverse: values.reverse });
@@ -78,6 +82,7 @@ function QuickAddForm({
   genders,
   language,
   dictation,
+  tagOptions,
   sticky,
   onSaved,
 }: {
@@ -85,6 +90,7 @@ function QuickAddForm({
   genders: boolean;
   language: string;
   dictation: string | null;
+  tagOptions: TagLook[];
   sticky: Sticky;
   onSaved: (values: CardValues) => void;
 }) {
@@ -140,6 +146,7 @@ function QuickAddForm({
         duplicates={duplicates}
         language={language}
         dictation={dictation}
+        tagOptions={tagOptions}
       />
       <div className="flex flex-wrap items-center gap-3">
         <Button type="submit" disabled={pending}>

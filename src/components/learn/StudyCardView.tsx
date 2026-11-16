@@ -45,7 +45,7 @@ export default function StudyCardView({
       </div>
       {!forward && (
         <p className="text-theme-xs mt-2 text-gray-500 dark:text-gray-400">
-          rückwärts
+          umgekehrt
         </p>
       )}
 

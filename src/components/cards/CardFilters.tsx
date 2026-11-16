@@ -20,7 +20,7 @@ export default function CardFilters({
   genders,
 }: {
   decks: FilterOption[];
-  tags: string[];
+  tags: FilterOption[];
   genders: boolean;
 }) {
   const [query, setQuery] = useUrlSearch("suche");
@@ -42,7 +42,7 @@ export default function CardFilters({
         <FilterSelect
           param="tag"
           label="Tag"
-          options={tags.map((tag) => ({ value: tag, label: tag }))}
+          options={tags}
           allLabel="Alle Tags"
         />
       ) : null}

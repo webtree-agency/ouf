@@ -10,6 +10,7 @@ import { deckLabel } from "@/lib/decks/label";
 import { requireLanguage } from "@/lib/languages/pageLanguage";
 import { recentCards } from "@/lib/queries/cards";
 import { listDecks } from "@/lib/queries/decks";
+import { listTags } from "@/lib/queries/tags";
 
 export const metadata: Metadata = { title: "Karte erfassen" };
 
@@ -37,7 +38,10 @@ export default async function NewCardPage({
     );
   }
 
-  const recent = await recentCards(session.userId, deck.id);
+  const [recent, tags] = await Promise.all([
+    recentCards(session.userId, deck.id),
+    listTags(session.userId, language.id),
+  ]);
 
   return (
     <>
@@ -54,6 +58,7 @@ export default async function NewCardPage({
               genders={language.genders}
               language={language.name}
               dictation={dictationConfigured() ? language.name : null}
+              tagOptions={tags}
             />
           </ComponentCard>
         </div>

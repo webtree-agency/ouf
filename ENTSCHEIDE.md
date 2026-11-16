@@ -310,6 +310,21 @@ Jann wollte weg vom Cockpit: weniger Verwaltung, mehr App, wie die Vorlage mit
 - **Die Auswahl klappt im Dialog auf**, nicht als schwebendes Menü: Escape
   schlösse sonst Menü und Dialog zugleich.
 
+## Tags mit Emoji und Farbe (16.11.2026)
+
+- **Tags sind eigene Einträge** (`tags`, je Sprache) mit Emoji und Farbe,
+  verwaltet unter Decks › Tags (`/decks/tags`, damit „Decks“ in der Leiste
+  markiert bleibt; die Leiste hat keinen Platz für ein sechstes Ziel). Die
+  Karte trägt weiter nur die Namen (`cards.tags`); was eine Karte neu trägt,
+  wird beim Speichern ein grauer Tag. Umbenennen und Löschen ändern die Karten
+  in derselben Transaktion. Verworfen: Karte und Tag über eine
+  Zwischentabelle; der GIN-Index auf `cards.tags` und Filter und Export
+  hängen am Namen, und für eine Person reicht das.
+- **Fünf Farben, die des Badges** (Blau, Grün, Gelb, Rot, Grau): keine neue
+  Farbe im System (CLAUDE.md §1).
+- **Im Formular Chips**: Antippen wählt einen vorhandenen, Enter oder Komma
+  legt einen neuen an, × oder Rücktaste nimmt ihn weg.
+
 ## Vorschläge für alle Projekte
 
 - **`apple-mobile-web-app-capable` von Hand setzen**, wo `appleWebApp` steht.

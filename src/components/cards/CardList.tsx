@@ -3,9 +3,11 @@ import Link from "next/link";
 import ComponentCard from "@/components/common/ComponentCard";
 import ListFooter from "@/components/common/ListFooter";
 import PerPageSelect from "@/components/common/PerPageSelect";
+import TagChip, { lookOf } from "@/components/tags/TagChip";
 import Badge from "@/components/ui/badge/Badge";
 import { listSummary } from "@/lib/format/listSummary";
 import type { CardRow } from "@/lib/queries/cards";
+import type { TagLook } from "@/lib/tags/colors";
 
 export default function CardList({
   rows,
@@ -14,6 +16,7 @@ export default function CardList({
   pageCount,
   listHref,
   filtered,
+  tagLooks,
 }: {
   rows: CardRow[];
   total: number;
@@ -22,7 +25,9 @@ export default function CardList({
   /** Die Adresse dieser Liste samt Filter, damit „Zurück" sie wiederfindet. */
   listHref: string;
   filtered: boolean;
+  tagLooks: TagLook[];
 }) {
+  const looks = new Map(tagLooks.map((tag) => [tag.name, tag]));
   return (
     <ComponentCard action={<PerPageSelect />}>
       {rows.length === 0 ? (
@@ -65,13 +70,11 @@ export default function CardList({
                 </span>
                 {card.reverse && (
                   <Badge size="sm" color="light">
-                    rückwärts
+                    umgekehrt
                   </Badge>
                 )}
                 {card.tags.map((tag) => (
-                  <Badge key={tag} size="sm" color="primary">
-                    {tag}
-                  </Badge>
+                  <TagChip key={tag} tag={lookOf(tag, looks)} />
                 ))}
               </div>
             </li>

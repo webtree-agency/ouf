@@ -3,6 +3,7 @@ import { and, eq } from "drizzle-orm";
 import { getDb, schema, type Executor } from "../../db/index.ts";
 import { DomainError } from "../domainError.ts";
 import { languageProfile } from "../languages/catalog.ts";
+import { ensureTags } from "../tags/tags.ts";
 import { frontKey } from "./frontKey.ts";
 import type { CardInput } from "./input.ts";
 
@@ -49,6 +50,7 @@ export async function createCard(
       .insert(schema.cards)
       .values(cardValues(input, deck.code))
       .returning({ id: schema.cards.id });
+    await ensureTags(tx, userId, deck.languageId, input.tags);
 
     await tx.insert(schema.cardSchedules).values(
       input.reverse
@@ -89,6 +91,7 @@ export async function updateCard(
       .update(schema.cards)
       .set({ ...cardValues(input, deck.code), updatedAt: new Date() })
       .where(eq(schema.cards.id, cardId));
+    await ensureTags(tx, userId, deck.languageId, input.tags);
 
     if (input.reverse) {
       await tx

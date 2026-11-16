@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import PageHeading from "@/components/common/PageHeading";
 import DeckList from "@/components/decks/DeckList";
 import NewDeckButton from "@/components/decks/NewDeckButton";
+import Button from "@/components/ui/button/Button";
 import { requireLanguage } from "@/lib/languages/pageLanguage";
 import { listDecks } from "@/lib/queries/decks";
 
@@ -17,7 +18,12 @@ export default async function DecksPage() {
       <PageHeading
         title="Decks"
         action={
-          decks.length > 0 ? <NewDeckButton variant="outline" /> : undefined
+          <div className="flex flex-wrap gap-3">
+            <Button variant="outline" href="/decks/tags">
+              Tags
+            </Button>
+            {decks.length > 0 && <NewDeckButton variant="outline" />}
+          </div>
         }
       />
       <DeckList decks={decks} languageName={language.name} />

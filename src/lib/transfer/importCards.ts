@@ -5,6 +5,7 @@ import { cardValues } from "../cards/cards.ts";
 import { frontKey } from "../cards/frontKey.ts";
 import { cardInput } from "../cards/input.ts";
 import { DomainError } from "../domainError.ts";
+import { ensureTags } from "../tags/tags.ts";
 import type { ImportCard } from "./cardRows.ts";
 
 export const MAX_IMPORT_ROWS = 5000;
@@ -112,6 +113,7 @@ export async function importCards(input: {
         .insert(schema.cards)
         .values(cardValues(parsed.data, language.code))
         .returning({ id: schema.cards.id });
+      await ensureTags(tx, input.userId, input.languageId, parsed.data.tags);
       await tx.insert(schema.cardSchedules).values(
         parsed.data.reverse
           ? [

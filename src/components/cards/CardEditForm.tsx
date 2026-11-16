@@ -8,6 +8,7 @@ import DraftNotice from "@/components/common/DraftNotice";
 import SelectField from "@/components/form/SelectField";
 import Button from "@/components/ui/button/Button";
 import { useFormDraft } from "@/hooks/useFormDraft";
+import type { TagLook } from "@/lib/tags/colors";
 import CardFields, { draftOf, type CardValues } from "./CardFields";
 import { useDuplicates } from "./useDuplicates";
 
@@ -17,6 +18,7 @@ export default function CardEditForm({
   decks,
   genders,
   languageName,
+  tagOptions,
   back,
 }: {
   cardId: string;
@@ -24,6 +26,7 @@ export default function CardEditForm({
   decks: { value: string; label: string }[];
   genders: boolean;
   languageName: string;
+  tagOptions: TagLook[];
   back: string;
 }) {
   const form = useRef<HTMLFormElement>(null);
@@ -71,6 +74,7 @@ export default function CardEditForm({
         genders={genders}
         duplicates={duplicates}
         languageName={languageName}
+        tagOptions={tagOptions}
       />
       <div className="flex flex-wrap gap-3">
         <Button type="submit" disabled={pending}>

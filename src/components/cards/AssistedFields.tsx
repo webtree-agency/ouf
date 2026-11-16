@@ -5,6 +5,7 @@ import { useRef } from "react";
 import { SparkIcon } from "@/icons";
 import { genderFromArticle } from "@/lib/cards/gender";
 import type { Duplicate } from "@/lib/queries/cards";
+import type { TagLook } from "@/lib/tags/colors";
 import CardFields, { type CardValues } from "./CardFields";
 import Dictate from "./Dictate";
 import { useCardAssist } from "./useCardAssist";
@@ -19,6 +20,7 @@ export default function AssistedFields({
   duplicates,
   language,
   dictation,
+  tagOptions,
 }: {
   values: CardValues;
   setValues: (next: (current: CardValues) => CardValues) => void;
@@ -28,6 +30,7 @@ export default function AssistedFields({
   language: string;
   /** Ob Diktat und Vorschläge eingerichtet sind. */
   dictation: string | null;
+  tagOptions: TagLook[];
 }) {
   const box = useRef<HTMLDivElement>(null);
   const assist = useCardAssist({
@@ -73,6 +76,7 @@ export default function AssistedFields({
         duplicates={duplicates}
         autoFocus
         languageName={language}
+        tagOptions={tagOptions}
         assist={{
           ...assist.fields,
           backAction: dictation && (
@@ -130,7 +134,7 @@ function AssistButton({
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className="text-theme-xs -mt-3 flex min-h-11 items-center gap-1.5 font-medium text-gray-600 hover:text-gray-900 disabled:opacity-40 dark:text-gray-300 dark:hover:text-white"
+      className="text-theme-xs -my-3 flex min-h-11 items-center gap-1.5 font-medium text-gray-600 hover:text-gray-900 disabled:opacity-40 dark:text-gray-300 dark:hover:text-white"
     >
       <SparkIcon />
       {children}

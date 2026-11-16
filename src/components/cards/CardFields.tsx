@@ -4,8 +4,10 @@ import Checkbox from "@/components/form/input/Checkbox";
 import Input from "@/components/form/input/InputField";
 import Label from "@/components/form/Label";
 import { genderFromArticle } from "@/lib/cards/gender";
+import TagInput from "@/components/tags/TagInput";
 import type { Gender } from "@/lib/languages/catalog";
 import type { Duplicate } from "@/lib/queries/cards";
+import type { TagLook } from "@/lib/tags/colors";
 import BackField from "./BackField";
 import {
   assistKey,
@@ -40,6 +42,7 @@ export default function CardFields({
   autoFocus = false,
   assist = NO_ASSIST,
   languageName,
+  tagOptions = [],
 }: {
   values: CardValues;
   onChange: (next: CardValues) => void;
@@ -51,6 +54,8 @@ export default function CardFields({
   assist?: FieldAssist;
   /** Steht über der Vorderseite, damit klar ist, was wohin gehört. */
   languageName?: string;
+  /** Die Tags der Sprache, zum Antippen. */
+  tagOptions?: TagLook[];
 }) {
   const keyOf = (field: AssistField) => assistKey(assist, field);
   const busy = (field: AssistField) => assistState(assist, field);
@@ -109,8 +114,10 @@ export default function CardFields({
       )}
 
       <div>
-        <div className="flex items-end justify-between gap-3">
-          <Label htmlFor="card-example">Beispielsatz</Label>
+        <div className="mb-1.5 flex items-center justify-between gap-3">
+          <Label htmlFor="card-example" className="mb-0">
+            Beispielsatz
+          </Label>
           {assist.exampleAction}
         </div>
         <Input
@@ -128,14 +135,12 @@ export default function CardFields({
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div>
           <Label htmlFor="card-tags">Tags</Label>
-          <Input
+          <TagInput
             id="card-tags"
-            autoComplete="off"
-            autoCapitalize="none"
             value={values.tags}
-            onChange={(event) => set({ tags: event.target.value })}
-            error={Boolean(fields.tags)}
-            hint={fields.tags ?? "Mit Komma oder Leerzeichen getrennt."}
+            onChange={(tags) => set({ tags })}
+            options={tagOptions}
+            error={fields.tags}
           />
         </div>
         <div>

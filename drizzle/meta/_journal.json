@@ -50,6 +50,13 @@
       "when": 1794866303478,
       "tag": "0006_emoji-und-uebersetzung",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1794867696341,
+      "tag": "0007_tags",
+      "breakpoints": true
     }
   ]
 }

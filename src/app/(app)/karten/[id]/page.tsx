@@ -10,6 +10,7 @@ import PageHeading from "@/components/common/PageHeading";
 import { requireLanguage } from "@/lib/languages/pageLanguage";
 import { findCard } from "@/lib/queries/cards";
 import { listDecks } from "@/lib/queries/decks";
+import { listTags } from "@/lib/queries/tags";
 
 export const metadata: Metadata = { title: "Karte bearbeiten" };
 
@@ -30,7 +31,10 @@ export default async function CardPage({
   const zurueck = (await searchParams).zurueck;
   const back =
     zurueck && /^\/karten(\?\S*)?$/.test(zurueck) ? zurueck : "/karten";
-  const decks = await listDecks(session.userId, language.id);
+  const [decks, tags] = await Promise.all([
+    listDecks(session.userId, language.id),
+    listTags(session.userId, language.id),
+  ]);
 
   return (
     <>
@@ -47,6 +51,7 @@ export default async function CardPage({
           back={back}
           genders={language.genders}
           languageName={language.name}
+          tagOptions={tags}
           decks={decks.map((deck) => ({
             value: deck.id,
             label: deckLabel(deck),

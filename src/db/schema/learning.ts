@@ -98,6 +98,40 @@ export const cards = pgTable(
   ],
 );
 
+export const tagColor = pgEnum("tag_color", [
+  "blue",
+  "green",
+  "amber",
+  "red",
+  "gray",
+]);
+
+/**
+ * **Ein Tag mit Emoji und Farbe**, je Sprache. Die Karten tragen nur den Namen
+ * (`cards.tags`); was hier fehlt, legt das Speichern einer Karte an.
+ */
+export const tags = pgTable(
+  "tags",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    languageId: uuid("language_id")
+      .notNull()
+      .references(() => languages.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    emoji: text("emoji"),
+    color: tagColor("color").notNull().default("gray"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("tags_language_name_idx").on(table.languageId, table.name),
+  ],
+);
+
 export const direction = pgEnum("direction", ["forward", "reverse"]);
 
 /**
