@@ -10,7 +10,12 @@ import {
 import { users } from "./auth.ts";
 
 /** Wofür ein fremder Dienst gerufen wurde (`ENTSCHEIDE.md`, Diktat und KI). */
-export const aiTask = pgEnum("ai_task", ["transcribe", "card", "example"]);
+export const aiTask = pgEnum("ai_task", [
+  "transcribe",
+  "card",
+  "example",
+  "translate",
+]);
 
 /**
  * Ein Eintrag je Aufruf, damit das Konto die Kosten zeigen kann. Gerechnet

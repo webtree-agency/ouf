@@ -6,11 +6,11 @@ import { useEffect, useState } from "react";
 const DEBOUNCE_MS = 700;
 
 /** Fragt LanguageTool, ob die Vorderseite richtig geschrieben ist (`api/rechtschreibung`). */
-export function useSpelling(front: string, paused: boolean): string | null {
+export function useSpelling(front: string, paused: boolean): string[] {
   const [result, setResult] = useState<{
     front: string;
-    correction: string | null;
-  }>({ front: "", correction: null });
+    corrections: string[];
+  }>({ front: "", corrections: [] });
 
   useEffect(() => {
     const value = front.trim();
@@ -23,8 +23,8 @@ export function useSpelling(front: string, paused: boolean): string | null {
           { signal: controller.signal },
         );
         if (!response.ok) return;
-        const body = (await response.json()) as { correction: string | null };
-        setResult({ front: value, correction: body.correction });
+        const body = (await response.json()) as { corrections: string[] };
+        setResult({ front: value, corrections: body.corrections });
       } catch {
         // Abgebrochen, weil weitergetippt wurde.
       }
@@ -35,5 +35,5 @@ export function useSpelling(front: string, paused: boolean): string | null {
     };
   }, [front, paused]);
 
-  return result.front === front.trim() ? result.correction : null;
+  return result.front === front.trim() ? result.corrections : [];
 }

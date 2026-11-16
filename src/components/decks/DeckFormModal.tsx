@@ -4,12 +4,18 @@ import { useRef, useState, useTransition } from "react";
 
 import { createDeckAction, updateDeckAction } from "@/app/(app)/decks/actions";
 import AuthNotice from "@/components/common/AuthNotice";
+import EmojiPicker from "@/components/form/EmojiPicker";
 import Input from "@/components/form/input/InputField";
 import Label from "@/components/form/Label";
 import Button from "@/components/ui/button/Button";
 import { Modal } from "@/components/ui/modal";
 
-export type DeckValues = { id?: string; name: string; newPerDay: number };
+export type DeckValues = {
+  id?: string;
+  name: string;
+  emoji: string | null;
+  newPerDay: number;
+};
 
 export default function DeckFormModal({
   deck,
@@ -22,6 +28,7 @@ export default function DeckFormModal({
 }) {
   const form = useRef<HTMLFormElement>(null);
   const [name, setName] = useState(deck.name);
+  const [emoji, setEmoji] = useState(deck.emoji ?? "");
   const [newPerDay, setNewPerDay] = useState(String(deck.newPerDay));
   const [error, setError] = useState<string | null>(null);
   const [fields, setFields] = useState<Record<string, string>>({});
@@ -37,7 +44,7 @@ export default function DeckFormModal({
     event.preventDefault();
     setError(null);
     startTransition(async () => {
-      const input = { name, newPerDay };
+      const input = { name, emoji, newPerDay };
       const result = deck.id
         ? await updateDeckAction(deck.id, input)
         : await createDeckAction(input);
@@ -45,6 +52,7 @@ export default function DeckFormModal({
         close();
         if (!deck.id) {
           setName("");
+          setEmoji("");
           setNewPerDay(String(deck.newPerDay));
         }
         return;
@@ -67,7 +75,7 @@ export default function DeckFormModal({
       </h2>
       <form ref={form} onSubmit={submit} noValidate className="mt-6 space-y-4">
         {error && <AuthNotice tone="error">{error}</AuthNotice>}
-        <div>
+        <EmojiPicker value={emoji} onChange={setEmoji} name={name}>
           <Label htmlFor="deck-name">Name</Label>
           <Input
             id="deck-name"
@@ -75,9 +83,9 @@ export default function DeckFormModal({
             autoFocus
             onChange={(event) => setName(event.target.value)}
             error={Boolean(fields.name)}
-            hint={fields.name}
+            hint={fields.name ?? fields.emoji}
           />
-        </div>
+        </EmojiPicker>
         <div>
           <Label htmlFor="deck-newPerDay">Neue Karten je Tag</Label>
           <Input

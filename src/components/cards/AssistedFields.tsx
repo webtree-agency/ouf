@@ -9,6 +9,7 @@ import CardFields, { type CardValues } from "./CardFields";
 import Dictate from "./Dictate";
 import { useCardAssist } from "./useCardAssist";
 import { useSpelling } from "./useSpelling";
+import { useTranslation } from "./useTranslation";
 
 /** Die Felder der Schnellerfassung, mit allem, was beim Erfassen hilft. */
 export default function AssistedFields({
@@ -17,6 +18,7 @@ export default function AssistedFields({
   fields,
   genders,
   duplicates,
+  language,
   dictation,
 }: {
   values: CardValues;
@@ -24,7 +26,8 @@ export default function AssistedFields({
   fields: Record<string, string>;
   genders: boolean;
   duplicates: Duplicate[];
-  /** Der Name der Sprache, wenn Diktat und Vorschläge eingerichtet sind. */
+  language: string;
+  /** Ob Diktat und Vorschläge eingerichtet sind. */
   dictation: string | null;
 }) {
   const box = useRef<HTMLDivElement>(null);
@@ -37,7 +40,11 @@ export default function AssistedFields({
         box.current?.querySelector<HTMLElement>("#card-front")?.focus(),
       ),
   });
-  const correction = useSpelling(values.front, assist.busy);
+  const corrections = useSpelling(values.front, assist.busy);
+  const translation = useTranslation(
+    values.front,
+    Boolean(dictation) && !values.back && !assist.busy,
+  );
 
   function applyCorrection(front: string) {
     setValues((current) => ({
@@ -70,20 +77,27 @@ export default function AssistedFields({
         genders={genders}
         duplicates={duplicates}
         autoFocus
+        languageName={language}
         assist={{
           ...assist.fields,
-          frontHint: correction && (
-            <button
-              type="button"
-              onClick={() => applyCorrection(correction)}
-              className="text-theme-xs link-underline motion-safe:animate-reveal mt-1.5 text-left text-gray-600 dark:text-gray-300"
-            >
-              Meintest du{" "}
-              <span className="font-medium text-gray-900 dark:text-white">
-                {correction}
-              </span>
-              ?
-            </button>
+          backSuggestion: translation,
+          frontHint: corrections.length > 0 && (
+            <p className="text-theme-xs motion-safe:animate-reveal mt-1.5 flex flex-wrap items-center gap-x-1 gap-y-1 text-gray-600 dark:text-gray-300">
+              Meintest du
+              {corrections.map((option, index) => (
+                <span key={option}>
+                  {index > 0 && "oder "}
+                  <button
+                    type="button"
+                    onClick={() => applyCorrection(option)}
+                    className="link-brand"
+                  >
+                    {option}
+                  </button>
+                  {index === corrections.length - 1 && "?"}
+                </span>
+              ))}
+            </p>
           ),
           exampleAction: dictation && (
             <button

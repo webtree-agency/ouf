@@ -8,7 +8,7 @@ import {
   transcribeAction,
 } from "@/app/(app)/karten/actions";
 import type { CardSuggestion } from "@/lib/capture/suggest";
-import type { AssistField, FieldAssist } from "./CardFields";
+import type { AssistField, FieldAssist } from "./fieldAssist";
 import type { CardValues } from "./CardFields";
 
 type Update = (next: (current: CardValues) => CardValues) => void;

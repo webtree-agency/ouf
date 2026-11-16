@@ -98,3 +98,33 @@ export async function suggestExample(
     throw new DomainError("Dazu fiel kein Satz ein.");
   return { value: answer.value.example, tokens: answer.tokens };
 }
+
+const translation = z.object({
+  back: z.string(),
+  gender: z.enum(["m", "f", ""]),
+});
+export type Translation = z.infer<typeof translation>;
+
+export function translationInstructions(language: LanguageProfile): string {
+  return [
+    `Übersetze einen Ausdruck auf ${language.name} von der Vorderseite einer Karteikarte ins Deutsche.`,
+    "back: die deutsche Bedeutung, knapp, ohne Punkt am Ende, ein Nomen mit Artikel. Hat er mehrere übliche Bedeutungen, die zwei häufigsten mit Semikolon.",
+    language.genders
+      ? `gender: "m" oder "f", wenn es ein Nomen auf ${language.name} ist, sonst "".`
+      : 'gender: immer "".',
+    `Ist es kein Ausdruck auf ${language.name}, lass back leer.`,
+  ].join("\n");
+}
+
+export async function suggestTranslation(
+  front: string,
+  language: LanguageProfile,
+): Promise<Answer<Translation | null>> {
+  const answer = await ask(
+    translationInstructions(language),
+    front,
+    translation,
+  );
+  const usable = !answer.refused && answer.value.back.trim();
+  return { value: usable ? answer.value : null, tokens: answer.tokens };
+}

@@ -36,7 +36,7 @@ export default function NewDeckButton({
         </Button>
       )}
       <DeckFormModal
-        deck={{ name: "", newPerDay: 20 }}
+        deck={{ name: "", emoji: null, newPerDay: 20 }}
         isOpen={open}
         onClose={() => setOpen(false)}
       />

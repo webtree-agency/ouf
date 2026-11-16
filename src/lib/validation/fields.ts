@@ -26,6 +26,28 @@ export function requiredTextField(max = MAX_TEXT) {
     .max(max, `Höchstens ${max} Zeichen.`);
 }
 
+const PICTOGRAPH = /\p{Extended_Pictographic}|\p{Regional_Indicator}/u;
+
+/** Genau ein Emoji, auch ein zusammengesetztes (👩‍🏫, 🇫🇷); leer heisst keins. */
+export function isSingleEmoji(value: string): boolean {
+  const graphemes = [
+    ...new Intl.Segmenter("de", { granularity: "grapheme" }).segment(value),
+  ];
+  return graphemes.length === 1 && PICTOGRAPH.test(value);
+}
+
+export function emojiField() {
+  return z
+    .string()
+    .trim()
+    .max(32, "Ein Emoji, bitte.")
+    .refine(
+      (value) => value === "" || isSingleEmoji(value),
+      "Ein Emoji, bitte.",
+    )
+    .transform((value) => value || null);
+}
+
 const KEINE_MAIL = "Das sieht nicht nach einer E-Mail-Adresse aus.";
 
 // Die Länge vor dem Muster: Was länger als 254 Zeichen ist, ist keine Adresse.

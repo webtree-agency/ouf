@@ -169,7 +169,7 @@ nur für Überschriften und Eyebrows. Keine zweite.
 ### Icons
 
 **Ausschliesslich aus `src/icons/`**, dem Satz aus dem Cockpit. Keine zweite
-Bibliothek, kein Emoji. Sparsam: Navigation, Aktionsknöpfe, Leerzustände.
+Bibliothek, kein Emoji. Ausnahme ist das Emoji, das man einem Deck selbst gibt. Sparsam: Navigation, Aktionsknöpfe, Leerzustände.
 Icons ohne Beschriftung brauchen `aria-label`.
 
 ### Links

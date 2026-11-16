@@ -5,6 +5,7 @@ import PageHeading from "@/components/common/PageHeading";
 import NewDeckButton from "@/components/decks/NewDeckButton";
 import ExportForm from "@/components/transfer/ExportForm";
 import ImportForm from "@/components/transfer/ImportForm";
+import { deckLabel } from "@/lib/decks/label";
 import { requireLanguage } from "@/lib/languages/pageLanguage";
 import { listDecks } from "@/lib/queries/decks";
 
@@ -14,7 +15,7 @@ export default async function TransferPage() {
   const { session, language } = await requireLanguage();
   const decks = (await listDecks(session.userId, language.id)).map((deck) => ({
     value: deck.id,
-    label: deck.name,
+    label: deckLabel(deck),
   }));
 
   return (

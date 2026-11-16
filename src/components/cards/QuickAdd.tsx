@@ -24,12 +24,14 @@ export default function QuickAdd({
   decks,
   deckId,
   genders,
+  language,
   dictation,
 }: {
   decks: { value: string; label: string }[];
   deckId: string;
   genders: boolean;
   /** Der Name der Sprache, wenn das Diktat eingerichtet ist, sonst `null`. */
+  language: string;
   dictation: string | null;
 }) {
   const router = useRouter();
@@ -52,6 +54,7 @@ export default function QuickAdd({
         key={`${deckId}-${round}`}
         deckId={deckId}
         genders={genders}
+        language={language}
         dictation={dictation}
         sticky={sticky}
         onSaved={(values) => {
@@ -73,12 +76,14 @@ export default function QuickAdd({
 function QuickAddForm({
   deckId,
   genders,
+  language,
   dictation,
   sticky,
   onSaved,
 }: {
   deckId: string;
   genders: boolean;
+  language: string;
   dictation: string | null;
   sticky: Sticky;
   onSaved: (values: CardValues) => void;
@@ -133,6 +138,7 @@ function QuickAddForm({
         fields={fields}
         genders={genders}
         duplicates={duplicates}
+        language={language}
         dictation={dictation}
       />
       <div className="flex flex-wrap items-center gap-3">

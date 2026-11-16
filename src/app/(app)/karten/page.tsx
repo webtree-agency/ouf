@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 
+import { deckLabel } from "@/lib/decks/label";
+
 import CardFilters from "@/components/cards/CardFilters";
 import CardList from "@/components/cards/CardList";
 import PageHeading from "@/components/common/PageHeading";
@@ -68,7 +70,10 @@ export default async function CardsPage({
       />
       <div className="space-y-6">
         <CardFilters
-          decks={decks.map((deck) => ({ value: deck.id, label: deck.name }))}
+          decks={decks.map((deck) => ({
+            value: deck.id,
+            label: deckLabel(deck),
+          }))}
           tags={tags}
           genders={language.genders}
         />

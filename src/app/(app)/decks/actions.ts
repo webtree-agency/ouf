@@ -13,11 +13,12 @@ import {
 import { activeLanguage } from "@/lib/queries/languages";
 import { fieldMessages } from "@/lib/validation/fields";
 
-type DeckForm = { name: string; newPerDay: string };
+type DeckForm = { name: string; emoji: string; newPerDay: string };
 
 function parse(input: DeckForm) {
   return deckInput.safeParse({
     name: String(input.name),
+    emoji: String(input.emoji ?? ""),
     newPerDay: String(input.newPerDay),
   });
 }

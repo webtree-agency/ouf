@@ -5,6 +5,7 @@ import { z } from "zod";
 
 import {
   countField,
+  emojiField,
   fieldMessages,
   normalizeTags,
   requiredEmailField,
@@ -92,5 +93,20 @@ describe("fieldMessages", () => {
     });
     const result = schema.safeParse({ front: "" });
     assert.deepEqual(fieldMessages(result.error!), { front: "eins" });
+  });
+});
+
+describe("emojiField", () => {
+  const field = emojiField();
+  it("nimmt genau ein Emoji, auch zusammengesetzt", () => {
+    for (const emoji of ["🍷", "🇫🇷", "👩‍🏫", "❤️"])
+      assert.equal(field.parse(emoji), emoji);
+  });
+  it("leer heisst keins", () => {
+    assert.equal(field.parse("  "), null);
+  });
+  it("weist Text und zwei Emojis ab", () => {
+    for (const value of ["a", "🍷🧀", "ab🍷"])
+      assert.equal(field.safeParse(value).success, false);
   });
 });

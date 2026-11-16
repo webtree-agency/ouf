@@ -6,6 +6,7 @@ import ComponentCard from "@/components/common/ComponentCard";
 import PageHeading from "@/components/common/PageHeading";
 import NewDeckButton from "@/components/decks/NewDeckButton";
 import { dictationConfigured } from "@/lib/capture/transcribe";
+import { deckLabel } from "@/lib/decks/label";
 import { requireLanguage } from "@/lib/languages/pageLanguage";
 import { recentCards } from "@/lib/queries/cards";
 import { listDecks } from "@/lib/queries/decks";
@@ -47,10 +48,11 @@ export default async function NewCardPage({
             <QuickAdd
               decks={decks.map((entry) => ({
                 value: entry.id,
-                label: entry.name,
+                label: deckLabel(entry),
               }))}
               deckId={deck.id}
               genders={language.genders}
+              language={language.name}
               dictation={dictationConfigured() ? language.name : null}
             />
           </ComponentCard>

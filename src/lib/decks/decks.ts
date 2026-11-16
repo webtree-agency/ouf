@@ -3,14 +3,22 @@ import { z } from "zod";
 
 import { getDb, schema } from "../../db/index.ts";
 import { DomainError } from "../domainError.ts";
-import { countField, requiredTextField } from "../validation/fields.ts";
+import {
+  countField,
+  emojiField,
+  requiredTextField,
+} from "../validation/fields.ts";
 
 export const deckInput = z.object({
   name: requiredTextField(60),
+  emoji: emojiField(),
   newPerDay: countField("Neue Karten je Tag", 0, 999),
 });
 
-export type DeckInput = z.infer<typeof deckInput>;
+// Ohne Emoji ist ein Deck vollständig; Import und Tests legen es so an.
+export type DeckInput = Omit<z.infer<typeof deckInput>, "emoji"> & {
+  emoji?: string | null;
+};
 
 const VERGEBEN = "Ein Deck mit diesem Namen gibt es in dieser Sprache schon.";
 
@@ -37,6 +45,7 @@ export async function createDeck(
         userId,
         languageId,
         name: input.name,
+        emoji: input.emoji ?? null,
         newPerDay: input.newPerDay,
       })
       .returning({ id: schema.decks.id });
@@ -54,7 +63,11 @@ export async function updateDeck(
   try {
     const updated = await getDb()
       .update(schema.decks)
-      .set({ name: input.name, newPerDay: input.newPerDay })
+      .set({
+        name: input.name,
+        emoji: input.emoji ?? null,
+        newPerDay: input.newPerDay,
+      })
       .where(and(eq(schema.decks.id, deckId), eq(schema.decks.userId, userId)))
       .returning({ id: schema.decks.id });
     if (updated.length === 0)

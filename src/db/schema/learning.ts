@@ -45,6 +45,8 @@ export const decks = pgTable(
       .notNull()
       .references(() => languages.id, { onDelete: "cascade" }),
     name: text("name").notNull(),
+    /** Ein Emoji als Icon, frei gewählt (Jann, 16.11.2026). */
+    emoji: text("emoji"),
     // Die einzige Einstellung in ouf. (CLAUDE.md, „Weniger ist mehr").
     newPerDay: integer("new_per_day").notNull().default(20),
     createdAt: timestamp("created_at", { withTimezone: true })

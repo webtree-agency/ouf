@@ -8,6 +8,8 @@ export const GET = withUser(async (request, session) => {
     .trim()
     .slice(0, 200);
   const { active } = await activeLanguage(session.userId);
-  if (!active || !text) return Response.json({ correction: null });
-  return Response.json({ correction: await checkSpelling(text, active.code) });
+  if (!active || !text) return Response.json({ corrections: [] });
+  return Response.json({
+    corrections: await checkSpelling(text, active.code),
+  });
 });

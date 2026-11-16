@@ -10,6 +10,7 @@ export const ACTIVE_SCHEDULE = sql`(${schema.cardSchedules.direction} = 'forward
 export type DeckRow = {
   id: string;
   name: string;
+  emoji: string | null;
   newPerDay: number;
   cardCount: number;
   newCount: number;
@@ -29,6 +30,7 @@ export async function listDecks(
     .select({
       id: schema.decks.id,
       name: schema.decks.name,
+      emoji: schema.decks.emoji,
       newPerDay: schema.decks.newPerDay,
       cardCount: sql<number>`count(distinct ${schema.cards.id})::int`,
       newCount: sql<number>`count(${schema.cardSchedules.id}) filter (where ${schema.cardSchedules.scheduleStatus} = 'new' and ${ACTIVE_SCHEDULE})::int`,
@@ -67,6 +69,7 @@ export async function findDeck(userId: string, deckId: string) {
     .select({
       id: schema.decks.id,
       name: schema.decks.name,
+      emoji: schema.decks.emoji,
       languageId: schema.decks.languageId,
       newPerDay: schema.decks.newPerDay,
     })

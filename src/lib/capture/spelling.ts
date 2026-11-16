@@ -15,19 +15,52 @@ export type Match = {
   rule: { id: string };
 };
 
-/** Die Fassung mit dem jeweils ersten Vorschlag, oder `null`, wenn nichts zu ändern ist. */
-export function corrected(text: string, matches: Match[]): string | null {
+const MAX_OPTIONS = 3;
+
+// Abkürzungen wie „CAF" sind für eine Karte keine Korrektur.
+const SHOUTING = /\p{Lu}{2,}/u;
+
+/** „Très" am Satzanfang bleibt „très", wenn man klein angefangen hat. */
+function keepCase(original: string, replacement: string): string {
+  const first = original.charAt(0);
+  return first && first === first.toLowerCase()
+    ? replacement.charAt(0).toLowerCase() + replacement.slice(1)
+    : replacement;
+}
+
+function apply(text: string, matches: Match[], pick: (m: Match) => string) {
   let result = text;
-  const usable = matches
-    .filter((match) => !IGNORED.test(match.rule.id) && match.replacements[0])
-    .sort((a, b) => b.offset - a.offset);
-  for (const match of usable) {
+  for (const match of [...matches].sort((a, b) => b.offset - a.offset)) {
+    const original = text.slice(match.offset, match.offset + match.length);
     result =
       result.slice(0, match.offset) +
-      match.replacements[0].value +
+      keepCase(original, pick(match)) +
       result.slice(match.offset + match.length);
   }
-  return result === text ? null : result;
+  return result;
+}
+
+/**
+ * Bis zu drei Fassungen zum Antippen: Für den ersten Fehler je ein Vorschlag
+ * von LanguageTool, die übrigen Fehler jeweils mit ihrem ersten. Leer heisst,
+ * es ist nichts zu ändern.
+ */
+export function corrections(text: string, matches: Match[]): string[] {
+  const usable = matches
+    .filter((match) => !IGNORED.test(match.rule.id) && match.replacements[0])
+    .sort((a, b) => a.offset - b.offset);
+  if (usable.length === 0) return [];
+  const [first] = usable;
+  const options = first.replacements
+    .slice(0, MAX_OPTIONS * 2)
+    .map((replacement) =>
+      apply(text, usable, (match) =>
+        match === first ? replacement.value : match.replacements[0].value,
+      ),
+    );
+  return [...new Set(options)]
+    .filter((option) => option !== text && !SHOUTING.test(option))
+    .slice(0, MAX_OPTIONS);
 }
 
 function languageToolCode(code: string): string {
@@ -38,7 +71,7 @@ export async function checkSpelling(
   text: string,
   languageCode: string,
   fetchImpl: typeof fetch = fetch,
-): Promise<string | null> {
+): Promise<string[]> {
   // Fällt der Dienst aus, gibt es eben keinen Hinweis; das Erfassen geht weiter.
   try {
     const response = await fetchImpl(ENDPOINT, {
@@ -50,10 +83,10 @@ export async function checkSpelling(
       }),
       signal: AbortSignal.timeout(5000),
     });
-    if (!response.ok) return null;
+    if (!response.ok) return [];
     const body = (await response.json()) as { matches?: Match[] };
-    return corrected(text, body.matches ?? []);
+    return corrections(text, body.matches ?? []);
   } catch {
-    return null;
+    return [];
   }
 }

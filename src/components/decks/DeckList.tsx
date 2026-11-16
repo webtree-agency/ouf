@@ -3,6 +3,7 @@ import Link from "next/link";
 import ComponentCard from "@/components/common/ComponentCard";
 import Button from "@/components/ui/button/Button";
 import { counted } from "@/lib/format/plural";
+import { deckLabel } from "@/lib/decks/label";
 import type { DeckRow } from "@/lib/queries/decks";
 import DeckActions from "./DeckActions";
 import NewDeckButton from "./NewDeckButton";
@@ -38,7 +39,7 @@ export default function DeckList({
                 href={`/karten?deck=${deck.id}`}
                 className="link-underline text-base font-medium text-gray-800 dark:text-white/90"
               >
-                {deck.name}
+                {deckLabel(deck)}
               </Link>
               <p className="text-theme-sm mt-0.5 text-gray-500 dark:text-gray-400">
                 {counted(deck.cardCount, { one: "Karte", many: "Karten" })} ·{" "}
@@ -67,6 +68,7 @@ export default function DeckList({
                 deck={{
                   id: deck.id,
                   name: deck.name,
+                  emoji: deck.emoji,
                   newPerDay: deck.newPerDay,
                 }}
                 cardCount={deck.cardCount}

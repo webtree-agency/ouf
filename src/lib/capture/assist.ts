@@ -3,6 +3,8 @@ import type { LanguageProfile } from "../languages/catalog.ts";
 import {
   suggestCard,
   suggestExample,
+  suggestTranslation,
+  type Translation,
   type Answer,
   type CardSuggestion,
 } from "./suggest.ts";
@@ -56,4 +58,13 @@ export async function exampleFor(
   language: LanguageProfile,
 ): Promise<string> {
   return counted(userId, "example", suggestExample(card, language));
+}
+
+/** Während des Tippens: die Rückseite als graue Vorgabe. */
+export async function translationFor(
+  userId: string,
+  front: string,
+  language: LanguageProfile,
+): Promise<Translation | null> {
+  return counted(userId, "translate", suggestTranslation(front, language));
 }

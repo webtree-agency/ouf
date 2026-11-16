@@ -282,8 +282,31 @@ Jann wollte weg vom Cockpit: weniger Verwaltung, mehr App, wie die Vorlage mit
   (`lib/capture/pricing.ts`). Verworfen: die Abrechnung von Anthropic abfragen;
   das braucht einen Admin-Schlüssel, und die Zahl gälte für die ganze
   Organisation, nicht für ouf.
+- **Übersetzung beim Tippen** (Jann): Ist die Rückseite leer, schlägt Claude
+  Haiku sie zur Vorderseite vor, grau im Feld; Tab oder „Übernehmen“ setzt sie
+  ein. Erst nach 900 ms Pause, je Ausdruck nur einmal gefragt. Über den Feldern
+  steht „Vorderseite · Französisch“ und „Rückseite · Deutsch“, damit nichts
+  durcheinandergerät.
+- **Bis zu drei Korrekturen** statt einer: LanguageTool liefert Varianten, die
+  erste passt nicht immer („ta guele“). Abkürzungen („CAF“) fallen weg, die
+  Kleinschreibung bleibt. Findet LanguageTool das Wort nicht, hilft
+  „Vorschlagen“.
 - **`Permissions-Policy: microphone=(self)`** statt `microphone=()`: Sonst
   verweigert der Browser das Mikrofon still, auch nach der Freigabe.
+
+## Emoji je Deck (16.11.2026)
+
+- **Ein Emoji als Icon je Deck** (Jann), gewählt im Deck-Dialog links neben dem
+  Namen. Es steht auf der Startseite statt des Stapel-Icons und in jeder
+  Deck-Auswahl. Die Regel „kein Emoji“ gilt weiter für das, was ouf. selbst
+  schreibt; ein Emoji, das man selbst wählt, ist Inhalt.
+- **Suche nach deutschem Namen** über `emojibase-data` („Auto“ → 🚗), auf dem
+  Server (`api/emoji`): Der Katalog hat 600 kB, der Browser bekommt nur die
+  Treffer. Passend zum Deck-Namen stehen Treffer zuoberst. Verworfen: eine
+  feste Liste im Code (zu klein) und Claude (kostet für etwas, das eine Liste
+  kann).
+- **Die Auswahl klappt im Dialog auf**, nicht als schwebendes Menü: Escape
+  schlösse sonst Menü und Dialog zugleich.
 
 ## Vorschläge für alle Projekte
 

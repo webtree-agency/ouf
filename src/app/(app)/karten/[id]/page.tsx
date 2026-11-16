@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+
+import { deckLabel } from "@/lib/decks/label";
 import { notFound } from "next/navigation";
 
 import CardEditForm from "@/components/cards/CardEditForm";
@@ -44,7 +46,10 @@ export default async function CardPage({
           cardId={card.id}
           back={back}
           genders={language.genders}
-          decks={decks.map((deck) => ({ value: deck.id, label: deck.name }))}
+          decks={decks.map((deck) => ({
+            value: deck.id,
+            label: deckLabel(deck),
+          }))}
           initial={{
             deckId: card.deckId,
             front: card.front,

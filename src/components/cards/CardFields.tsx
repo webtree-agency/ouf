@@ -1,13 +1,20 @@
 "use client"; // Gesteuerte Felder.
 
-import type { ReactNode } from "react";
-
 import Checkbox from "@/components/form/input/Checkbox";
 import Input from "@/components/form/input/InputField";
 import Label from "@/components/form/Label";
 import { genderFromArticle } from "@/lib/cards/gender";
 import type { Gender } from "@/lib/languages/catalog";
 import type { Duplicate } from "@/lib/queries/cards";
+import BackField from "./BackField";
+import {
+  assistKey,
+  assistState,
+  NO_ASSIST,
+  Side,
+  type AssistField,
+  type FieldAssist,
+} from "./fieldAssist";
 import DuplicateNotice from "./DuplicateNotice";
 import GenderField from "./GenderField";
 
@@ -24,22 +31,6 @@ export type CardValues = {
   genderTouched: boolean;
 };
 
-export type AssistField = "front" | "back" | "example";
-
-/** Was das Diktat und die Vorschläge an den Feldern zeigen (`useCardAssist`). */
-export type FieldAssist = {
-  /** Felder, für die gerade ein Vorschlag kommt: grau, sie atmen leise. */
-  loading: ReadonlySet<AssistField>;
-  /** Was diktiert wurde, grau in der Vorderseite, bis der Vorschlag da ist. */
-  ghost: string;
-  /** Zählt je Feld die Vorschläge; ein neuer kommt weich herein. */
-  revealed: Partial<Record<AssistField, number>>;
-  frontHint?: ReactNode;
-  exampleAction?: ReactNode;
-};
-
-const NO_ASSIST: FieldAssist = { loading: new Set(), ghost: "", revealed: {} };
-
 export default function CardFields({
   values,
   onChange,
@@ -48,6 +39,7 @@ export default function CardFields({
   duplicates,
   autoFocus = false,
   assist = NO_ASSIST,
+  languageName,
 }: {
   values: CardValues;
   onChange: (next: CardValues) => void;
@@ -57,19 +49,24 @@ export default function CardFields({
   duplicates: Duplicate[];
   autoFocus?: boolean;
   assist?: FieldAssist;
+  /** Steht über der Vorderseite, damit klar ist, was wohin gehört. */
+  languageName?: string;
 }) {
-  // Ein neuer Schlüssel je Vorschlag baut das Feld neu, und es kommt weich herein.
-  const keyOf = (field: AssistField) =>
-    `${field}-${assist.revealed[field] ?? 0}`;
-  const busy = (field: AssistField) => ({
-    readOnly: assist.loading.has(field),
-    className: assist.loading.has(field)
-      ? "motion-safe:animate-pulse"
-      : assist.revealed[field]
-        ? "motion-safe:animate-reveal"
-        : "",
-  });
+  const keyOf = (field: AssistField) => assistKey(assist, field);
+  const busy = (field: AssistField) => assistState(assist, field);
+  const suggestion = values.back ? null : (assist.backSuggestion ?? null);
   const set = (patch: Partial<CardValues>) => onChange({ ...values, ...patch });
+
+  function acceptBack() {
+    if (!suggestion) return;
+    set({
+      back: suggestion.back,
+      gender:
+        genders && !values.genderTouched
+          ? suggestion.gender || values.gender
+          : values.gender,
+    });
+  }
 
   function setFront(front: string) {
     const fromArticle = genderFromArticle(front);
@@ -84,7 +81,10 @@ export default function CardFields({
     <div className="space-y-4">
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div>
-          <Label htmlFor="card-front">Vorderseite</Label>
+          <Label htmlFor="card-front">
+            Vorderseite
+            {languageName && <Side>{languageName}</Side>}
+          </Label>
           <Input
             key={keyOf("front")}
             {...busy("front")}
@@ -102,19 +102,16 @@ export default function CardFields({
           <DuplicateNotice duplicates={duplicates} />
           {assist.frontHint}
         </div>
-        <div>
-          <Label htmlFor="card-back">Rückseite</Label>
-          <Input
-            key={keyOf("back")}
-            {...busy("back")}
-            id="card-back"
-            autoComplete="off"
-            value={values.back}
-            onChange={(event) => set({ back: event.target.value })}
-            error={Boolean(fields.back)}
-            hint={fields.back}
-          />
-        </div>
+        <BackField
+          key={keyOf("back")}
+          busy={busy("back")}
+          side={languageName && <Side>Deutsch</Side>}
+          value={values.back}
+          onChange={(back) => set({ back })}
+          error={fields.back}
+          suggestion={suggestion?.back ?? null}
+          onAccept={acceptBack}
+        />
       </div>
 
       {genders && (

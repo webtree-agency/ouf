@@ -43,6 +43,13 @@
       "when": 1794865599281,
       "tag": "0005_ki-verbrauch",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1794866303478,
+      "tag": "0006_emoji-und-uebersetzung",
+      "breakpoints": true
     }
   ]
 }

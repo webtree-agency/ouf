@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import PageHeading from "@/components/common/PageHeading";
 import LearnSession from "@/components/learn/LearnSession";
+import { deckLabel } from "@/lib/decks/label";
 import { requireLanguage } from "@/lib/languages/pageLanguage";
 import { studyState } from "@/lib/learning/session";
 import { findDeck } from "@/lib/queries/decks";
@@ -30,7 +31,7 @@ export default async function LearnPage({
 
   return (
     <>
-      <PageHeading title={deck && deckId ? deck.name : "Alle Decks"} />
+      <PageHeading title={deck && deckId ? deckLabel(deck) : "Alle Decks"} />
       <LearnSession key={deckId ?? "alle"} initial={initial} deckId={deckId} />
     </>
   );

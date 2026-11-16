@@ -55,7 +55,7 @@ export default function DeckActions({
       </button>
 
       <DeckFormModal
-        key={`${deck.name}-${deck.newPerDay}`}
+        key={`${deck.name}-${deck.emoji}-${deck.newPerDay}`}
         deck={deck}
         isOpen={open === "edit"}
         onClose={() => setOpen(null)}
