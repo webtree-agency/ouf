@@ -405,6 +405,13 @@ Jann wollte weg vom Cockpit: weniger Verwaltung, mehr App, wie die Vorlage mit
 - **Tags in Listen leise** (`QuietTag`): umrandet statt gefüllt, Emoji mit
   Abstand, ohne Emoji ein Farbpunkt. Gefüllte Chips bleiben im Formular.
 
+## Lernkarte aufgeräumt (17.11.2026)
+
+- **Der Lautsprecher fürs Wort sitzt oben rechts in der Ecke**, das Wort steht
+  genau mittig (Jann). Der Beispielsatz bekommt ein eigenes Feld mit dem
+  Lautsprecher rechts darin. Das Genus steht unter dem französischen Wort,
+  nicht unter der Übersetzung.
+
 ## Vorschläge für alle Projekte
 
 - **`apple-mobile-web-app-capable` von Hand setzen**, wo `appleWebApp` steht.

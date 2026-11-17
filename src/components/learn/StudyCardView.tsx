@@ -28,6 +28,13 @@ export default function StudyCardView({
   const speakFront =
     onSpeak && (forward || revealed) ? () => onSpeak(card.front) : undefined;
 
+  // Das Genus gehört zum französischen Wort, nicht zur Übersetzung.
+  const gender = card.gender && (
+    <p className="text-theme-sm mt-2 text-gray-500 dark:text-gray-400">
+      {GENDER_LABELS[card.gender]}
+    </p>
+  );
+
   return (
     // Kein <button>: Darin liegen die Knöpfe zum Vorlesen. Die Tastatur deckt mit
     // der Leertaste auf, am Desktop steht der Knopf „Aufdecken“ darunter.
@@ -36,27 +43,27 @@ export default function StudyCardView({
       onClick={(event) => {
         if (!(event.target as HTMLElement).closest("button")) onFlip?.();
       }}
-      className={`${flips > 0 ? "motion-safe:animate-flip" : ""} flex min-h-72 w-full cursor-pointer flex-col justify-center rounded-2xl border border-gray-200 bg-white px-6 py-10 text-center select-none sm:px-10 dark:border-gray-800 dark:bg-gray-900`}
+      className={`${flips > 0 ? "motion-safe:animate-flip" : ""} relative flex min-h-72 w-full cursor-pointer flex-col justify-center rounded-2xl border border-gray-200 bg-white px-6 py-12 text-center select-none sm:px-12 dark:border-gray-800 dark:bg-gray-900`}
     >
-      <div className="flex items-center justify-center gap-2">
-        <p
-          className="text-title-md sm:text-title-lg break-words text-gray-800 dark:text-white/90"
-          lang={forward ? "fr" : "de"}
+      {/* Oben rechts in der Ecke, damit das Wort genau in der Mitte steht. */}
+      {speakFront && (
+        <button
+          type="button"
+          onClick={speakFront}
+          aria-label="Vorlesen"
+          title="Vorlesen (V)"
+          className={`${SPEAK} absolute top-3 right-3`}
         >
-          {prompt}
-        </p>
-        {forward && speakFront && (
-          <button
-            type="button"
-            onClick={speakFront}
-            aria-label="Vorlesen"
-            title="Vorlesen (V)"
-            className={SPEAK}
-          >
-            <SoundIcon />
-          </button>
-        )}
-      </div>
+          <SoundIcon />
+        </button>
+      )}
+      <p
+        className="text-title-md sm:text-title-lg break-words text-gray-800 dark:text-white/90"
+        lang={forward ? "fr" : "de"}
+      >
+        {prompt}
+      </p>
+      {forward && revealed && gender}
       {!forward && (
         <p className="text-theme-xs mt-2 text-gray-500 dark:text-gray-400">
           umgekehrt
@@ -65,45 +72,34 @@ export default function StudyCardView({
 
       {revealed && (
         <div className="motion-safe:animate-reveal mt-8 border-t border-gray-100 pt-8 dark:border-gray-800">
-          <div className="flex items-center justify-center gap-2">
-            <p className="text-title-sm break-words text-gray-800 dark:text-white/90">
-              {answer}
-            </p>
-            {!forward && speakFront && (
-              <button
-                type="button"
-                onClick={speakFront}
-                aria-label="Vorlesen"
-                title="Vorlesen (V)"
-                className={SPEAK}
-              >
-                <SoundIcon />
-              </button>
-            )}
-          </div>
-          {card.gender && (
-            <p className="text-theme-sm mt-2 text-gray-500 dark:text-gray-400">
-              {GENDER_LABELS[card.gender]}
-            </p>
-          )}
+          <p
+            className="text-title-sm break-words text-gray-800 dark:text-white/90"
+            lang={forward ? "de" : "fr"}
+          >
+            {answer}
+          </p>
+          {!forward && gender}
           {card.example && (
-            <p
-              className="mt-6 text-base text-gray-700 dark:text-gray-300"
-              lang="fr"
-            >
-              {card.example}
+            // Der Satz in einem eigenen Feld, der Lautsprecher rechts darin; der Satz bleibt mittig.
+            <div className="relative mt-6 rounded-xl bg-gray-50 px-12 py-3 dark:bg-white/5">
+              <p
+                className="text-base text-gray-700 dark:text-gray-300"
+                lang="fr"
+              >
+                {card.example}
+              </p>
               {onSpeak && (
                 <button
                   type="button"
                   onClick={() => onSpeak(card.example ?? "")}
                   aria-label="Beispielsatz vorlesen"
                   title="Beispielsatz vorlesen"
-                  className={`${SPEAK} ml-1 inline-flex align-middle`}
+                  className={`${SPEAK} absolute top-1/2 right-0.5 -translate-y-1/2`}
                 >
                   <SoundIcon />
                 </button>
               )}
-            </p>
+            </div>
           )}
           {card.note && (
             <p className="text-theme-sm mt-3 text-gray-500 dark:text-gray-400">
