@@ -373,7 +373,10 @@ Jann wollte weg vom Cockpit: weniger Verwaltung, mehr App, wie die Vorlage mit
   Leiste auf `/lernen` ganz verstecken; man kam vom „Fertig“ nur über das Logo
   weiter.
 - **Dialoge am Handy oben statt mittig**, sonst liegt die Tastatur über den
-  Feldern; Html und Body sind gesperrt (iOS scrollt sonst den Body dahinter).
+  Feldern. Die Seite dahinter wird festgesetzt (`useScrollLock`: Body
+  `position: fixed` an der aktuellen Stelle, beim Schliessen zurück).
+  Verworfen: nur `overflow: hidden`; am iPhone scrollte die Seite bei offener
+  Tastatur trotzdem (Jann, 17.11.2026).
 - **„Titel“ statt „Name“** im Deck-Dialog, „Tag“ im Tag-Dialog: Bei „Name“
   bietet iOS den eigenen Kontakt zum Ausfüllen an.
 

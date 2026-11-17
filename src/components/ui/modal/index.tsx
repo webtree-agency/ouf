@@ -2,6 +2,8 @@
 import { useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 
+import { useScrollLock } from "@/hooks/useScrollLock";
+
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -39,18 +41,7 @@ export const Modal: React.FC<ModalProps> = ({
     };
   }, [isOpen, onClose]);
 
-  // Stellt den vorherigen Wert her: Schliesst der obere von zwei Dialogen, bleibt die Seite gesperrt.
-  useEffect(() => {
-    if (!isOpen) return;
-    // iOS Safari scrollt den Body trotz `overflow: hidden`, solange das Html frei ist.
-    const root = document.documentElement;
-    const before = [document.body.style.overflow, root.style.overflow];
-    document.body.style.overflow = "hidden";
-    root.style.overflow = "hidden";
-    return () => {
-      [document.body.style.overflow, root.style.overflow] = before;
-    };
-  }, [isOpen]);
+  useScrollLock(isOpen);
 
   if (!isOpen) return null;
 
