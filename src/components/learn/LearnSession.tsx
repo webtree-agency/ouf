@@ -106,7 +106,10 @@ export default function LearnSession({
   const { neu, lernen, faellig } = state.counts;
 
   return (
-    <div className="flex flex-1 flex-col items-center pb-36 md:pb-0">
+    <div
+      data-learning={card ? "" : undefined}
+      className="flex flex-1 flex-col items-center pb-36 md:pb-0"
+    >
       <div className="flex w-full items-center justify-between gap-3 lg:w-2/3">
         <p
           className="text-theme-sm text-gray-500 dark:text-gray-400"

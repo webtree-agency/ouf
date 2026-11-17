@@ -63,7 +63,9 @@ export default function DeckFormModal({
       const erstes = Object.keys(amFeld)[0];
       if (erstes)
         form.current
-          ?.querySelector<HTMLInputElement>(`#deck-${erstes}`)
+          ?.querySelector<HTMLInputElement>(
+            `#deck-${erstes === "name" ? "title" : erstes}`,
+          )
           ?.focus();
     });
   }
@@ -76,9 +78,11 @@ export default function DeckFormModal({
       <form ref={form} onSubmit={submit} noValidate className="mt-6 space-y-4">
         {error && <AuthNotice tone="error">{error}</AuthNotice>}
         <EmojiPicker value={emoji} onChange={setEmoji} name={name}>
-          <Label htmlFor="deck-name">Name</Label>
+          {/* „Titel" statt „Name": Bei „Name" bietet iOS den eigenen Kontakt an. */}
+          <Label htmlFor="deck-title">Titel</Label>
           <Input
-            id="deck-name"
+            id="deck-title"
+            autoComplete="off"
             value={name}
             autoFocus
             onChange={(event) => setName(event.target.value)}

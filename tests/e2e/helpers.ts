@@ -29,7 +29,7 @@ export async function newAccountWithDeck(page: Page, deck = "Grundwortschatz") {
   await page.waitForURL(/\/decks$/);
 
   await page.getByRole("button", { name: "Neues Deck" }).click();
-  await page.getByLabel("Name").fill(deck);
+  await page.getByLabel("Titel").fill(deck);
   await page.getByRole("button", { name: "Speichern" }).click();
   await expect(page.getByRole("link", { name: deck })).toBeVisible();
 }

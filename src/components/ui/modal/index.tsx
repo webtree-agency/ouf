@@ -42,10 +42,13 @@ export const Modal: React.FC<ModalProps> = ({
   // Stellt den vorherigen Wert her: Schliesst der obere von zwei Dialogen, bleibt die Seite gesperrt.
   useEffect(() => {
     if (!isOpen) return;
-    const before = document.body.style.overflow;
+    // iOS Safari scrollt den Body trotz `overflow: hidden`, solange das Html frei ist.
+    const root = document.documentElement;
+    const before = [document.body.style.overflow, root.style.overflow];
     document.body.style.overflow = "hidden";
+    root.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = before;
+      [document.body.style.overflow, root.style.overflow] = before;
     };
   }, [isOpen]);
 
@@ -60,15 +63,19 @@ export const Modal: React.FC<ModalProps> = ({
 
   // Im Body, damit kein Vorfahr mit Transform oder Stapelkontext den Dialog einfängt.
   return createPortal(
-    <div ref={rootRef} className="modal fixed inset-0 z-99999 overflow-y-auto">
+    <div
+      ref={rootRef}
+      className="modal fixed inset-0 z-99999 overflow-y-auto overscroll-contain"
+    >
       {!isFullscreen && (
         <div
           className="motion-safe:animate-fade fixed inset-0 h-full w-full bg-gray-950/40 backdrop-blur-sm"
           onClick={onClose}
         ></div>
       )}
-      {/* Mittig über eine Hülle mit min-h-full: Ein Dialog, höher als der Bildschirm, ragte sonst oben unerreichbar hinaus. */}
-      <div className="flex min-h-full items-center justify-center p-4">
+      {/* Über eine Hülle mit min-h-full: Ein Dialog, höher als der Bildschirm, ragte sonst oben unerreichbar hinaus.
+          Am Handy oben statt mittig, sonst liegt die Tastatur über den Feldern. */}
+      <div className="flex min-h-full items-start justify-center p-4 pt-6 sm:items-center sm:pt-4">
         <div
           ref={modalRef}
           role="dialog"

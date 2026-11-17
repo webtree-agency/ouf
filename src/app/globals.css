@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:is(.dark *));
+/* Solange eine Lernkarte zum Bewerten dasteht (`data-learning`): Am Handy liegen
+   dann die Bewertungsknöpfe unten, wo sonst die Leiste ist. */
+@custom-variant learning (body:has([data-learning]) &);
 
 @theme {
   --font-*: initial;

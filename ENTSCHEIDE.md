@@ -365,6 +365,18 @@ Jann wollte weg vom Cockpit: weniger Verwaltung, mehr App, wie die Vorlage mit
   Fehlt es in der Auswahl, schaltet „Für alle einschalten“ es für deren Karten
   ein, ausdrücklich, nie beim Laden der Seite.
 
+## Handy (17.11.2026)
+
+- **Die Leiste fehlt beim Lernen nur, solange eine Karte dasteht**
+  (`data-learning`, Variante `learning:` in `globals.css`): Dann liegen dort die
+  Bewertungsknöpfe. Ist nichts mehr dran, ist sie wieder da. Verworfen: die
+  Leiste auf `/lernen` ganz verstecken; man kam vom „Fertig“ nur über das Logo
+  weiter.
+- **Dialoge am Handy oben statt mittig**, sonst liegt die Tastatur über den
+  Feldern; Html und Body sind gesperrt (iOS scrollt sonst den Body dahinter).
+- **„Titel“ statt „Name“** im Deck-Dialog, „Tag“ im Tag-Dialog: Bei „Name“
+  bietet iOS den eigenen Kontakt zum Ausfüllen an.
+
 ## Vorschläge für alle Projekte
 
 - **`apple-mobile-web-app-capable` von Hand setzen**, wo `appleWebApp` steht.

@@ -17,7 +17,7 @@ export default function TabBar({ extras }: { extras: React.ReactNode }) {
     pathname,
     MAIN_NAV.map((entry) => entry.href),
   );
-  const hideOnPhone = pathname.startsWith("/lernen") ? "max-md:hidden" : "";
+  const hideOnPhone = "max-md:learning:hidden";
 
   return (
     <>

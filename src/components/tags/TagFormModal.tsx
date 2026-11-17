@@ -70,9 +70,11 @@ export default function TagFormModal({
       <form onSubmit={submit} noValidate className="mt-6 space-y-4">
         {error && <AuthNotice tone="error">{error}</AuthNotice>}
         <EmojiPicker value={emoji} onChange={setEmoji} name={name}>
-          <Label htmlFor="tag-name">Name</Label>
+          {/* Nicht „Name": Dort bietet iOS den eigenen Kontakt an. */}
+          <Label htmlFor="tag-title">Tag</Label>
           <Input
-            id="tag-name"
+            id="tag-title"
+            autoComplete="off"
             value={name}
             autoFocus
             autoCapitalize="none"
