@@ -397,10 +397,13 @@ Jann wollte weg vom Cockpit: weniger Verwaltung, mehr App, wie die Vorlage mit
 - **Vorder- und Rückseite nebeneinander**, ab dem Laptop in einem gemeinsamen
   Raster für alle Zeilen (`grid-cols-subgrid`), sonst sprang die Übersetzung je
   nach Zahl der Tags. Am Handy untereinander.
-- **Das Deck ist in der Zeile wählbar** (mit Emoji), die Wahl gilt sofort;
-  schlägt sie fehl, springt die Auswahl zurück. Daneben ein Stift zum
-  Bearbeiten, das Genus als Chip. Verworfen: alles in der Zeile bearbeitbar;
-  Vorder- und Rückseite ändert man selten, und die Zeile würde ein Formular.
+- **Drei Punkte je Karte** (Jann, 17.11.2026): am Handy oben rechts in der
+  Ecke, am Laptop am Ende der Zeile; darin Bearbeiten, In Deck verschieben
+  (alle Decks mit Emoji, das aktuelle mit Haken) und Löschen mit
+  Bestätigung. Verworfen: eine Deck-Auswahl in jeder Zeile; sie machte die
+  Liste unruhig. Das Deck steht leise als „🧠 Everyday“ da.
+- **Tags in Listen leise** (`QuietTag`): umrandet statt gefüllt, Emoji mit
+  Abstand, ohne Emoji ein Farbpunkt. Gefüllte Chips bleiben im Formular.
 
 ## Vorschläge für alle Projekte
 

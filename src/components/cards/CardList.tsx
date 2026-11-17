@@ -3,14 +3,14 @@ import Link from "next/link";
 import ComponentCard from "@/components/common/ComponentCard";
 import ListFooter from "@/components/common/ListFooter";
 import PerPageSelect from "@/components/common/PerPageSelect";
-import TagChip, { lookOf } from "@/components/tags/TagChip";
+import { lookOf, QuietTag } from "@/components/tags/TagChip";
 import Badge from "@/components/ui/badge/Badge";
-import { PencilIcon } from "@/icons";
+import { deckLabel } from "@/lib/decks/label";
 import { GENDER_LABELS } from "@/lib/languages/catalog";
 import { listSummary } from "@/lib/format/listSummary";
 import type { CardRow } from "@/lib/queries/cards";
 import type { TagLook } from "@/lib/tags/colors";
-import CardDeckSelect from "./CardDeckSelect";
+import CardActions from "./CardActions";
 
 export default function CardList({
   rows,
@@ -43,14 +43,14 @@ export default function CardList({
             : "Noch keine Karte in dieser Sprache."}
         </p>
       ) : (
-        <ul className="stagger -my-3 divide-y divide-gray-100 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto] dark:divide-gray-800">
+        <ul className="stagger -my-3 divide-y divide-gray-100 lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto_auto] dark:divide-gray-800">
           {rows.map((card) => {
             const editHref = `/karten/${card.id}?zurueck=${encodeURIComponent(listHref)}`;
             return (
               <li
                 key={card.id}
                 // Ein Raster für alle Zeilen (Subgrid), sonst springt die Übersetzung je nach Zahl der Tags.
-                className="grid grid-cols-1 gap-x-6 gap-y-2 py-3 md:grid-cols-2 lg:col-span-3 lg:grid-cols-subgrid lg:items-center"
+                className="relative grid grid-cols-1 gap-x-6 gap-y-1.5 py-3 pr-12 md:grid-cols-2 lg:col-span-4 lg:grid-cols-subgrid lg:items-center lg:pr-0"
               >
                 <div className="flex min-w-0 items-center gap-2">
                   <Link
@@ -69,29 +69,29 @@ export default function CardList({
                 <p className="text-theme-sm min-w-0 truncate text-gray-600 dark:text-gray-300">
                   {card.back}
                 </p>
-                <div className="flex flex-wrap items-center gap-2 md:col-span-2 lg:col-span-1 lg:justify-end">
+                <div className="flex flex-wrap items-center gap-1.5 md:col-span-2 lg:col-span-1 lg:justify-end">
                   {card.tags.map((tag) => (
-                    <TagChip key={tag} tag={lookOf(tag, looks)} />
+                    <QuietTag key={tag} tag={lookOf(tag, looks)} />
                   ))}
                   {card.reverse && (
-                    <Badge size="sm" color="light">
+                    <span className="text-theme-xs text-gray-500 dark:text-gray-400">
                       umgekehrt
-                    </Badge>
+                    </span>
                   )}
-                  <CardDeckSelect
+                  <span className="text-theme-xs whitespace-nowrap text-gray-500 dark:text-gray-400">
+                    {deckLabel({ name: card.deckName, emoji: card.deckEmoji })}
+                  </span>
+                </div>
+                {/* Am Handy oben rechts in der Ecke, ab dem Laptop am Ende der Zeile. */}
+                <div className="absolute top-1.5 right-0 lg:static">
+                  <CardActions
                     cardId={card.id}
+                    front={card.front}
                     deckId={card.deckId}
                     decks={decks}
-                    front={card.front}
+                    editHref={editHref}
+                    listHref={listHref}
                   />
-                  <Link
-                    href={editHref}
-                    aria-label={`${card.front} bearbeiten`}
-                    title="Bearbeiten"
-                    className="flex size-11 items-center justify-center rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-800 dark:text-gray-400 dark:hover:bg-white/5 dark:hover:text-white/90"
-                  >
-                    <PencilIcon />
-                  </Link>
                 </div>
               </li>
             );
