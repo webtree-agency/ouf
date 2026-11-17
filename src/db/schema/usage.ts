@@ -15,6 +15,7 @@ export const aiTask = pgEnum("ai_task", [
   "card",
   "example",
   "translate",
+  "gender",
 ]);
 
 /**

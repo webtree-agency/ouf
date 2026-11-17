@@ -4,6 +4,7 @@ import type { LanguageProfile } from "../languages/catalog.ts";
 import { deeplConfigured, translateWithDeepl } from "./deepl.ts";
 import {
   suggestCard,
+  guessGender,
   suggestExample,
   suggestTranslation,
   type Translation,
@@ -80,4 +81,13 @@ export async function translationFor(
     }
   }
   return counted(userId, "translate", suggestTranslation(card, language));
+}
+
+/** Das Genus eines Nomens ohne verräterischen Artikel („vérité", „l'eau"). */
+export async function genderFor(
+  userId: string,
+  front: string,
+  language: LanguageProfile,
+): Promise<"m" | "f" | null> {
+  return counted(userId, "gender", guessGender(front, language));
 }

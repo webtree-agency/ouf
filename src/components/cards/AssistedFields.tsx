@@ -9,6 +9,7 @@ import type { TagLook } from "@/lib/tags/colors";
 import CardFields, { type CardValues } from "./CardFields";
 import Dictate from "./Dictate";
 import { useCardAssist } from "./useCardAssist";
+import { useGenderGuess } from "./useGenderGuess";
 import { useSpelling } from "./useSpelling";
 
 /** Die Felder der Schnellerfassung, mit allem, was beim Erfassen hilft. */
@@ -43,6 +44,17 @@ export default function AssistedFields({
       ),
   });
   const corrections = useSpelling(values.front, assist.busy);
+  // Nur, solange das Genus offen ist und niemand von Hand gewählt hat.
+  useGenderGuess(
+    values.front,
+    Boolean(dictation) && genders && !values.genderTouched && !values.gender,
+    (front, gender) =>
+      setValues((current) =>
+        current.front.trim() === front && !current.genderTouched
+          ? { ...current, gender }
+          : current,
+      ),
+  );
 
   function applyCorrection(front: string) {
     setValues((current) => ({

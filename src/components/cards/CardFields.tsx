@@ -61,12 +61,14 @@ export default function CardFields({
   const busy = (field: AssistField) => assistState(assist, field);
   const set = (patch: Partial<CardValues>) => onChange({ ...values, ...patch });
 
+  // Ein Artikel gewinnt immer, auch gegen eine Wahl von Hand; ohne Artikel
+  // bleibt, was gewählt ist (oder was `useGenderGuess` erkannt hat).
   function setFront(front: string) {
-    const fromArticle = genderFromArticle(front);
+    const fromArticle = genders ? genderFromArticle(front) : null;
     set({
       front,
-      gender:
-        genders && !values.genderTouched ? (fromArticle ?? "") : values.gender,
+      gender: fromArticle ?? (values.genderTouched ? values.gender : ""),
+      genderTouched: fromArticle ? false : values.genderTouched,
     });
   }
 

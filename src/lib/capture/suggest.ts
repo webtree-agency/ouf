@@ -132,3 +132,21 @@ export async function suggestTranslation(
   const usable = !answer.refused && answer.value.back.trim();
   return { value: usable ? answer.value : null, tokens: answer.tokens };
 }
+
+const genderGuess = z.object({ gender: z.enum(["m", "f", ""]) });
+
+export function genderInstructions(language: LanguageProfile): string {
+  return [
+    `Welches Genus hat dieses Nomen auf ${language.name}? Ein Artikel kann fehlen oder zu l' verkürzt sein.`,
+    'gender: "m" oder "f". Ist es kein Nomen oder nicht eindeutig, "".',
+  ].join("\n");
+}
+
+export async function guessGender(
+  front: string,
+  language: LanguageProfile,
+): Promise<Answer<"m" | "f" | null>> {
+  const answer = await ask(genderInstructions(language), front, genderGuess);
+  const gender = answer.refused ? "" : answer.value.gender;
+  return { value: gender || null, tokens: answer.tokens };
+}

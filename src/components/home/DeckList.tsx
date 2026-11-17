@@ -43,7 +43,7 @@ function DeckLink({ deck }: { deck: DeckRow }) {
     >
       <span
         aria-hidden
-        className="bg-brand-100 dark:bg-brand-300/10 dark:text-brand-300 flex size-11 shrink-0 items-center justify-center rounded-xl text-2xl text-gray-800"
+        className="flex size-11 shrink-0 items-center justify-center text-3xl text-gray-500 dark:text-gray-400"
       >
         {deck.emoji ?? <StackIcon />}
       </span>

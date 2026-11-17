@@ -294,6 +294,11 @@ Jann wollte weg vom Cockpit: weniger Verwaltung, mehr App, wie die Vorlage mit
   Das Genus kommt dann aus dem Artikel. „Andere Übersetzung“ bleibt bei
   Claude, DeepL gäbe dieselbe noch einmal. Ohne Schlüssel übersetzt Claude
   Haiku, etwa 0.00006 $ je Übersetzung.
+- **Genus von selbst** (Jann, 17.11.2026): Ein Artikel (le, la, un, une)
+  gewinnt immer, auch gegen eine Wahl von Hand. Ohne verräterischen Artikel
+  („vérité“, „l'eau“) fragt ouf. nach 800 ms Pause Claude Haiku, je Ausdruck
+  einmal; kein Nomen heisst „–“. Gewählt wird nur, solange niemand von Hand
+  gewählt hat.
 - **Bis zu drei Korrekturen** statt einer: LanguageTool liefert Varianten, die
   erste passt nicht immer („ta guele“). Abkürzungen („CAF“) fallen weg, die
   Kleinschreibung bleibt. Findet LanguageTool das Wort nicht, hilft
@@ -304,7 +309,7 @@ Jann wollte weg vom Cockpit: weniger Verwaltung, mehr App, wie die Vorlage mit
 ## Emoji je Deck (16.11.2026)
 
 - **Ein Emoji als Icon je Deck** (Jann), gewählt im Deck-Dialog links neben dem
-  Namen. Es steht auf der Startseite statt des Stapel-Icons und in jeder
+  Namen, ohne Fläche dahinter (Jann, 17.11.2026). Es steht auf der Startseite statt des Stapel-Icons und in jeder
   Deck-Auswahl. Die Regel „kein Emoji“ gilt weiter für das, was ouf. selbst
   schreibt; ein Emoji, das man selbst wählt, ist Inhalt.
 - **Suche nach deutschem Namen** über `emojibase-data` („Auto“ → 🚗), auf dem

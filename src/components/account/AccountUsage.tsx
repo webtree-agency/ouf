@@ -6,7 +6,8 @@ const LABELS: Record<TaskUsage["task"], string> = {
   transcribe: "Aufnahmen abgeschrieben",
   card: "Karten vorgeschlagen",
   example: "Beispielsätze",
-  translate: "Übersetzungen beim Tippen",
+  translate: "Übersetzungen",
+  gender: "Genus erkannt",
 };
 
 /** Was Diktat und Vorschläge diesen Monat gekostet haben, von ouf. selbst gerechnet. */
