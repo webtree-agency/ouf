@@ -380,6 +380,18 @@ Jann wollte weg vom Cockpit: weniger Verwaltung, mehr App, wie die Vorlage mit
 - **„Titel“ statt „Name“** im Deck-Dialog, „Tag“ im Tag-Dialog: Bei „Name“
   bietet iOS den eigenen Kontakt zum Ausfüllen an.
 
+## Lernkarte antippen (17.11.2026)
+
+- **Am Handy dreht ein Tipp auf die Karte sie um, ein zweiter zurück** (Jann);
+  den Knopf „Aufdecken“ gibt es dort nur noch für Vorlesehilfen. Am Desktop
+  bleiben Knopf und Leertaste, Klicken auf die Karte geht dort auch. Die
+  Drehung (`animate-flip`) läuft nur beim Antippen, nicht beim Erscheinen.
+- **Vorlesen über die Stimmen des Geräts** (am iPhone Siri), robuster
+  gemacht: Stimmen erst nach `voiceschanged`, bessere Stimmen zuerst, und
+  abgebrochen wird nur, was läuft; Safari verschluckte sonst den Satz.
+  Verworfen: eine Sprachausgabe über einen Dienst; die Geräte-Stimmen sind
+  gratis und auf dem iPhone gut.
+
 ## Vorschläge für alle Projekte
 
 - **`apple-mobile-web-app-capable` von Hand setzen**, wo `appleWebApp` steht.

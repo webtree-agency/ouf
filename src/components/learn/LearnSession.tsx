@@ -29,6 +29,7 @@ export default function LearnSession({
 }) {
   const [state, setState] = useState(initial);
   const [revealed, setRevealed] = useState(false);
+  const [flips, setFlips] = useState(0);
   const [error, setError] = useState<string | null>(null);
   // Die Karte gleitet hinaus, während der Server antwortet: „Nochmal" nach links.
   const [leaving, setLeaving] = useState<"left" | "right" | null>(null);
@@ -44,6 +45,7 @@ export default function LearnSession({
   const show = useCallback((next: StudyState) => {
     setState(next);
     setRevealed(false);
+    setFlips(0);
     setError(null);
     setLeaving(null);
   }, []);
@@ -152,6 +154,12 @@ export default function LearnSession({
             <StudyCardView
               card={card}
               revealed={revealed}
+              flips={flips}
+              onFlip={() => {
+                if (pending) return;
+                setRevealed((value) => !value);
+                setFlips((value) => value + 1);
+              }}
               onSpeak={available ? speak : undefined}
             />
             <p className="text-theme-xs mt-2 text-center text-gray-500 dark:text-gray-400">
@@ -166,14 +174,20 @@ export default function LearnSession({
                 disabled={pending}
               />
             ) : (
-              <button
-                type="button"
-                onClick={() => setRevealed(true)}
-                aria-keyshortcuts="Space"
-                className="dark:bg-brand-300 dark:hover:bg-brand-200 flex h-14 w-full items-center justify-center rounded-xl bg-gray-800 text-base font-medium text-white transition hover:bg-gray-900 active:scale-97 dark:text-gray-900"
-              >
-                Aufdecken
-              </button>
+              <>
+                {/* Am Handy dreht ein Tipp auf die Karte sie um; der Knopf bleibt für Vorlesehilfen. */}
+                <button
+                  type="button"
+                  onClick={() => setRevealed(true)}
+                  aria-keyshortcuts="Space"
+                  className="dark:bg-brand-300 dark:hover:bg-brand-200 flex h-14 w-full items-center justify-center rounded-xl bg-gray-800 text-base font-medium text-white transition hover:bg-gray-900 active:scale-97 max-md:sr-only dark:text-gray-900"
+                >
+                  Aufdecken
+                </button>
+                <p className="text-theme-sm pb-2 text-center text-gray-500 md:hidden dark:text-gray-400">
+                  Karte antippen, dann bewerten.
+                </p>
+              </>
             )}
             <p className="text-theme-xs mt-3 hidden text-center text-gray-500 md:block dark:text-gray-400">
               {revealed

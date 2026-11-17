@@ -9,10 +9,16 @@ const SPEAK =
 export default function StudyCardView({
   card,
   revealed,
+  flips = 0,
+  onFlip,
   onSpeak,
 }: {
   card: StudyCard;
   revealed: boolean;
+  /** Wie oft diese Karte schon gedreht wurde; nur dann dreht sie sich sichtbar. */
+  flips?: number;
+  /** Antippen der Karte dreht sie um, in beide Richtungen. */
+  onFlip?: () => void;
   /** Nur, wenn der Browser vorlesen kann. */
   onSpeak?: (text: string) => void;
 }) {
@@ -23,7 +29,15 @@ export default function StudyCardView({
     onSpeak && (forward || revealed) ? () => onSpeak(card.front) : undefined;
 
   return (
-    <div className="flex min-h-72 w-full flex-col justify-center rounded-2xl border border-gray-200 bg-white px-6 py-10 text-center sm:px-10 dark:border-gray-800 dark:bg-gray-900">
+    // Kein <button>: Darin liegen die Knöpfe zum Vorlesen. Die Tastatur deckt mit
+    // der Leertaste auf, am Desktop steht der Knopf „Aufdecken“ darunter.
+    <div
+      key={flips}
+      onClick={(event) => {
+        if (!(event.target as HTMLElement).closest("button")) onFlip?.();
+      }}
+      className={`${flips > 0 ? "motion-safe:animate-flip" : ""} flex min-h-72 w-full cursor-pointer flex-col justify-center rounded-2xl border border-gray-200 bg-white px-6 py-10 text-center select-none sm:px-10 dark:border-gray-800 dark:bg-gray-900`}
+    >
       <div className="flex items-center justify-center gap-2">
         <p
           className="text-title-md sm:text-title-lg break-words text-gray-800 dark:text-white/90"

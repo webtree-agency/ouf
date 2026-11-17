@@ -139,6 +139,8 @@
   /* Bewegung nur beim Lernen, kurz und leise (DESIGN.md). In der Oberfläche
      immer mit `motion-safe:`, damit „Bewegung reduzieren" sie abschaltet. */
   --animate-card-in: card-in 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  /* Antippen dreht die Lernkarte, eine Vierteldrehung genügt fürs Auge. */
+  --animate-flip: flip 240ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
   --animate-card-out-left: card-out-left 160ms ease-in forwards;
   --animate-card-out-right: card-out-right 160ms ease-in forwards;
   --animate-reveal: reveal 200ms ease-out;
@@ -149,6 +151,12 @@
   --animate-pop: pop 160ms cubic-bezier(0.2, 0.8, 0.2, 1) backwards;
   --animate-fade: fade 160ms ease-out backwards;
 
+  @keyframes flip {
+    from {
+      opacity: 0.4;
+      transform: perspective(900px) rotateY(-80deg);
+    }
+  }
   @keyframes card-in {
     from {
       opacity: 0;
