@@ -22,6 +22,7 @@ export type CardRow = {
   reverse: boolean;
   deckId: string;
   deckName: string;
+  deckEmoji: string | null;
 };
 
 // `%` und `_` sind in LIKE Platzhalter; wer nach „50%" sucht, meint das Zeichen.
@@ -77,6 +78,7 @@ export async function listCards(
       reverse: schema.cards.reverse,
       deckId: schema.decks.id,
       deckName: schema.decks.name,
+      deckEmoji: schema.decks.emoji,
     })
     .from(schema.cards)
     .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))

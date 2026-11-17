@@ -115,3 +115,26 @@ export async function deleteCard(
 
   await getDb().delete(schema.cards).where(eq(schema.cards.id, card.id));
 }
+
+/** Eine Karte in ein anderes Deck derselben Sprache, direkt aus der Liste. */
+export async function moveCard(
+  userId: string,
+  cardId: string,
+  deckId: string,
+): Promise<void> {
+  await getDb().transaction(async (tx) => {
+    const [current] = await tx
+      .select({ languageId: schema.decks.languageId })
+      .from(schema.cards)
+      .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
+      .where(and(eq(schema.cards.id, cardId), eq(schema.decks.userId, userId)));
+    if (!current) throw new DomainError("Diese Karte gibt es nicht.");
+    const deck = await ownedDeck(tx, userId, deckId);
+    if (deck.languageId !== current.languageId)
+      throw new DomainError("Eine Karte bleibt in ihrer Sprache.");
+    await tx
+      .update(schema.cards)
+      .set({ deckId: deck.id, updatedAt: new Date() })
+      .where(eq(schema.cards.id, cardId));
+  });
+}

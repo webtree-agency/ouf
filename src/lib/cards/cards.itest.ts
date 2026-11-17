@@ -10,7 +10,7 @@ import { DomainError } from "../domainError.ts";
 import { addLanguage } from "../languages/languages.ts";
 import { findDuplicates, listCards, listTags } from "../queries/cards.ts";
 import { listDecks } from "../queries/decks.ts";
-import { createCard, deleteCard, updateCard } from "./cards.ts";
+import { createCard, deleteCard, moveCard, updateCard } from "./cards.ts";
 import { frontKey } from "./frontKey.ts";
 import type { CardInput } from "./input.ts";
 
@@ -171,6 +171,37 @@ describe("Karten", () => {
       (error: unknown) =>
         error instanceof DomainError && error.field === "name",
     );
+  });
+
+  test("verschiebt eine Karte aus der Liste, nur in ein eigenes Deck derselben Sprache", async () => {
+    const { userId, fr, deckId } = await setup();
+    const cardId = await createCard(userId, karte(deckId));
+    const verben = await createDeck(userId, fr, {
+      name: "Verben",
+      newPerDay: 5,
+    });
+    await moveCard(userId, cardId, verben);
+    const { rows } = await listCards(userId, fr, {
+      deckId: verben,
+      perPage: 10,
+    });
+    assert.equal(rows[0]?.id, cardId);
+
+    const en = await addLanguage(userId, "en");
+    const englisch = await createDeck(userId, en, {
+      name: "Words",
+      newPerDay: 5,
+    });
+    await assert.rejects(moveCard(userId, cardId, englisch), DomainError);
+
+    const noah = await seedUser({ email: "noah@ouf.local" });
+    const noahFr = await addLanguage(noah, "fr");
+    const fremd = await createDeck(noah, noahFr, {
+      name: "Fremd",
+      newPerDay: 5,
+    });
+    await assert.rejects(moveCard(userId, cardId, fremd), DomainError);
+    await assert.rejects(moveCard(noah, cardId, fremd), DomainError);
   });
 
   test("löscht eine Karte samt Lernstand", async () => {

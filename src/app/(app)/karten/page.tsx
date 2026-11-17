@@ -58,6 +58,10 @@ export default async function CardsPage({
   });
 
   const listHref = `/karten${toQuery(params)}`;
+  const deckOptions = decks.map((deck) => ({
+    value: deck.id,
+    label: deckLabel(deck),
+  }));
   const neu = deckId ? `/karten/neu?deck=${deckId}` : "/karten/neu";
 
   return (
@@ -72,10 +76,7 @@ export default async function CardsPage({
       />
       <div className="space-y-6">
         <CardFilters
-          decks={decks.map((deck) => ({
-            value: deck.id,
-            label: deckLabel(deck),
-          }))}
+          decks={deckOptions}
           tags={tags.map((entry) => ({
             value: entry.name,
             label: entry.emoji ? `${entry.emoji} ${entry.name}` : entry.name,
@@ -86,6 +87,7 @@ export default async function CardsPage({
           {...result}
           listHref={listHref}
           tagLooks={tags}
+          decks={deckOptions}
           filtered={Boolean(query || deckId || tag || gender)}
         />
       </div>

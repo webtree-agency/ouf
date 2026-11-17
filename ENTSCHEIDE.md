@@ -392,6 +392,16 @@ Jann wollte weg vom Cockpit: weniger Verwaltung, mehr App, wie die Vorlage mit
   Verworfen: eine Sprachausgabe über einen Dienst; die Geräte-Stimmen sind
   gratis und auf dem iPhone gut.
 
+## Kartenliste (17.11.2026)
+
+- **Vorder- und Rückseite nebeneinander**, ab dem Laptop in einem gemeinsamen
+  Raster für alle Zeilen (`grid-cols-subgrid`), sonst sprang die Übersetzung je
+  nach Zahl der Tags. Am Handy untereinander.
+- **Das Deck ist in der Zeile wählbar** (mit Emoji), die Wahl gilt sofort;
+  schlägt sie fehl, springt die Auswahl zurück. Daneben ein Stift zum
+  Bearbeiten, das Genus als Chip. Verworfen: alles in der Zeile bearbeitbar;
+  Vorder- und Rückseite ändert man selten, und die Zeile würde ein Formular.
+
 ## Vorschläge für alle Projekte
 
 - **`apple-mobile-web-app-capable` von Hand setzen**, wo `appleWebApp` steht.

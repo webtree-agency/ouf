@@ -15,7 +15,12 @@ import {
   translationFor,
 } from "@/lib/capture/assist";
 import type { CardSuggestion, Translation } from "@/lib/capture/suggest";
-import { createCard, deleteCard, updateCard } from "@/lib/cards/cards";
+import {
+  createCard,
+  deleteCard,
+  moveCard,
+  updateCard,
+} from "@/lib/cards/cards";
 import { cardInput, type CardDraft } from "@/lib/cards/input";
 import { DomainError } from "@/lib/domainError";
 import { activeLanguage } from "@/lib/queries/languages";
@@ -132,5 +137,15 @@ export async function suggestTranslationAction(
   if (!parsed.success) return refused("Zuerst die Vorderseite.");
   return runActionWith<Translation | null>({}, async (actor) =>
     translationFor(actor.id, parsed.data, await language(actor.id)),
+  );
+}
+
+/** Das Deck einer Karte aus der Liste heraus wechseln; die Liste bleibt, wo sie ist. */
+export async function moveCardAction(
+  cardId: string,
+  deckId: string,
+): Promise<ActionResult> {
+  return runAction({ revalidate: ["/"] }, (actor) =>
+    moveCard(actor.id, z.uuid().parse(cardId), z.uuid().parse(deckId)),
   );
 }

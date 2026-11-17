@@ -63,7 +63,7 @@ test("die Liste filtert über die Adresse, und Zurück bringt den Filter mit", a
   await page.waitForURL(/suche=katze/);
   await expect(page.getByRole("link", { name: "le chien" })).toBeHidden();
 
-  await page.getByRole("link", { name: "le chat" }).click();
+  await page.getByRole("link", { name: "le chat", exact: true }).click();
   await page.waitForURL(/\/karten\/[0-9a-f-]+\?zurueck=/);
   await page.getByLabel("Rückseite").fill("die Katze, der Kater");
   await page.getByRole("button", { name: "Speichern" }).click();
